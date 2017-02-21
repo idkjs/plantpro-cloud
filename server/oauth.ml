@@ -5,7 +5,7 @@ let service_get_oauth = get "/" (fun req ->
   `String "not yet implemented"
   |> respond')
 
-let service_create_account = post "/create account" (fun req ->
+let service_create_account = post "/create-account" (fun req ->
   `String "not yet implemented"
   |> respond')
 
