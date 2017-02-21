@@ -9,7 +9,10 @@ let service_get_oauth = get "/" (fun req ->
   |> respond')
 
 let service_create_account = post "/create-account" (fun req ->
-  `String "not yet implemented"
+  Cohttp_lwt_body.to_string
+    req.Opium_rock.Request.body
+  >>= fun body ->
+  `String ("received request \"" ^ body ^ "\"")
   |> respond')
 
 let _ =
