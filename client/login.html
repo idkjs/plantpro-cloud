@@ -29,6 +29,17 @@ js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1560775
 fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     </script>
-    <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
+    <div class = "login-container">
+      <form action="/create-account" method="post">
+        <label for="username">username</label>
+        <input name="username" type="text" />
+        <label for="password1">password</label>
+        <input name="password1" type="password" />
+        <label for="password2">password</label>
+        <input name="password2" type="password" />
+        <input type="submit" />
+      </form>
+      <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
+    </div>
   </body>
 </html>
