@@ -2,8 +2,8 @@ open Opium.Std
 open Lwt.Infix
 
 let service_get_oauth = get "/" (fun req ->
-  Lwt.return (`String "not yet implemented")
-  >>| respond)
+  `String "not yet implemented"
+  |> respond')
 
 let _ =
   let static =
