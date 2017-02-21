@@ -1,5 +1,7 @@
 SRC .
+B _build/*
 PKG lwt
 PKG opium.unix
 PKG yojson
 PKG ppx_deriving_yojson
+PKG extlib

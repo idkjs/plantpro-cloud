@@ -12,8 +12,28 @@ let service_create_account = post "/create-account" (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
   >>= fun body ->
-  `String ("received request \"" ^ body ^ "\"")
-  |> respond')
+  let params = Fuck_stdlib.get_post_params body in
+  let _, username =
+    List.find
+      ~f:(fun (name, _) -> name = "username")
+      params
+  in
+  let _, password1 =
+    List.find
+      ~f:(fun (name, _) -> name = "password1")
+      params
+  in
+  let _, password2 =
+    List.find
+      ~f:(fun (name, _) -> name = "password2")
+      params
+  in
+  let resp =
+    if password1 <> password2
+    then `String ("passwords do not match you cuck " ^ username)
+    else `String ("received request \"" ^ body ^ "\"")
+  in
+  respond' resp)
 
 let _ =
   let static =
