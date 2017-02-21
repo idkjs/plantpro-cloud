@@ -15,5 +15,6 @@ let _ =
   in
   App.empty
   |> service_get_oauth
+  |> service_create_account
   |> middleware static
   |> App.run_command
