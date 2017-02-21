@@ -1,5 +1,13 @@
+module StdList = struct
+  include List
+end
+
 open Opium.Std
 open Lwt.Infix
+
+module List = struct
+  include StdList
+end
 
 let service_get_oauth = get "/" (fun req ->
   Cohttp_lwt_body.to_string
@@ -15,17 +23,17 @@ let service_create_account = post "/create-account" (fun req ->
   let params = Fuck_stdlib.get_post_params body in
   let _, username =
     List.find
-      ~f:(fun (name, _) -> name = "username")
+      (fun (name, _) -> name = "username")
       params
   in
   let _, password1 =
     List.find
-      ~f:(fun (name, _) -> name = "password1")
+      (fun (name, _) -> name = "password1")
       params
   in
   let _, password2 =
     List.find
-      ~f:(fun (name, _) -> name = "password2")
+      (fun (name, _) -> name = "password2")
       params
   in
   let resp =
