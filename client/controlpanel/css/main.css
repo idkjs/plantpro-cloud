@@ -1,0 +1,146 @@
+
+	body {
+		margin: 1% 1% 1% 1%;
+		background-color:  #e8e8e8; /*Full page background*/
+		/*background-image: url("https://wallpaperscraft.com/image/grass_motion_blur_background_light_87037_3840x2160.jpg") no-repeat center center fixed; 
+ 		 -webkit-background-size: cover;
+		  -moz-background-size: cover;
+		  -o-background-size: cover;
+		  background-size: cover;*/
+
+		color: black;
+	}
+
+	html{
+		height: 100%;
+	}
+
+	#NavBar {
+		background-color: #009b09; /*NavBar Underline color*/
+		width: 97%;
+		height: 43px;
+		position: fixed;
+
+	}
+
+	#NavBar ul {		
+		margin: 0;
+    		padding: 0;
+    		top: 0;
+    		width: 97%;
+		position: fixed;
+		list-style-type: none;
+	    	overflow: hidden;
+	    	background-color: #424242; /*NavBar Background*/
+	}
+
+	#NavBar li {
+	    	float: left;
+	    	border-right: 1px solid #898989; /*Divider color*/
+	}	
+
+	#NavBar li a {
+    	display: block;
+		color: white;
+	    	text-align: center;
+	    	padding: 3% 10%;
+	    	text-decoration: none;
+		letter-spacing: 2px;
+		font-size: 15px;
+		background-color: #009b09; /*sign out color*/
+	}
+
+	#NavBar li.active a, #NavBar li a:hover {
+   	 	background-color: #007a2a;
+	}	
+
+	#NavBar li:last-child {
+    		border-right: none;
+	}
+	
+	#NavBar li strong{   /*Top Title Color*/
+   	 	color: #25ba00;
+		font-size: 41px;
+		font-style: bold;
+		margin-left: 5%;
+		letter-spacing: 3px;
+	}
+	
+	#NavBar li span{  
+   	 	color: #fff;
+		font-size: 15px;
+		letter-spacing: 1px;
+		margin-right: 15px;
+
+	}
+	
+	#signup, #signin {
+
+		float: right;
+	}
+	
+	#signup li a, #signin li a{
+		color: white;
+		font-size: 18px;
+	}
+	
+	#signin li a:hover, #signup li a:hover, #aside .inner li a:hover {
+   	 	background-color: #007a2a;
+	}	
+	
+#body{ width: 100%; margin: 0 auto; }
+#aside{ float: left; width: 75%; padding-left: 3%;}
+#status{ margin-left: 0%;}
+
+#main{ float: left; width: 100%; }
+#main .inner{ padding-right: 90%;}
+#content-aside{ float: left; width: 350px; margin-left: -350px;}
+
+  h2 { /*Category, maybe can be used for tables, probably a div would work better*/
+	  color: white;
+	  background-color: #009b09;
+	  height: 3%;
+	  width: 95%;
+	  text-align: center;
+	  margin-left: 0%;
+	  margin-right: 0%;
+  }
+
+ img {
+	padding-left: 3%;
+}
+
+  h1 {	
+  	color:black;
+  	text-rendering: 10;
+  	  height: 2%;
+	  width: 20%;
+  	margin-left: 3%;
+  }
+  
+  #aside .inner li {
+	 border-bottom: 1px solid #bbb;
+	  margin-left: -2%;
+  }
+  
+  #aside .inner li a {
+	    	width: 25%;
+		height: 10%;
+    		display: block;
+		color: black;
+    		text-align: left;
+		padding-top: 2%;
+    		text-decoration: none;
+		letter-spacing: 3px;
+		font-size: 18px;
+		
+}
+
+#aside .inner ul {		
+		list-style-type: none;
+    		overflow: hidden;
+    		width: 90%;
+		
+		
+}
+
