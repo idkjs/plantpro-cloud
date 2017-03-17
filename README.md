@@ -18,3 +18,6 @@ At the moment, this subproject is managed through Trello. This is still up for d
 - please don't accept your own MR's
 - at least try to delete your branches when you're done with them, so that if someone else needs to refactor the login screen they don't need to make a dumb branch like `refactor/login-again`
 - you know who accepted his own MR's? Hitler
+- please don't edit other people's branches. Instead, do one of the following things:
+  - If it's an MR, drop a comment asking the author to fix it.
+  - Fork the branch, make your change, then create an MR.
