@@ -1,4 +1,3 @@
-
 body {
 	/*margin: 1% 1% 1% 1%;*/
 	margin: 0 0 0 0;
@@ -9,7 +8,6 @@ html{
 	height: 100%;
 	font-family:Helvetica;
 }
-
 /*-----------------------------Nav Bar-------------------------------------------*/
 
 .navbar{
@@ -44,55 +42,28 @@ h1 {
   	color:black;
   	height: 2%;
 	width: 100%;
-  	/*margin-left: 3%;*/
  }
 
-h2 {
-	color: white;
-	background-color: #009b09;
-	height: 3%;
-	width:100%;
-	text-align: center;
-	margin-left: 0%;
-	margin-right: 0%;
-  }
-
-#panel{ 
-	float: left; 
-	width: 100%; 
-	
-}
-#status{ 
-	margin-left: 0%;
-}
-  
-#panel.inner_panel li {
-	border-bottom: 1px solid #bbb;
-	margin-left: -2%;
-}
-  
-#panel.inner_panel ul {		
-	list-style-type: none;
-    	overflow: hidden;
-    	width: 90%;
-}
-
-.attention{
-	font-size: 15px;
+.subsection{
+	font-size: 17px;
 	font-weight: bold;
+	text-decoration: underline;
 }
 
-#Level li {
-	
-	font-size: 18px;
-	font-weight: normal;
-	text-decoration: underline;
+.subform{
+	padding-left: 3%;
+	width: 75%;
 }
 
 #version{
 	position:fixed;
     	bottom:0;
     	right:1;
+}
+
+
+.confirm_text{
+	display: none;
 }
 
 .EasterEgg {
