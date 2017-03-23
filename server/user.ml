@@ -11,7 +11,7 @@ type t =
   ; p_hash: string
   }
 
-let create name email salt password =
+let create name email password =
   let salt = string_of_int (Random.bits()) in
   { creation_time = Calendar.now()
   ; name = name
@@ -23,8 +23,7 @@ let create name email salt password =
         (name ^ email ^ salt ^ password)
   }
 
-let check name password =
-  let user = get_user name in
+let check name password user =
   let p_hash =
     Cryptokit.hash_string
       (Cryptokit.Hash.sha512())
