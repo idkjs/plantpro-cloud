@@ -85,14 +85,12 @@ let service_login = post "/login" (fun req ->
               let cookie =
                 Cohttp.Cookie.Set_cookie_hdr.make
                   ~expiration:(`Max_age (lifetime))
-                  ~path:"/"
                   ~secure:false
                   ("auth_token", session.auth_token)
               in
               let cookie' =
                 Cohttp.Cookie.Set_cookie_hdr.make
                   ~expiration:(`Max_age (lifetime))
-                  ~path:"/"
                   ~secure:false
                   ("username", session.user)
               in
@@ -130,7 +128,7 @@ let service_associate_device = post "/associate-device" (fun req ->
     Cohttp.Cookie.Set_cookie_hdr.(
       Request.headers req
       |> extract
-      |> List.find (fun (name, _) -> name = "name")
+      |> List.find (fun (name, _) -> name = "username")
       |> snd
       |> value)
   in
