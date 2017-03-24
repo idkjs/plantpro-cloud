@@ -126,10 +126,13 @@ let service_associate_device = post "/associate-device" (fun req ->
     req.Opium_rock.Request.body
   >>= fun body ->
   let params = Fuck_stdlib.get_post_params body in
-  let _, username =
-    List.find
-      (fun (name, _) -> name = "username")
-      params
+  let username =
+    Cohttp.Cookie.Set_cookie_hdr.(
+      Request.headers req
+      |> extract
+      |> List.find (fun (name, _) -> name = "name")
+      |> snd
+      |> value)
   in
   let _, device =
     List.find
