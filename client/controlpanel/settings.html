@@ -12,6 +12,35 @@
 		<link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
 	</head>
 	<body>
+		<script>
+			function getCookie(cname) {
+				var name = cname + "=";
+				var decodeCookie = decodeCookie.split(';');
+				for(var i = 0; i <ca.length; i++) {
+					var c = ca[i];
+        					while (c.charAt(0) == ' ') {
+            						c = c.substring(1);
+        				}
+        				if (c.indexOf(name) == 0) {
+            					return c.substring(name.length, c.length);
+        				}
+        				return "";
+    			}
+    			
+    			function hex2a(hexx) {
+ 				var hex = hexx.toString();
+				var str = '';
+				for (var i = 0; i < hex.length; i += 2)
+					str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    				return str;
+			}
+
+			//var username = hex2a(getCookie("username"));
+			//var xhr = new XMLHttpRequest();
+			//xhr.open("get", "/get-device" + username);
+			//xhr.send();
+			//var plantname = JSON.parse(xhr.response)[0].name;
+		</script>
 		<!--Begin NavBar-->
 		<nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
 			<div class="container-fluid">
