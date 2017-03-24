@@ -8,6 +8,10 @@ html{
 	height: 100%;
 	font-family:Helvetica;
 }
+
+hr {
+	border: 1px solid #ccc;
+}
 /*-----------------------------Nav Bar-------------------------------------------*/
 
 .navbar{

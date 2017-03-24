@@ -62,19 +62,23 @@ h2 {
 	width: 100%; 
 	
 }
+.panel_status{
+	padding-left: 2%;
+}
 #status{ 
 	margin-left: 0%;
 }
   
 #panel.inner_panel li {
 	border-bottom: 1px solid #bbb;
-	margin-left: -2%;
+	margin-left: %;
 }
   
 #panel.inner_panel ul {		
 	list-style-type: none;
     	overflow: hidden;
     	width: 90%;
+    	margin-left: 2%;
 }
 
 .attention{
@@ -89,10 +93,16 @@ h2 {
 	text-decoration: underline;
 }
 
+
+
 #version{
 	position:fixed;
     	bottom:0;
     	right:1;
+}
+
+hr {
+	border: 1px solid #ccc;
 }
 
 .EasterEgg {
