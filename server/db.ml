@@ -45,32 +45,11 @@ let _ =
           FOREIGN KEY(user_id) REFERENCES users(id))"];
   in
   Lwt_main.run(
-    try%lwt
-      match%lwt S.select_one_maybe db [%sqlc "SELECT @s{name} FROM users"] with
-        | Some _ ->
-            Lwt_io.printf "users table already exists\n"
-        | None ->
-            make_users ()
-    with
-      | _ -> make_users()
-    >>= fun () ->
-    try%lwt
-      match%lwt S.select_one_maybe db [%sqlc "SELECT @d{device_id} FROM devices"] with
-        | Some _ ->
-            Lwt_io.printf "devices table already exists\n"
-        | None ->
-            make_devices ()
-    with
-      | _ -> make_users()
-    >>= fun () ->
-    try%lwt
-      match%lwt S.select_one_maybe db [%sqlc "SELECT @s{time} FROM px"] with
-      | Some _ ->
-          Lwt_io.printf "px table already exists\n"
-      | None ->
-          make_plant_data()
-    with
-      | _ -> make_plant_data())
+    make_users ()
+    >>= fun _ ->
+    make_devices ()
+    >>= fun _ ->
+    make_plant_data ())
 
 let get_user uname =
   try%lwt
