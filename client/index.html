@@ -4,7 +4,7 @@
 <head>
 <title>PlantPi</title>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="css/landing.css">
+<link rel="stylesheet" type="text/css" href="css/index.css">
 <script>
 	function showLogin() {
 		var x = document.getElementById('hidden-login');
@@ -21,7 +21,7 @@
 	
 	
 	<div class="topright">
-		<div class="userButtons"><a href="">Signup</a></div>
+		<div class="userButtons"><a href="signup.html">Signup</a></div>
 		<div class="userButtons"><a onclick="showLogin()">Login</a></div>
 	</div>
 	
@@ -33,33 +33,8 @@
 	</div>
 	<div id="hidden-login">
 		<h2 style="margin:0 0 10px 0; text-align:center;">Login</h2>
-		<script>
-window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '156077578236155',
-    cookie     : true,
-    xfbml      : true,
-    version    : 'v2.8'
-  });
-  FB.AppEvents.logPageView();   
-};
-(function(d, s, id){
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-    </script>
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-var js, fjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) return;
-js = d.createElement(s); js.id = id;
-js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=156077578236155";
-fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-    </script>
+   
     <div class = "login-container">
       <form action="/create-account" method="post">
         <div>
@@ -70,11 +45,8 @@ fjs.parentNode.insertBefore(js, fjs);
           <label for="password1">Password:</label>
           <input name="password1" type="password" placeholder="password" />
         </div>
-        <div>
-          <label for="password2">Password:</label>
-          <input name="password2" type="password" placeholder="password" />
-        </div>
-        <div style="text-align:center;"><input type="submit" /></div>
+        
+        <div style="text-align:center;"><input type="submit" value=Login /></div>
       </form>
       <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
     </div>
