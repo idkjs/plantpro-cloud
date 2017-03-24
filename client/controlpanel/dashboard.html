@@ -15,20 +15,12 @@
 		<link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
 		
 		<script>
-
-			function getCookie(cname) {
-				var name = cname + "=";
-				var decodeCookie = decodeCookie.split(';');
-				for(var i = 0; i <ca.length; i++) {
-					var c = ca[i];
-        					while (c.charAt(0) == ' ') {
-            						c = c.substring(1);
-        				}
-        				if (c.indexOf(name) == 0) {
-            					return c.substring(name.length, c.length);
-        				}
-        				return "";
-    			}
+	               	function getCookie(name) {
+		                              var value = "; " + document.cookie;
+		                              var parts = value.split("; " + name + "=");
+		                              if (parts.length == 2) 
+		                              	return parts.pop().split(";").shift();
+	                       	 }
     			
     			function hex2a(hexx) {
  				var hex = hexx.toString();
@@ -37,17 +29,41 @@
 					str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
     				return str;
 			}
+                        
+                       		function doWork() {
 
-			var username = hex2a(getCookie("username"));
-			var xhr = new XMLHttpRequest();
-			xhr.open("get", "/get-device" + username);
+                       			var EasterEgg = document.getElementById("Easter");
+		                              var Leaf = document.getElementById("Leaf");
+		                              var xicon = document.getElementsByClassName("close")[0];
+		                
+		                              Leaf.onclick = function(){ //When leaf is clicked on
+		                               	EasterEgg.style.display="block";
+		                              };
+		                              xicon.onclick = function() { //when "X" icon is clicked on
+		                              	EasterEgg.style.display = "none";
+		                              };
+		                              window.onclick = function(event) { //Close window if user clicks outside the box
+		                                             if (event.target == EasterEgg) {
+		                                             	EasterEgg.style.display = "none";
+		                                             }
+		                              };
+
+	        			var username = hex2a(getCookie("username"));
+		        		var xhr = new XMLHttpRequest();
+                                		console.log(hex2a(getCookie("username")));
+                                		xhr.open("get", "/get-devices/" + username);
+                                		xhr.addEventListener("load", function() {
+                                       		var plantname = JSON.parse(this.response)[0].name;
+                                        
+	                                       	 //This is just to give the site some more personality
+	                                        	fuckingBelgians.innerHTML += plantname;
+                                });
 			xhr.send();
-			var plantname = JSON.parse(xhr.response)[0].name;
-
-		</script>
+                        }
+                        </script>
 
 	</head>
-	<body>
+	<body onload="doWork();">
 		
 		<!--Begin NavBar-->
 		<nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
@@ -66,7 +82,7 @@
 		    			<ul class="nav navbar-nav navbar-right">
 					               <li> <a href="settings.html"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 					               <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a></li>
-					               <li><a id="Leaf"><span class="glyphicon glyphicon-leaf""></span></a></li>
+					               <li><a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a></li>
 
 					         	<div id="Easter" class="EasterEgg">
 							<div class="EasterEgg-content">
@@ -79,21 +95,6 @@
 			</div>
 		</nav>
 		<script> //because i was bored EASTEREGG
-			var EasterEgg = document.getElementById("Easter");
-			var Leaf = document.getElementById("Leaf");
-			var xicon = document.getElementsByClassName("close")[0];
-
-			Leaf.onclick = function(){ //When leaf is clicked on
-			 	EasterEgg.style.display="block";
-			 }
-			xicon.onclick = function() { //when "X" icon is clicked on
-   				EasterEgg.style.display = "none";
-			}
-			window.onclick = function(event) { //Close window if user clicks outside the box
-				if (event.target == EasterEgg) {
-					EasterEgg.style.display = "none";
-				}
-			}
 		</script>
 		<!--End NavBar-->
 
@@ -101,21 +102,10 @@
 
 		<div class="container">
 			<script>
-				//This is just to give the site some more personality
-				var num = (Math.floor(Math.random() * 3) + 1); //random from 1 to 3
-				if(num == 1){
-					document.write("<h1>Let's see how <strong>" + plantname + "</strong> is doing: </h1>");
-				}
-				else if (num == 2){
-					document.write("<h1>This is how <strong>" +plantname+ "</strong> is doing: </h1>");
-				}
-				else{
-					document.write("<h1>Let's observe <strong>" +plantname+ "'s</strong> status:</h1>");
-				}
 			</script>
+			<h1> Let's see how <strong id = "fuckingBelgians"></strong> is doing:</h1>
 			<hr/>
-			<!--<h1> Let's see how <strong>"Maple"</strong> is doing:</h1>-->
-			<div id="panel" = style="border-style: double; border-width: 2px; border-color: #ccc">
+			<div id="panel" style="border-style: double; border-width: 2px; border-color: #ccc">
 				<div class="innerpanel">
 					<h2>Statistics</h2>
 					<div class="panel_status">
@@ -129,7 +119,6 @@
 							var moisture = false;
 
 							//Temp = Celcius, Moisture=T or F, uhh what was light?
-
 
 							//Check for Temperature
 							
