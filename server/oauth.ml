@@ -136,7 +136,12 @@ let service_associate_device = post "/associate-device" (fun req ->
       (fun (name, _) -> name = "device")
       params
   in
-  let%lwt res = Db.associate_device username device in
+  let _, name =
+    List.find
+      (fun (name, _) -> name = "name")
+      params
+  in
+  let%lwt res = Db.associate_device username device name in
   match Int64.to_int res with
     | 1 ->
         respond' (`String "Successfully associated user")
@@ -226,7 +231,6 @@ let _ =
     Middleware.static ~local_path:"../client" ~uri_prefix:"/static"
   in
   App.empty
-  |> service_get_oauth
   |> service_create_account
   |> service_login
   |> service_push_data

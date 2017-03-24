@@ -40,7 +40,8 @@ let _ =
       [%sqlc
         "CREATE TABLE IF NOT EXISTS devices ( \
           device_id PRIMARY KEY NOT NULL, \
-          user_id NOT NULL, \
+          user_id TEXT NOT NULL, \
+          name TEXT NOT NULL, \
           FOREIGN KEY(user_id) REFERENCES users(id))"];
   in
   Lwt_main.run(
@@ -134,16 +135,17 @@ let add_data time device_id sensor_type value =
     sensor_type
     value
 
-let associate_device user device =
+let associate_device user device name =
   let open User in
   let%lwt id = get_user_id user in
   match id with
     | Some id ->
         S.insert
           db
-          [%sqlc "INSERT INTO devices(user_id, device_id) VALUES(%d, %s)"]
+          [%sqlc "INSERT INTO devices(user_id, device_id, name) VALUES(%d, %s, %s)"]
           id
           device
+          name
     | None ->
         raise (Failure "trying to associate a device with a nonexistent user")
 
@@ -153,9 +155,9 @@ let get_devices user : Device.t list Lwt.t =
     | Some id ->
         S.select_f
           db
-          (fun id ->
-            Lwt.return Device.{id = id})
-          [%sqlc "SELECT @s{device_id} FROM devices WHERE user_id = %d"]
+          (fun (id, name) ->
+            Lwt.return Device.{id = id; name = name})
+          [%sqlc "SELECT @s{device_id}, @s{name} FROM devices WHERE user_id = %d"]
           id
     | None ->
         raise (Failure "trying to get devices for a nonexistent user")

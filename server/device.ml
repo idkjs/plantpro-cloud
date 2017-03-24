@@ -18,5 +18,6 @@ type data_packet =
 
 type t =
   { id: string
+  ; name: string
   }
   [@@deriving yojson]
