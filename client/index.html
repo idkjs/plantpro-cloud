@@ -8,6 +8,16 @@
 <script>
 	function showLogin() {
 		var x = document.getElementById('hidden-login');
+		var y = document.getElementById('hidden-signup');
+		if (x.style.display === 'block') {
+			x.style.display = 'none';
+		} else {
+			x.style.display = 'block';
+		}
+	};
+	function showSignup() {
+		var x = document.getElementById('hidden-signup');
+		var y = document.getElementById('hidden-login');
 		if (x.style.display === 'block') {
 			x.style.display = 'none';
 		} else {
@@ -21,7 +31,7 @@
 	
 	
 	<div class="topright">
-		<div class="userButtons"><a href="signup.html">Signup</a></div>
+		<div class="userButtons"><a onclick="showSignup()">Signup</a></div>
 		<div class="userButtons"><a onclick="showLogin()">Login</a></div>
 	</div>
 	
@@ -33,23 +43,44 @@
 	</div>
 	<div id="hidden-login">
 		<h2 style="margin:0 0 10px 0; text-align:center;">Login</h2>
-    <div id="fb-root"></div>
-   
-    <div class = "login-container">
-      <form action="/create-account" method="post">
-        <div>
-          <label for="username">Username:</label>
-          <input name="username" type="text" placeholder="username" />
-        </div>
-        <div>
-          <label for="password1">Password:</label>
-          <input name="password1" type="password" placeholder="password" />
-        </div>
-        
-        <div style="text-align:center;"><input type="submit" value=Login /></div>
-      </form>
-      <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
-    </div>
+	   
+		<div class = "login-container">
+		  <form action="/login" method="post">
+			<div>
+			  <label for="username">Username:</label>
+			  <input name="username" type="text" placeholder="username" />
+			</div>
+			<div>
+			  <label for="password">Password:</label>
+			  <input name="password" type="password" placeholder="password" />
+			</div>
+			
+			<div style="text-align:center;"><input type="submit" value=Login /></div>
+		  </form>
+		</div>
+	</div>
+	<div id="hidden-signup">
+		<h2 style="margin:0 0 10px 0; text-align:center;">Signup</h2>
+	   
+		<div class = "signup-container">
+		  <form action="/create-account" method="post">
+			<div>
+			  <label for="username">Username:</label>
+			  <input name="username" type="text" placeholder="username" />
+			</div>
+			<div>
+			  <label for="password1">Password:</label>
+			  <input name="password1" type="password" placeholder="password" />
+			</div>
+			<div>
+			  <label for="password2">Password:</label>
+			  <input name="password2" type="password" placeholder="password" />
+			</div>
+			
+			<div style="text-align:center;"><input type="submit" value=Login /></div>
+		  </form>
+		  <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
+		</div>
 	</div>
 
 

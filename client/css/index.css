@@ -9,6 +9,7 @@ html {
 	background-position: center center;
 	background-attachment: fixed;
 	height: 100%;
+	background-position: center;
 	background-size: cover;
 	overflow:hidden;
 }
@@ -90,7 +91,7 @@ h1 {
 }
 
 
-#hidden-login {
+#hidden-login, #hidden-signup {
 	display: none;
 	position: absolute;
 	top: 80px;
