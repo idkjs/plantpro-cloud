@@ -43,7 +43,7 @@ let service_create_account = post "/create-account" (fun req ->
     match%lwt Db.get_user username with
       | Some _ ->
           respond'
-            ~headers:(Cohttp.Header.init_with "Location" "/static/signup.html#failed")
+            ~headers:(Cohttp.Header.init_with "Location" "/static/index.html#failed")
             ~code:(`Moved_permanently)
             (`String ("Error: User " ^ username ^ " already exists"))
       | None ->
@@ -102,14 +102,14 @@ let service_login = post "/login" (fun req ->
               in
               redirect'
                 ~headers
-                (Uri.of_string "/static/secure/panel.html")
+                (Uri.of_string "/static/controlpanel/dashboard.html")
           | `Nope ->
               redirect'
-                (Uri.of_string "/static/landing.html#bad-pass")
+                (Uri.of_string "/static/index.html#bad-pass")
         end
     | None ->
         redirect'
-          (Uri.of_string "/static/landing.html#not-found"))
+          (Uri.of_string "/static/index.html#not-found"))
 
 let service_get_user_devices = get "/get-devices/:username" (fun req ->
   let username = param req "username" in
