@@ -2,11 +2,17 @@ open Cryptokit
 
 let rng = Random.device_rng "/dev/urandom";;
 
-let hex_encode str =
-  transform_string (Hexa.encode ()) str;;
+(*string -> string*)
+let hex_encode = transform_string (Hexa.encode ());;
 
-let hex_decode str =
-  transform_string (Hexa.decode ()) str;;
+(*string -> string*)
+let hex_decode = transform_string (Hexa.decode ());;
+
+(*string -> string*)
+let base64_encode = transform_string (Base64.encode_compact ());;
+
+(*string -> string*)
+let base64_decode = transform_string (Base64.decode ());;
 
 (*output 32 bytes*)
 let hash msg =
@@ -23,16 +29,16 @@ module Diffie_hellman = struct
 
   (*() -> DH.private_secret*)
   let gen_priv_secret () =
-    DH.private_secret ~rng:rng param;;
+    DH.private_secret ~rng:rng parameters;;
 
   (*DH.private_secret -> string*)
   let gen_message priv_sec =
-    DH.message param priv_sec;;
+    DH.message parameters priv_sec;;
 
   (*Need I say msg should not be the one you generated*)
   (*DH.private_secret -> string -> string*)
   let shared_secret priv_sec msg =
-    DH.shared_secret param priv_sec msg;;
+    DH.shared_secret parameters priv_sec msg;;
 
   (** derives a secret string
       (typically, a key for symmetric encryption) from the given shared
