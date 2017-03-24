@@ -16,7 +16,7 @@
 	</head>
 	<body>
 		<script>
-			var plantname = "login";
+			var plantname = "John Smith";
 		</script>
 		<!--Begin NavBar-->
 		<nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
@@ -94,7 +94,7 @@
 							var lvl1att = 0, lvl2att = 0, lvl3att = 0;  //These are the flags
 							var code = 0; //by default
 
-							var celcius = 70; 
+							var celcius = 30; 
 							var moisture = false;
 
 							//Temp = Celcius, Moisture=T or F, uhh what was light?
@@ -176,6 +176,9 @@
 						<br/>
 						<script>
 							document.write("<p>Current: " + celcius + "&#8451, " + faren + "&#8457 </p>");
+							if(faren > 119){
+								document.write("<br/><p>Your plant is not far from spontaneously combusting! <span class=\"glyphicon glyphicon-fire\"></span> throw some ice on it or something! <span class=\"glyphicon glyphicon-ice-lolly\"></span> </p>");
+							}
 						</script>
 						
 						<br/>
