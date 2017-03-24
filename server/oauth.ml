@@ -85,18 +85,21 @@ let service_login = post "/login" (fun req ->
               let cookie =
                 Cohttp.Cookie.Set_cookie_hdr.make
                   ~expiration:(`Max_age (lifetime))
+                  ~path:"/"
                   ~secure:false
-                  ("auth_token", session.auth_token)
+                  ("auth_token", Encrypt.hex_encode session.auth_token)
               in
               let cookie' =
                 Cohttp.Cookie.Set_cookie_hdr.make
                   ~expiration:(`Max_age (lifetime))
+                  ~path:"/"
                   ~secure:false
-                  ("username", session.user)
+                  ("username", Encrypt.hex_encode session.user)
               in
               let headers =
                 let k, v = Cohttp.Cookie.Set_cookie_hdr.serialize cookie in
-                Cohttp.Header.(add (init_with k v) k v)
+                let k', v' = Cohttp.Cookie.Set_cookie_hdr.serialize cookie' in
+                Cohttp.Header.(add (init_with k v) k' v')
               in
               redirect'
                 ~headers
@@ -124,13 +127,16 @@ let service_associate_device = post "/associate-device" (fun req ->
     req.Opium_rock.Request.body
   >>= fun body ->
   let params = Fuck_stdlib.get_post_params body in
+  let username = "penis" in
   let username =
-    Cohttp.Cookie.Set_cookie_hdr.(
-      Request.headers req
-      |> extract
-      |> List.find (fun (name, _) -> name = "username")
-      |> snd
-      |> value)
+    match Cohttp.Header.get (Request.headers req) "Cookie" with
+      | Some s ->
+          Fuck_stdlib.get_post_params ~split_on:";" s
+          (*|> List.fold_left (fun acc (name, x) -> acc ^ "<br />" ^ name ^ " " ^ x) ""*)
+          |> List.find (fun (name, _) -> String.trim name = "username")
+          |> snd
+          |> Encrypt.hex_decode
+      | None -> "no cookies"
   in
   let _, device =
     List.find
