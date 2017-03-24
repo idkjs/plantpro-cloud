@@ -1,0 +1,39 @@
+//create plant data
+CREATE TABLE Px
+        (ID serial PRIMARY KEY,
+        time timestamp,
+        sensor_type NUMBER,
+        data VARCHAR2(64)
+);
+        
+
+//setting data
+INSERT INTO Px (sensor_type, data)
+VALUES
+        (n1,'d');
+        (n2,'tnt');
+        ...
+        
+        
+        
+//getting data
+SELECT ID, time, sensor_type, data FROM Px;
+        
+        
+//CREATE TABLE users
+        (ID serial PRIMARY KEY,
+        creation_time timestamp,
+        name VARCHAR2(64),
+        email VARCHAR2(64),
+        salt VARCHAR2(128),
+        p_hash VARCHAR2(128)
+);
+
+//setting data
+INSERT INTO Px (name, email, salt, p_hash)
+VALUES
+        ('usr_name', 'email@sample.com', 'NaCl', 'hash potatoes');
+        ...
+        
+//getting data
+SELECT ID, creation_time, name, email, salt, p_hash

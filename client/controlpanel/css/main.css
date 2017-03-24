@@ -1,0 +1,142 @@
+
+body {
+	/*margin: 1% 1% 1% 1%;*/
+	margin: 0 0 0 0;
+	background-color:  #e8e8e8; /*Full page background*/
+	color: black;
+}
+html{
+	height: 100%;
+	font-family:Helvetica;
+}
+
+/*-----------------------------Nav Bar-------------------------------------------*/
+
+.navbar{
+	z-index: 1;
+}
+
+.navbar-brand {
+  	color:#009b09 !important;
+  	font-size: 40px;
+ 	margin: 0px;
+
+}
+.navbar-brand:hover{
+	color:#007a2a !important;
+}
+
+.navbar-right a{
+	color:#009b09 !important;
+	font-size: 17px;
+}
+
+.navbar-right li a:hover{
+	color:#007a2a !important;
+}
+
+.leaf li a:hover{
+	color:#007a2a !important;
+}
+/*---------------------------------NavBar End--------------------------------------------*/
+
+h1 {	
+  	color:black;
+  	height: 2%;
+	width: 100%;
+  	/*margin-left: 3%;*/
+ }
+
+h2 {
+	color: white;
+	background-color: #009b09;
+	height: 3%;
+	width:100%;
+	text-align: center;
+	margin-left: 0%;
+	margin-right: 0%;
+  }
+
+#panel{ 
+	float: left; 
+	width: 100%; 
+	
+}
+.panel_status{
+	padding-left: 2%;
+}
+#status{ 
+	margin-left: 0%;
+}
+  
+#panel.inner_panel li {
+	border-bottom: 1px solid #bbb;
+	margin-left: %;
+}
+  
+#panel.inner_panel ul {		
+	list-style-type: none;
+    	overflow: hidden;
+    	width: 90%;
+    	margin-left: 2%;
+}
+
+.attention{
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#Level li {
+	
+	font-size: 18px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+
+
+#version{
+	position:fixed;
+    	bottom:0;
+    	right:1;
+}
+
+hr {
+	border: 1px solid #ccc;
+}
+
+.EasterEgg {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.EasterEgg-content {
+	background-color: #131313;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
