@@ -1,9 +1,7 @@
 before_script:
  - apk update
- - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget
+ - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam
  - update-ca-certificates
- - wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin
- - /usr/local/bin/opam init --comp 4.02.1
  - export OPAMYES=true
  - comp=${1:-system}
  - opam init --comp="${comp}"
