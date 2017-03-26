@@ -1,6 +1,6 @@
 before_script:
  - apk update
- - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam
+ - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam patch
  - update-ca-certificates
  - export OPAMYES=true
  - comp=${1:-system}
