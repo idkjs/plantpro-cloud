@@ -9,6 +9,9 @@ before_script:
  - opam update
  - opam install camlp4
  - opam upgrade
+ - ocaml -version
+ - opam -version
+ - camlp4 -version
  - opam install ocamlbuild cryptokit opium sqlexpr
 
 build:
