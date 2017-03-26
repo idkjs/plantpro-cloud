@@ -6,7 +6,10 @@ before_script:
  - comp=${1:-system}
  - opam init --comp="${comp}"
  - eval `opam config env`
- - opam install ocamlbuild tls cryptokit opium sqlexpr
+ - opam update
+ - opam install camlp4
+ - opam upgrade
+ - opam install ocamlbuild cryptokit opium sqlexpr
 
 build:
   script: "cd server && make"
