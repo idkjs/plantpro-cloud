@@ -1,8 +1,11 @@
 before_script:
  - apk update
  - apk add make m4 opam perl build-base gcc zlib-dev
- - opam init
+ - export OPAMYES=true
+ - comp=${1:-system}
+ - opam init --comp="${comp}"
  - eval `opam config env`
+ - opam install ocamlfind
  - opam install ocamlbuild tls cryptokit opium sqlexpr
 
 build:
