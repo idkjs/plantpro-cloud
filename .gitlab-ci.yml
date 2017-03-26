@@ -1,6 +1,6 @@
 before_script:
  - apk update
- - apk add make m4 opam perl build-base gcc abuild binutils
+ - apk add make m4 opam perl build-base gcc zlib-dev
  - opam init
  - eval `opam config env`
  - opam install ocamlbuild tls cryptokit opium sqlexpr
