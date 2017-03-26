@@ -1,8 +1,6 @@
 before_script:
- - ls
- - pwd
  - apk update
  - apk add make m4 opam
 
 build:
-  script: "make"
+  script: "cd server && make all"
