@@ -2,12 +2,14 @@ before_script:
  - echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories
  - cat /etc/apk/repositories
  - apk update
- - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam@edge patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4=4.04-r0
+ - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam@edge patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4=4.04-r0 git
  - update-ca-certificates
  - export OPAMYES=true
  - comp=${1:-system}
  - opam init --comp="${comp}"
  - eval `opam config env`
+ - opam repo add janestreet https://github.com/janestreet/opam-repository.git
+ - opam install ppx_ast
  - opam update
  - opam install camlp4
  - opam upgrade
