@@ -1,6 +1,6 @@
 before_script:
  - cat /etc/apk/repositories
- - echo "@edge http://en.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+ - echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/main/" >> /etc/apk/repositories
  - apk update
  - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam@edge patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4=4.04-r0
  - update-ca-certificates
