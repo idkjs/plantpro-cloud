@@ -1,12 +1,11 @@
 before_script:
  - apk update
- - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam patch
+ - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam patch sqlite-dev glib-dev pkgconfig
  - update-ca-certificates
  - export OPAMYES=true
  - comp=${1:-system}
  - opam init --comp="${comp}"
  - eval `opam config env`
- - opam install ocamlfind.1.6.1
  - opam install ocamlbuild tls cryptokit opium sqlexpr
 
 build:
