@@ -3,4 +3,4 @@ before_script:
  - apk add make m4 opam
 
 build:
-  script: "cd server && make all"
+  script: "cd server && make"
