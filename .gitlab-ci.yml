@@ -1,4 +1,5 @@
 before_script:
+ - cat /etc/*-release
  - apt-get install opam ocaml ocaml-native-compilers camlp4-extra opam m4
 
 build:
