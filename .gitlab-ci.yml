@@ -9,7 +9,8 @@ before_script:
  - opam init --comp="${comp}"
  - eval `opam config env`
  - opam repo add janestreet https://github.com/janestreet/opam-repository.git
- - opam install ppx_ast
+ - opam install ppx_ast || true
+ - cat /root/.opam/system/build/ppx_ast.v0.9.0/ppx_ast-*.err
  - opam update
  - opam install camlp4
  - opam upgrade
