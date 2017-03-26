@@ -122,6 +122,25 @@ let service_get_user_devices = get "/get-devices/:username" (fun req ->
   `Json (Ezjsonm.from_string devices)
   |> respond')
 
+let try_unoption = function
+  | Some x -> x
+  | None -> raise (Failure "gambled and lost, mate *shrugs*")
+
+let service_get_device_data = get "/get-data/:device" (fun req ->
+  let device_name = param req "device" in
+  let%lwt device =
+    Db.get_device_by_name device_name
+  in
+  let device = try_unoption device in
+  let%lwt data = Db.get_data device in
+  let res =
+    [%to_yojson: Device.sensor_reading list] data
+    |> Yojson.Safe.to_string
+  in
+  (*`String device.name*)
+  `Json (Ezjsonm.from_string res)
+  |> respond')
+
 let service_associate_device = post "/associate-device" (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
@@ -169,14 +188,14 @@ let service_push_data = post "/push-data" (fun req ->
         let%lwt _ =
           Db.add_data
             (Calendar.now ())
-            packet.Device.device
+            (B64.decode packet.Device.device)
             packet.Device.payload.sclass
             packet.Device.payload.value
         in
         `String "OK"
         |> respond'
-    | Error _ ->
-        raise (Failure "MALFORMED JSON");)
+    | Error msg ->
+        raise (Failure ("MALFORMED JSON: " ^ msg));)
 
 (*let auth_static =
   let filter handler req =
@@ -243,5 +262,6 @@ let _ =
   |> service_push_data
   |> service_associate_device
   |> service_get_user_devices
+  |> service_get_device_data
   |> middleware static
   |> App.run_command
