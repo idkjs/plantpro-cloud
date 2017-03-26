@@ -1,6 +1,9 @@
 before_script:
  - apk update
  - apk add make m4 opam
+ - opam init
+ - eval `opam config env`
+ - opam install ocamlbuild tls cryptokit opium sqlexpr
 
 build:
   script: "cd server && make"
