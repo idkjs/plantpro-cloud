@@ -6,8 +6,7 @@ before_script:
  - comp=${1:-system}
  - opam init --comp="${comp}"
  - eval `opam config env`
- - opam switch 4.03.0
- - opam install ocamlfind
+ - opam install ocamlfind.1.6.1
  - opam install ocamlbuild tls cryptokit opium sqlexpr
 
 build:
