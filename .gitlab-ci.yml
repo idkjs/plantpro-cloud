@@ -1,6 +1,6 @@
 before_script:
  - apk update
- - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev
+ - apk add make m4 ocaml perl build-base gcc zlib-dev ca-certificates wget opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4=4.04-r0
  - update-ca-certificates
  - export OPAMYES=true
  - comp=${1:-system}
