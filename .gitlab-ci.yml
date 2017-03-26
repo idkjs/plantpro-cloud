@@ -1,6 +1,6 @@
 before_script:
  - apk update
- - apk add m4 opam
+ - apk add make m4 opam
 
 build:
   script: "make"
