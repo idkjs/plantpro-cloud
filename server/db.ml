@@ -20,7 +20,7 @@ let _ =
           name VARCHAR(256) NOT NULL, \
           email VARCHAR(256) NOT NULL, \
           salt VARCHAR(256) NOT NULL, \
-          p_hash VARCHAR(256) NOT NULL)"];
+          p_hash TEXT NOT NULL)"];
   in
   let make_plant_data () =
     S.execute
@@ -39,38 +39,17 @@ let _ =
       db
       [%sqlc
         "CREATE TABLE IF NOT EXISTS devices ( \
-          device_id PRIMARY KEY NOT NULL, \
+          device_id TEXT PRIMARY KEY NOT NULL, \
           user_id TEXT NOT NULL, \
           name TEXT NOT NULL, \
           FOREIGN KEY(user_id) REFERENCES users(id))"];
   in
   Lwt_main.run(
-    try%lwt
-      match%lwt S.select_one_maybe db [%sqlc "SELECT @s{name} FROM users"] with
-        | Some _ ->
-            Lwt_io.printf "users table already exists\n"
-        | None ->
-            make_users ()
-    with
-      | _ -> make_users()
-    >>= fun () ->
-    try%lwt
-      match%lwt S.select_one_maybe db [%sqlc "SELECT @d{device_id} FROM devices"] with
-        | Some _ ->
-            Lwt_io.printf "devices table already exists\n"
-        | None ->
-            make_devices ()
-    with
-      | _ -> make_users()
-    >>= fun () ->
-    try%lwt
-      match%lwt S.select_one_maybe db [%sqlc "SELECT @s{time} FROM px"] with
-      | Some _ ->
-          Lwt_io.printf "px table already exists\n"
-      | None ->
-          make_plant_data()
-    with
-      | _ -> make_plant_data())
+    make_users ()
+    >>= fun _ ->
+    make_devices ()
+    >>= fun _ ->
+    make_plant_data ())
 
 let get_user uname =
   try%lwt
@@ -162,6 +141,13 @@ let get_devices user : Device.t list Lwt.t =
     | None ->
         raise (Failure "trying to get devices for a nonexistent user")
 
+let get_device_by_name name =
+  S.select_one_f_maybe
+    db
+    (fun (id, name) -> Lwt.return Device.{id; name})
+    [%sqlc "SELECT @s{device_id}, @s{name} FROM devices WHERE name = %s"]
+    name
+
 let get_data device =
   let id = device.Device.id in
   S.select_f
@@ -169,7 +155,7 @@ let get_data device =
     (fun (time, sensor_type, value) ->
       let time = CalendarLib.Printer.Calendar.from_string time in
       match sensor_type with
-        | "jeffrey" ->
+        | "temp" ->
             Lwt.return (Device.Jeffrey (float_of_string value, time))
         | _ ->
             raise (Failure ("invalid sensor type found in database: \"" ^ sensor_type ^ "\"")))
