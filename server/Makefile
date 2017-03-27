@@ -9,8 +9,9 @@ test: PlantPi_server.native
 
 check: PlantPi_server.native
 	./PlantPi_server.native -p 8080 -d &
-	node tests/test-server.js
-	kill %?PlantPi_server
+	cd tests
+	mocha .
+	kill %1
 
 install: build
 	@echo "The PlantPi server doesn't really have a clean installation process at the moment"
