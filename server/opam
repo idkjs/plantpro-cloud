@@ -18,7 +18,7 @@ remove: [
 build-test: [ [make "check"] ]
 
 depends: [
-        "opium"
+        "opium" { = "https://github.com/chrismamo1/opium.git" }
         "lwt"
         "ppx_deriving_yojson"
         "extlib"
