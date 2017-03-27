@@ -26,6 +26,7 @@ depends: [
         "sqlexpr"
         "cryptokit"
         "base64"
+        "ocamlnet"
 
         "ocamlfind" {build}
         "omake" {build}
