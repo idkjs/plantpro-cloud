@@ -6,6 +6,12 @@ PlantPi_server.native: PlantPi_server.ml fuck_stdlib.ml device.ml user.ml db.ml 
 test: PlantPi_server.native
 	./PlantPi_server.native -p 8080 -d & lt --port 8080 -s plantpi
 
+
+check: PlantPi_server.native
+	./PlantPi_server.native -p 8080 -d &
+	node tests/test-server.js
+	kill %?PlantPi_server
+
 install: build
 	@echo "The PlantPi server doesn't really have a clean installation process at the moment"
 
