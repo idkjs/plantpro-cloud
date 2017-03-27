@@ -117,9 +117,8 @@ let service_get_user_devices = get "/get-devices/:username" (fun req ->
   let%lwt devices = Db.get_devices username in
   let devices =
     [%to_yojson: Device.t list] devices
-    |> Yojson.Safe.to_string
   in
-  `Json (Ezjsonm.from_string devices)
+  `Json devices
   |> respond')
 
 let try_unoption = function
@@ -135,10 +134,9 @@ let service_get_device_data = get "/get-data/:device" (fun req ->
   let%lwt data = Db.get_data device in
   let res =
     [%to_yojson: Device.sensor_reading list] data
-    |> Yojson.Safe.to_string
   in
   (*`String device.name*)
-  `Json (Ezjsonm.from_string res)
+  `Json res
   |> respond')
 
 let service_associate_device = post "/associate-device" (fun req ->
