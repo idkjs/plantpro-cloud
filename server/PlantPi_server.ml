@@ -183,12 +183,15 @@ let service_push_data = post "/push-data" (fun req ->
   let open Result in
   match packet with
     | Ok packet ->
+        let open Device in
+        let sclass = sclass_of_data_packet_payload packet.payload in
+        let `Jeffrey(value, _) = packet.payload in
         let%lwt _ =
           Db.add_data
             (Calendar.now ())
             (B64.decode packet.Device.device)
-            packet.Device.payload.sclass
-            packet.Device.payload.value
+            sclass
+            (string_of_float value)
         in
         `String "OK"
         |> respond'

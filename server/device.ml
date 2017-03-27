@@ -18,6 +18,10 @@ type ttype =
   ]
   [@@deriving yojson]
 
+let sclass_of_data_packet_payload = function
+  | `Jeffrey _ ->
+      "Jeffrey"
+
 type data_packet_payload =
   [ `Jeffrey of float * ttype
   ]
