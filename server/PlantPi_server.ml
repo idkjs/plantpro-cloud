@@ -10,6 +10,10 @@ module List = struct
   include StdList
 end
 
+let _ =
+  let open Email in
+  ()
+
 (*let service_get_oauth = get "/" (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
