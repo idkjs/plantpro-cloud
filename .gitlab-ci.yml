@@ -6,6 +6,7 @@ before_script:
  - opam init --comp="${comp}"
  - opam switch 4.03.0
  - eval `opam config env`
+ - opam pin add opium https://github.com/chrismamo1/opium.git
  - opam update
  - opam install camlp4
  - opam upgrade
