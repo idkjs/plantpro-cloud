@@ -1,9 +1,6 @@
 before_script:
- - echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories
- - cat /etc/apk/repositories
  - apk update
  - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash
- - update-ca-certificates
  - export OPAMYES=true
  - comp=${1:-system}
  - opam init --comp="${comp}"
@@ -12,10 +9,10 @@ before_script:
  - opam update
  - opam install camlp4
  - opam upgrade
+ - eval `opam config env`
  - ocaml -version
  - opam --version
  - camlp4 -version
- - opam install ocamlbuild cryptokit opium ppx_deriving_yojson sqlexpr extlib calendar
 
 build:
-  script: "cd server && make"
+  script: "cd server && opam pin add plantpi ."
