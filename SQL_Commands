@@ -1,3 +1,141 @@
+// users table
+// create table
+"CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        creation_time VARCHAR(256) NOT NULL,
+        name VARCHAR(256) NOT NULL,
+        email VARCHAR(256) NOT NULL,
+        salt VARCHAR(256) NOT NULL,
+        p_hash TEXT NOT NULL)";
+
+//setting data
+"INSERT INTO users(creation_time, name, email, salt, p_hash)
+        VALUES(%s, %s, %s, %s, %s)"
+        
+//getting data
+        "SELECT
+            @s{creation_time}
+          , @s{name}
+          , @s{email}
+          , @s{salt}
+          , @s{p_hash}
+          FROM users WHERE name = %s
+
+_______________________________________________________________________________
+// group table
+// create table
+"CREATE TABLE IF NOT EXISTS group (
+        group_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        group_name VARCHAR(256) NOT NULL,
+        FOREIGN KEY(owner_id) REFERENCES users(id))"
+
+//setting data
+"INSERT INTO temp(group_id, group_name, owner_id)
+        VALUES(%s, %s, %s)"
+        
+//getting data by group_id
+        "SELECT @s{group_name}, @s{owner_id}} FROM devices WHERE group_id = %s"
+        
+//getting data by group_name
+        "SELECT @s{group_id}, @s{owner_id}} FROM devices WHERE group_name = %s"
+        
+//getting data by owner_id
+        "SELECT @s{group_id}, @s{group_name}} FROM devices WHERE owner_id = %s"
+
+_______________________________________________________________________________
+// devices table
+// create table
+"CREATE TABLE IF NOT EXISTS devices (
+        device_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        creation_time VARCHAR(256) NOT NULL,
+        name VARCHAR(256) NOT NULL,
+        FOREIGN KEY(owner_id) REFERENCES users(id))"
+        FOREIGN KEY(group_id) REFERENCES group(group_id))"
+
+//setting data with group
+"INSERT INTO users(creation_time, name, owner_id, group_id)
+        VALUES(%s, %s, %s, $s)"
+        
+//setting data
+"INSERT INTO users(creation_time, name, owner_id)
+        VALUES(%s, %s, %s)"
+        
+//setting group
+"INSERT INTO users(group_id)
+        VALUES(%s)"
+        
+//getting data by device id
+        "SELECT @s{device_id}, @s{name}, @s{owner_id} FROM devices WHERE device_id = %s"
+        
+//getting data by owner_id
+        "SELECT @s{device_id}, @s{name}, @s{owner_id} FROM devices WHERE owner_id = %s"
+        
+//getting data by device name
+        "SELECT @s{device_id}, @s{name}, @s{owner_id} FROM devices WHERE name = %s"
+        
+//getting data by group_id
+        "SELECT @s{device_id}, @s{name}, @s{owner_id} FROM devices WHERE group_id = %s"
+        
+_______________________________________________________________________________
+// temperature table
+// create table
+"CREATE TABLE IF NOT EXISTS temp (
+        temp_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        creation_time VARCHAR(256) NOT NULL,
+        data VARCHAR(256) NOT NULL,
+        temp_unit VARCHAR(256) NOT NULL,
+        FOREIGN KEY(device_id) REFERENCES device(id))"
+
+//setting data
+"INSERT INTO temp(creation_time, data, temp_unit, device_id)
+        VALUES(%s, %s, %s, %s)"
+        
+//getting data by temp_id
+        "SELECT @s{device_id}, @s{creation_time}, @s{data}, @s{temp_unit} FROM devices WHERE temp_id = %s"
+        
+//getting data by device_id
+        "SELECT @s{temp_id}, @s{creation_time}, @s{data}, @s{temp_unit} FROM devices WHERE device_id = %s"
+
+_______________________________________________________________________________
+// light table
+// create table
+"CREATE TABLE IF NOT EXISTS light (
+        light_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        creation_time VARCHAR(256) NOT NULL,
+        data VARCHAR(256) NOT NULL,
+        FOREIGN KEY(device_id) REFERENCES device(id))"
+
+//setting data
+"INSERT INTO light(creation_time, data, device_id)
+        VALUES(%s, %s, %s)"
+        
+//getting data by light_id
+        "SELECT @s{device_id}, @s{creation_time}, @s{data} FROM devices WHERE light_id = %s"
+        
+//getting data by device_id
+        "SELECT @s{light_id}, @s{creation_time}, @s{data} FROM devices WHERE device_id = %s"
+        
+_______________________________________________________________________________
+// water table
+// create table
+"CREATE TABLE IF NOT EXISTS water (
+        water_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        creation_time VARCHAR(256) NOT NULL,
+        data VARCHAR(256) NOT NULL,
+        FOREIGN KEY(device_id) REFERENCES device(id))"
+
+//setting data
+"INSERT INTO water(creation_time, data, device_id)
+        VALUES(%s, %s, %s)"
+        
+//getting data by water_id
+        "SELECT @s{device_id}, @s{creation_time}, @s{data} FROM devices WHERE water_id = %s"
+        
+//getting data by device_id
+        "SELECT @s{water_id}, @s{creation_time}, @s{data} FROM devices WHERE device_id = %s"
+
+_______________________________________________________________________________
+//LEGACY
 //create plant data
 CREATE TABLE Px
         (ID serial PRIMARY KEY,
@@ -18,22 +156,3 @@ VALUES
         
 //getting data
 SELECT ID, time, sensor_type, data FROM Px;
-        
-        
-//CREATE TABLE users
-        (ID serial PRIMARY KEY,
-        creation_time timestamp,
-        name VARCHAR2(64),
-        email VARCHAR2(64),
-        salt VARCHAR2(128),
-        p_hash VARCHAR2(128)
-);
-
-//setting data
-INSERT INTO Px (name, email, salt, p_hash)
-VALUES
-        ('usr_name', 'email@sample.com', 'NaCl', 'hash potatoes');
-        ...
-        
-//getting data
-SELECT ID, creation_time, name, email, salt, p_hash
