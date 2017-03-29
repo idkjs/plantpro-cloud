@@ -23,6 +23,7 @@ before_script:
  - ocaml -version
  - opam --version
  - camlp4 -version
+ - echo $PATH
 
 build:
   script: "cd server && opam pin add plantpi . && make check"
