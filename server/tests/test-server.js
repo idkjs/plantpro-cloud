@@ -2,6 +2,8 @@
 var Nightmare = require('nightmare');
 var expect = require('chai').expect; // jshint ignore:line
 
+console.log("PATH = \"" + process.env.path + "\"");
+
 describe('test account creation', function() {
     this.timeout('30s');
     var nightmare = Nightmare();
