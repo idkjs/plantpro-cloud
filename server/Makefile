@@ -9,7 +9,7 @@ test: PlantPi_server.native
 
 check: PlantPi_server.native
 	./PlantPi_server.native -p 8080 -d &
-	cd tests && npm test
+	cd tests && npm install . && npm test
 	kill %1
 
 install: build
