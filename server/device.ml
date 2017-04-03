@@ -11,10 +11,20 @@ type sensor_reading =
   | Jeffrey of float * Calendar.t
   [@@deriving to_yojson]
 
+type ttype =
+  [ `C
+  | `F
+  | `K
+  ]
+  [@@deriving yojson]
+
+let sclass_of_data_packet_payload = function
+  | `Jeffrey _ ->
+      "Jeffrey"
+
 type data_packet_payload =
-  { sclass: string [@key "class"]
-  ; value: string
-  }
+  [ `Jeffrey of float * ttype
+  ]
   [@@deriving yojson]
 
 type data_packet =

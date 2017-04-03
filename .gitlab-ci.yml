@@ -1,6 +1,16 @@
 before_script:
+ - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
  - apk update
- - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash
+ - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash nodejs-npm@edge
+ - npm install --save -g nightmare
+ - npm install --save nightmare
+ - npm install -g nightmare
+ - npm install --save -g mocha
+ - npm install --save mocha
+ - npm install -g mocha
+ - npm install --save -g chai
+ - npm install --save chai
+ - npm install -g chai
  - export OPAMYES=true
  - comp=${1:-system}
  - opam init --comp="${comp}"
@@ -13,6 +23,7 @@ before_script:
  - ocaml -version
  - opam --version
  - camlp4 -version
+ - echo $PATH
 
 build:
   script: "cd server && opam pin add plantpi ."
