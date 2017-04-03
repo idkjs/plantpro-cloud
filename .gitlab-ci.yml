@@ -26,4 +26,4 @@ before_script:
  - echo $PATH
 
 build:
-  script: "cd server && opam pin add plantpi . && make check"
+  script: "cd server && opam pin add plantpi ."
