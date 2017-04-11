@@ -32,6 +32,9 @@
 	  				$('[data-toggle=offcanvas]').click(function() {
 	    				$('.row-offcanvas').toggleClass('active');
   					});
+					var username = hex2a(getCookie("username"));
+					uname.value=username;
+					
 			});
                         
                        		function doWork() {
@@ -52,6 +55,7 @@
 		                              };
 		                              
 	        			var username = hex2a(getCookie("username"));
+						
 		        		var xhr = new XMLHttpRequest();
                                 		console.log(hex2a(getCookie("username")));
                                 		xhr.open("get", "/get-devices/" + username);
@@ -131,7 +135,7 @@
 										
 										<div id="show_create_group" style="display: none;">
 											<form action="/create-group" method="post">
-												<input type="hidden" value=username name="user" />
+												<input type="hidden" value=username name="user" id="uname" />
 												<input type="text" class="form-control" id="PlantName" name="groupName" placeholder="new group name" />
 												<button id="savebutton" type="submit" class="btn btn-primary" onclick="addGroup()">Create Group</button>
 											</form>
