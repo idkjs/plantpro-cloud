@@ -14,11 +14,12 @@
 		<link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
 		
 		<script>
-                        function getCookie(name) {
-                                var value = "; " + document.cookie;
-                                var parts = value.split("; " + name + "=");
-                                if (parts.length == 2) return parts.pop().split(";").shift();
-                        }
+	               	function getCookie(name) {
+		                              var value = "; " + document.cookie;
+		                              var parts = value.split("; " + name + "=");
+		                              if (parts.length == 2) 
+		                              	return parts.pop().split(";").shift();
+	                       	 }
     			
     			function hex2a(hexx) {
  				var hex = hexx.toString();
@@ -27,40 +28,45 @@
 					str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
     				return str;
 			}
+			$(document).ready(function() {
+	  				$('[data-toggle=offcanvas]').click(function() {
+	    				$('.row-offcanvas').toggleClass('active');
+  					});
+			});
                         
-                        function doWork() {
-        			var username = hex2a(getCookie("username"));
-	        		var xhr = new XMLHttpRequest();
-                                console.log(hex2a(getCookie("username")));
-                                xhr.open("get", "/get-devices/" + username);
-                                xhr.addEventListener("load", function() {
-                                        var plantname = JSON.parse(this.response)[0].name;
-                                        var EasterEgg = document.getElementById("Easter");
-                                        var Leaf = document.getElementById("Leaf");
-                                        var xicon = document.getElementsByClassName("close")[0];
-                
-                                        Leaf.onclick = function(){ //When leaf is clicked on
-                                                EasterEgg.style.display="block";
-                                         };
-                                        xicon.onclick = function() { //when "X" icon is clicked on
-                                                EasterEgg.style.display = "none";
-                                        };
-                                        window.onclick = function(event) { //Close window if user clicks outside the box
-                                                if (event.target == EasterEgg) {
-                                                        EasterEgg.style.display = "none";
-                                                }
-                                        };
-                                        //This is just to give the site some more personality
-                                        fuckingBelgians.innerHTML += plantname;
+                       		function doWork() {
+                       			var EasterEgg = document.getElementById("Easter");
+		                              var Leaf = document.getElementById("Leaf");
+		                              var xicon = document.getElementsByClassName("close")[0];
+		                
+		                              Leaf.onclick = function(){ //When leaf is clicked on
+		                               	EasterEgg.style.display="block";
+		                              };
+		                              xicon.onclick = function() { //when "X" icon is clicked on
+		                              	EasterEgg.style.display = "none";
+		                              };
+		                              window.onclick = function(event) { //Close window if user clicks outside the box
+		                                             if (event.target == EasterEgg) {
+		                                             	EasterEgg.style.display = "none";
+		                                             }
+		                              };
+		                              
+	        			var username = hex2a(getCookie("username"));
+		        		var xhr = new XMLHttpRequest();
+                                		console.log(hex2a(getCookie("username")));
+                                		xhr.open("get", "/get-devices/" + username);
+                                		xhr.addEventListener("load", function() {
+                                       		var plantname = JSON.parse(this.response)[0].name;
+                                        
+	                                       	 //This is just to give the site some more personality
+	                                        	pname.innerHTML += plantname;
                                 });
-			        xhr.send();
+			xhr.send();
                         }
-		</script>
-
+                        </script>
 	</head>
 	<body onload="doWork();">
-		
-		<!--Begin NavBar-->
+		<!--.....................................................................................................Begin NavBar............................................................................-->
 		<nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
 			<div class="container-fluid">
 	    			<div class="navbar-header">
@@ -78,7 +84,6 @@
 					               <li> <a href="settings.html"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 					               <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a></li>
 					               <li><a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a></li>
-
 					         	<div id="Easter" class="EasterEgg">
 							<div class="EasterEgg-content">
 						    		<span class="close">&times;</span>
@@ -89,82 +94,119 @@
 				 </div>
 			</div>
 		</nav>
-		<script> //because i was bored EASTEREGG
-		</script>
-		<!--End NavBar-->
-
-		<br/><br/><br/><br/>
-
-		<div class="container">
-			<script>
-			</script>
-			<hr/>
-			<h1> Let's see how <strong id = "fuckingBelgians"></strong> is doing:</h1>
-			<div id="panel" style="border-style: double; border-width: 2px; border-color: #ccc">
-				<div class="innerpanel">
-					<h2>Statistics</h2>
-					<div class="panel_status">
-						<script> //Status snippet
-							var txt;
-							var stat = "Status: ";
-							var lvl1att = 0, lvl2att = 0, lvl3att = 0;  //These are the flags
-							var code = 0; //by default
-
-							var celcius = 30; 
-							var moisture = false;
-
-							//Temp = Celcius, Moisture=T or F, uhh what was light?
-
-
-							//Check for Temperature
-							
-							//we just need to have a way to figure out what will trigger lvl attention to 1
-							//Like the temperature is too high, set off the flag, the moisture is too low,
-							//set off the flag, light levels are low (for a duration), set off the flag.
-							//This is highly dependant on what type of units we are gonna use though.
-							
-							//-------------------Determination of attention will go here------------------
-
-							//Temp check
-							var faren = (celcius * (9/5) + 32);
-							if(faren > 110 || faren < 32){
-								lvl1att = 1;
-							}
-
-							//Moisture check
-							if(!moisture){
-								lvl2att = 1;
-							}
-
-							//if 0, no attention needed, if 1, attention is needed
-							//lvl1 is temperature, lvl2 is moisture, and lvl3 is light level
-							
-							//what determines the status display is the sum of all level attention
-							var code = lvl1att + lvl2att + lvl3att;
-
-							document.write("<p><strong>" + stat.fontsize(5)  + "</strong> ");
-
-							if(code == 0){
-								txt  = "It's All Good :)";
-								document.write(txt.fontcolor("#009b09").fontsize(4));
-							}
-							else if (code == 1 || code == 2){
-								txt = "Needs Some Attention!";
-								document.write(txt.fontcolor("#b8bf00").fontsize(4));
-							}
-							else if (code == 3){
-								txt = "DANGER!";
-								document.write(txt.fontcolor("#cc0000").fontsize(4));
-							}							
-						</script>
-						<br/>
-						<div class="attention">
-							<script> //Attention needed snippet
-								var lvl1 = "Temperature", lvl2 = "Moisture", lvl3 = "Light";
-								if(code > 0){
-									document.write("<p>Attention needed at: ");
-									if(lvl1att){
-										document.write(lvl1 + ", ");
+		<!--..................................................................................................End NavBar...................................................................................-->
+		<br/><br/>
+		<!--........................................................................................Begin sidebar and stage.....................................................................-->
+		<div class="row-offcanvas row-offcanvas-left">
+			<div id="sidebar" class="sidebar-offcanvas">
+				<br/> <br/>
+			      	<div class="col-xs-12"> 
+			        		<h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"></span></a></h3><br/>
+			        		<ul class="nav nav-pills nav-stacked">
+						<ul class="nav">
+							<li><h4>Groups:</h4></li>
+							<li class="dropdown" id="groupsList">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Backyard <span class="caret"></span></a>
+							               <ul class="dropdown-menu forAnimate" role="menu">
+							                    	<li><a href="#"><span class="glyphicon glyphicon-leaf"></span>  Jeffery <i style="margin-right: 0.5em; color: #EEEEEE;" class="glyphicon glyphicon-leaf"></a></i></li>
+							                   	 <li><a href="#"><span class="glyphicon glyphicon-leaf"></span> Maple</a></li>
+							                    	<li><a href="#"><span class="glyphicon glyphicon-leaf"></span> Ivy</a></li>
+							                    	<br/>
+							                  </ul>               
+						                </li>
+						                <li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret"></span></a>
+							               <ul class="dropdown-menu" role="menu">
+							                    	<li><a href="#">Cara </a></li>
+							                   	 <li><a href="#">Raspy</a></li>
+							                    	<li><a href="#">Bob</a></li>
+							                    	<br/>
+							                  </ul>               
+						                </li>
+						                <br/>
+						                <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
+										<li style="font-size: 20px; float: left;"><a onclick="showCreateGroup()">+</a></li>
+										<br/>
+										<br/>
+										
+										<div id="show_create_group" style="display: none;">
+											<form action="/create-group" method="post">
+												<input type="hidden" value=username name="user" />
+												<input type="text" class="form-control" id="PlantName" name="groupName" placeholder="new group name" />
+												<button id="savebutton" type="submit" class="btn btn-primary" onclick="addGroup()">Create Group</button>
+											</form>
+										</div>
+										<script>
+											function showCreateGroup() {
+												var hidden = document.getElementById('show_create_group');
+												if (hidden.style.display === 'block') {
+													hidden.style.display = 'none';
+												} else {
+													hidden.style.display = 'block';
+												}
+											};
+										</script>
+										<script>
+											function addGroup() {
+												
+											};
+										</script>
+										
+											
+						</ul>
+						<hr/>
+						<ul class="nav" style="font-size: 15px;">	
+							<li><h4>All:</h4></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-leaf"></span> Plant A</a>
+								<ul class="dropdown-menu forAnimate" role="menu">
+									<li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings1</a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings2</a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings3</a></li>
+									<br/>
+								</ul>    
+							</li>
+						
+						</ul>
+						
+						
+					</ul>
+				</div>
+			</div>	
+			<!--...........................................................................Side bar ends here..........................................................................-->
+			<!--Begin Stage, To play friendly with the side bar, the "stage" must be within the same div-->
+			<div id="stage">
+				<div class="col-md-12">
+					<br/>
+					<!--Spawn button for sidebar collapse for better resizing compatability-->
+			      	 	<p class="visible-xs"> <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i></button> </p>
+			      	 	<!--HEADER PLANT NAME, controled by js script dowork()-->
+			          		<h1> Let's see how <strong id = "pname"></strong> is doing:</h1> <br/>
+					
+					<div id="panel" style="border-style: double; border-width: 2px; border-color: #ccc">
+						<div class="inner_panel">
+							<h2>Statistics</h2>
+							<div class="panel_status">
+								<script> //Status snippet
+									var txt;
+									var stat = "Status: ";
+									var lvl1att = 0, lvl2att = 0, lvl3att = 0;  //These are the flags
+									var code = 0; //by default
+									var celcius = 30; 
+									var moisture = false;
+									//Temp = Celcius, Moisture=T or F, uhh what was light?
+									//Check for Temperature
+										
+									//we just need to have a way to figure out what will trigger lvl attention to 1
+									//Like the temperature is too high, set off the flag, the moisture is too low,
+									//set off the flag, light levels are low (for a duration), set off the flag.
+									//This is highly dependant on what type of units we are gonna use though.
+										
+									//-------------------Determination of attention will go here------------------
+									//Temp check
+									var faren = (celcius * (9/5) + 32);
+									if(faren > 110 || faren < 32){
+										lvl1att = 1;
 									}
 									//Moisture check
 									if(!moisture){
