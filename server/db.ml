@@ -149,11 +149,10 @@ let get_groups user =
     | Some user_id ->
         S.select_f
           db
-          (fun groups ->
-            Lwt.return (
-              List.map
-                (fun (id, name, owner_id) ->
-                  Group.({name = name; id = id; owner_id = owner_id}))))
+          (fun (id, name, owner_id) ->
+            Lwt.return
+              Group.(
+                {name = name; id = id; owner_id = owner_id}))
           [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} FROM groups WHERE owner_id = %d"]
           user_id
 

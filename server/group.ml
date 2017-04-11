@@ -3,3 +3,4 @@ type t =
   ; name : string
   ; owner_id : int
   }
+[@@deriving yojson]

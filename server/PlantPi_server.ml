@@ -77,20 +77,13 @@ let service_create_group = post "/create-group" (fun req ->
       (fun (name, _) -> name = "groupName")
       params
   in
-  match%lwt Db.get_user username with
-    | Some _ ->
-        respond'
-          ~headers:(Cohttp.Header.init_with "Location" "/static/index.html#failed")
-          ~code:(`Moved_permanently)
-          (`String ("Error: Creating group"))
-    | None ->
-        let%lwt user = Db.get_user username in
-        let%lwt res = Db.add_group group_name username in
-        respond'
-          (`String
-            (Printf.sprintf
-              "created group with ID %d"
-              (Int64.to_int res))))
+  let%lwt user = Db.get_user username in
+  let%lwt res = Db.add_group group_name username in
+  respond'
+    (`String
+      (Printf.sprintf
+        "created group with ID %d"
+        (Int64.to_int res))))
 
 let service_login = post "/login" (fun req ->
   Cohttp_lwt_body.to_string
@@ -153,6 +146,15 @@ let service_get_user_devices = get "/get-devices/:username" (fun req ->
     [%to_yojson: Device.t list] devices
   in
   `Json devices
+  |> respond')
+
+let service_get_user_groups = get "/get-groups/:username" (fun req ->
+  let username = param req "username" in
+  let%lwt groups = Db.get_groups username in
+  let groups =
+    [%to_yojson: Group.t list] groups
+  in
+  `Json groups
   |> respond')
 
 let try_unoption = function
@@ -298,6 +300,7 @@ let _ =
   |> service_push_data
   |> service_associate_device
   |> service_get_user_devices
+  |> service_get_user_groups
   |> service_get_device_data
   |> middleware static
   |> App.run_command
