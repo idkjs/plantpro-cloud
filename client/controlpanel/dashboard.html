@@ -14,6 +14,7 @@
 		<link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
 		
 		<script>
+			var username;
 	               	function getCookie(name) {
 		                              var value = "; " + document.cookie;
 		                              var parts = value.split("; " + name + "=");
@@ -32,44 +33,60 @@
 	  				$('[data-toggle=offcanvas]').click(function() {
 	    				$('.row-offcanvas').toggleClass('active');
   					});
-					var username = hex2a(getCookie("username"));
+					username = hex2a(getCookie("username"));
 					uname.value=username;
 					
 			});
                         
-                       		function doWork() {
-                       			var EasterEgg = document.getElementById("Easter");
-		                              var Leaf = document.getElementById("Leaf");
-		                              var xicon = document.getElementsByClassName("close")[0];
-		                
-		                              Leaf.onclick = function(){ //When leaf is clicked on
-		                               	EasterEgg.style.display="block";
-		                              };
-		                              xicon.onclick = function() { //when "X" icon is clicked on
-		                              	EasterEgg.style.display = "none";
-		                              };
-		                              window.onclick = function(event) { //Close window if user clicks outside the box
-		                                             if (event.target == EasterEgg) {
-		                                             	EasterEgg.style.display = "none";
-		                                             }
-		                              };
+						function doWork() {
+							var EasterEgg = document.getElementById("Easter");
+								  var Leaf = document.getElementById("Leaf");
+								  var xicon = document.getElementsByClassName("close")[0];
+					
+								  Leaf.onclick = function(){ //When leaf is clicked on
+									EasterEgg.style.display="block";
+								  };
+								  xicon.onclick = function() { //when "X" icon is clicked on
+									EasterEgg.style.display = "none";
+								  };
+								  window.onclick = function(event) { //Close window if user clicks outside the box
+												 if (event.target == EasterEgg) {
+													EasterEgg.style.display = "none";
+												 }
+								  };
 		                              
-	        			var username = hex2a(getCookie("username"));
+	        			
 						
 		        		var xhr = new XMLHttpRequest();
-                                		console.log(hex2a(getCookie("username")));
-                                		xhr.open("get", "/get-devices/" + username);
-                                		xhr.addEventListener("load", function() {
-                                       		var plantname = JSON.parse(this.response)[0].name;
-                                        
-	                                       	 //This is just to give the site some more personality
-	                                        	pname.innerHTML += plantname;
-                                });
+						console.log(hex2a(getCookie("username")));
+						xhr.open("get", "/get-devices/" + username);
+						xhr.addEventListener("load", function() {
+							var plantname = JSON.parse(this.response)[0].name;		
+							//This is just to give the site some more personality
+							pname.innerHTML += plantname;
+						});
 			xhr.send();
                         }
-                        </script>
+		</script>
+		<script>
+			function loadGroups() {
+				var xhr = new XMLHttpRequest();
+				xhr.open("/get-groups/" + username);
+				xhr.send();
+				xhr.addEventListener("load", printout);
+			}
+			function printout () {
+				var groups = JSON.parse(this.responseText);
+				groupsList.innerHTML = "";
+				for (var group in groups) {
+					groupsList.innerHTML += '<li class="dropdown">\n<a href="#" class="dropdown-toggle" data-toggle="dropdown">' + group.name + '<span class="caret"></span></a></li>';
+				}
+			}
+
+		</script>
+						
 	</head>
-	<body onload="doWork();">
+	<body onload="doWork(); loadGroups();">
 		<!--.....................................................................................................Begin NavBar............................................................................-->
 		<nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
 			<div class="container-fluid">
@@ -118,15 +135,15 @@
 							                    	<br/>
 							                  </ul>               
 						                </li>
-						                <li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret"></span></a>
-							               <ul class="dropdown-menu" role="menu">
-							                    	<li><a href="#">Cara </a></li>
-							                   	 <li><a href="#">Raspy</a></li>
-							                    	<li><a href="#">Bob</a></li>
-							                    	<br/>
-							                  </ul>               
-						                </li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret"></span></a>
+								    <ul class="dropdown-menu" role="menu">
+										<li><a href="#">Cara </a></li>
+										<li><a href="#">Raspy</a></li>
+										<li><a href="#">Bob</a></li>
+										<br/>
+									</ul>               
+								</li>
 						                <br/>
 						                <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
 										<li style="font-size: 20px; float: left;"><a onclick="showCreateGroup()">+</a></li>
