@@ -136,6 +136,28 @@
 						                </li>
 						                <br/>
 						                <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
+										<li style="font-size: 20px; float: left;"><a onclick="showCreateGroup()">+</a></li>
+										<br/>
+										<br/>
+										
+										<div id="show_create_group" style="display: none;">
+											<form action="" method="post">
+												<input type="text" class="form-control" id="PlantName" name="create_group" placeholder="new group name" />
+												<button id="savebutton" type="submit" class="btn btn-primary" onclick="confirm_mes()">Create Group</button>
+											</form>
+										</div>
+										<script>
+											function showCreateGroup() {
+												var hidden = document.getElementById('show_create_group');
+												if (hidden.style.display === 'block') {
+													hidden.style.display = 'none';
+												} else {
+													hidden.style.display = 'block';
+												}
+											};
+										</script>
+										
+											
 						</ul>
 						<hr/>
 						<ul class="nav" style="font-size: 15px;">	
