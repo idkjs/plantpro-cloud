@@ -17,7 +17,7 @@ var username = hex2a(getCookie("username"));
 function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
-    if (parts.length == 2)
+    if (parts.length == 2) 
         return parts.pop().split(";").shift();
 }
 
@@ -56,9 +56,9 @@ function doWork() {
 
     var xhr = new XMLHttpRequest();
     console.log(hex2a(getCookie("username")));
-    xhr.open("get", "/get-devices/" + username + "/all");
+    xhr.open("get", "/get-devices/" + username);
     xhr.addEventListener("load", function() {
-        var plantname = JSON.parse(this.response)[0].name;
+        var plantname = JSON.parse(this.response)[0].name;      
         //This is just to give the site some more personality
         pname.innerHTML += plantname;
     });
@@ -181,6 +181,9 @@ $('.dropdown.keep-open').on({
                     <p class="visible-xs"> <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left">&nbsp;</i></button> </p>
                     <!--HEADER PLANT NAME, controled by js script dowork()-->
                     <h1> Let's see how <strong id = "pname"></strong> is doing:</h1> <br/>
+                        <p class="visible-xs"> <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i></button> </p>
+                        <!--HEADER PLANT NAME, controled by js script dowork()-->
+                            <h1> Let's see how <strong id = "pname"></strong> is doing:</h1> <br/>
 
                     <div id="panel" style="border-style: double; border-width: 2px; border-color: #ccc">
                         <div class="inner_panel">
@@ -191,7 +194,7 @@ var txt;
 var stat = "Status: ";
 var lvl1att = 0, lvl2att = 0, lvl3att = 0;  //These are the flags
 var code = 0; //by default
-var celcius = 30;
+var celcius = 30; 
 var moisture = false;
 //Temp = Celcius, Moisture=T or F, uhh what was light?
 //Check for Temperature
@@ -216,7 +219,7 @@ if(!moisture){
 
 //what determines the status display is the sum of all level attention
 var code = lvl1att + lvl2att + lvl3att;
-document.write(stat.fontsize(5));
+document.write("<p><strong>" + stat.fontsize(5)  + "</strong> ");
 if(code == 0){
     txt  = "It's All Good :)";
     document.write(txt.fontcolor("#009b09").fontsize(4));
@@ -252,6 +255,26 @@ if(code > 0){
 else{ //if nothing needs attention, then is "all good" :)
     document.write("Your plant is doing well :)");
 }
+                                        var lvl1 = "Temperature", lvl2 = "Moisture", lvl3 = "Light";
+                                        if(code > 0){
+                                            document.write("<p>Attention needed at: ");
+                                            if(lvl1att){
+                                                document.write(lvl1 + ", ");
+                                            }
+                                            if (lvl2att) {
+                                                document.write(lvl2 + ", ");
+                                            }
+                                            if(lvl3att){
+                                                document.write(lvl3 + " ");
+                                            }
+                                            if(code == 3){
+                                                document.write(" <br/>Take some time to save a life.");
+                                            }
+                                            document.write("</p>");
+                                        }
+                                        else{ //if nothing needs attention, then is "all good" :)
+                                            document.write("<p>Your plant is doing well :)</p>");
+                                        }
                                     </script>
                                 </div>
                                 <br/>
