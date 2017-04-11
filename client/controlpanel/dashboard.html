@@ -71,7 +71,7 @@
 		<script>
 			function loadGroups() {
 				var xhr = new XMLHttpRequest();
-				xhr.open("/get-groups/" + username);
+				xhr.open("GET" ,"/get-groups/" + username);
 				xhr.send();
 				xhr.addEventListener("load", printout);
 			}
