@@ -62,6 +62,36 @@ let service_create_account = post "/create-account" (fun req ->
                 (Int64.to_int res)))
   end)
 
+let service_create_group = post "/create-group" (fun req ->
+  Cohttp_lwt_body.to_string
+    req.Opium_rock.Request.body
+  >>= fun body ->
+  let params = Fuck_stdlib.get_post_params body in
+  let _, username =
+    List.find
+      (fun (name, _) -> name = "user")
+      params
+  in
+  let _, group_name =
+    List.find
+      (fun (name, _) -> name = "groupName")
+      params
+  in
+  match%lwt Db.get_user username with
+    | Some _ ->
+        respond'
+          ~headers:(Cohttp.Header.init_with "Location" "/static/index.html#failed")
+          ~code:(`Moved_permanently)
+          (`String ("Error: Creating group"))
+    | None ->
+        let%lwt user = Db.get_user username in
+        let%lwt res = Db.add_group group_name username in
+        respond'
+          (`String
+            (Printf.sprintf
+              "created group with ID %d"
+              (Int64.to_int res))))
+
 let service_login = post "/login" (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
@@ -263,6 +293,7 @@ let _ =
   in
   App.empty
   |> service_create_account
+  |> service_create_group
   |> service_login
   |> service_push_data
   |> service_associate_device
