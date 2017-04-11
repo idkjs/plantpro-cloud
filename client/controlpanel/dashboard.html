@@ -69,12 +69,6 @@
                         }
 		</script>
 		<script>
-			function loadGroups() {
-				var xhr = new XMLHttpRequest();
-				xhr.open("GET" ,"/get-groups/" + username);
-				xhr.send();
-				xhr.addEventListener("load", printout);
-			}
 			function printout () {
 				var groups = JSON.parse(this.responseText);
 				groupsList.innerHTML = "";
@@ -82,6 +76,13 @@
 					groupsList.innerHTML += '<li class="dropdown">\n<a href="#" class="dropdown-toggle" data-toggle="dropdown">' + group.name + '<span class="caret"></span></a></li>';
 				}
 			}
+			function loadGroups() {
+				var xhr = new XMLHttpRequest();
+				xhr.addEventListener("load", printout);
+				xhr.open("GET", "/get-groups/" + username);
+				xhr.send();
+			}
+			
 
 		</script>
 						
