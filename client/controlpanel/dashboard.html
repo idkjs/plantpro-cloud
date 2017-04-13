@@ -33,8 +33,7 @@ $(document).ready(function() {
     $('[data-toggle=offcanvas]').click(function() {
         $('.row-offcanvas').toggleClass('active');
     });
-    username = hex2a(getCookie("username"));
-    uname.value=username;
+
 
 });
 
@@ -83,7 +82,10 @@ function doWork() {
                 <!--Allow for better compatability when resizing-->
                 <div class="collapse navbar-collapse" id="TheNavBar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a><span class="glyphicon glyphicon-user"></span> TheLegend27</a></li>
+                <script>
+document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + username + "</a></li>");
+                </script>
+                        <!--<li><a><span class="glyphicon glyphicon-user"></span> TheLegend27</a></li>-->
                         <li> <a href="settings.html"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                         <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a></li>
                         <li><a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a></li>
@@ -107,8 +109,19 @@ function doWork() {
                 <div class="col-xs-12"> 
                     <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"></span></a></h3><br/>
                     <ul class="nav nav-pills nav-stacked">
+                        <h4>Groups:</h4>
                         <ul class="nav" id="groupsList">
-                            <li><h4>Groups:</h4></li>
+                            <li class="dropdown keep-open">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret"></span>
+
+                                                <ul class="dropdown-menu keep-open" role="menu">
+                                                <li><a href="#">Cara </a></li>
+                                                 <li><a href="#">Raspy</a></li>
+                                                <li><a href="#">Bob</a></li>
+                                                <br/>
+                                              </ul>
+
+                                </li>
                             <div id="groupsListContainer"></div>
                             <br/>
                             <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
@@ -136,16 +149,22 @@ function showCreateGroup() {
 function addGroup() {
 
 };
+
+$('.dropdown.keep-open').on({
+    "shown.bs.dropdown": function() { this.closable = false; },
+    "click":             function() { this.closable = true; },
+    "hide.bs.dropdown":  function() { return this.closable; }
+});
                             </script>
                         </ul>
                         <hr/>
+                        <h4>All:</h4>
                         <ul class="nav" style="font-size: 15px;">   
-                            <li><h4>All:</h4></li>
-                            <li><a href="">Plant A
-                                    <button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:3px;"></button></a></li>
+                            <li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
+                                </button><a href="broken.html"> Jeffery the giant plant who gives oxygen </a>
+                            </li>
 
-                            <li><a href="" class="dropdown-toggle" >Plant B
-                                    <button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:3px;"></button></a></li>
+                            <li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li>
                             <br />
                             <br />
                         </ul>
@@ -274,7 +293,7 @@ else{
                         </div>
                     </div>
                 </div>
-                <div id="version" style="position: bottom-right;">v3.0.1: semi-functional</div>
+                
             </div><!-- End stage and sidebar-->
         </div>
         <script src="dist/bundle.js"></script>
