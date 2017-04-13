@@ -40,6 +40,51 @@ class GroupsListing extends React.Component {
   }
 }
 
+
+class PlantListing extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log(props);
+        this.state = {
+            plants: [],
+            props: props,
+        };
+    }
+    
+    componentDidMount() {
+        var url = `/get-devices/${this.state.props.username}`;
+        console.log(this.state);
+        console.log(url);
+        axios.get(url)
+            .then(res => {
+                var plants = res.data;
+                console.log(plants);
+                this.setState({plants: plants});});
+    }
+
+    render() {
+        return (
+            { 
+                this.state.plants.map((plant) => {
+                    return (
+                        <li key={plant.name}>
+                        <a href="">
+                        <button key={plant.name} onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:trans parent;padding-top:3px;">
+                        </button>
+                        </a>
+                        </li>
+                    );
+                })
+            }
+
+        );
+    }
+}
+
 ReactDOM.render(
   <GroupsListing username={username} />,
   document.getElementById('groupsListContainer'));
+
+ReactDOM.render(
+  <PlantListing username={username} />,
+  document.getElementByID('plantListContainer'));
