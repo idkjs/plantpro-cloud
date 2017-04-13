@@ -143,7 +143,7 @@ let service_get_user_devices = get "/get-devices/:username/:group" (fun req ->
   let username = param req "username" in
   let%lwt devices = Db.get_devices username in
   let%lwt devices =
-    match param req "group" with
+    match param req "group" |> Netencoding.Url.decode with
       | "all" ->
           Lwt.return devices
       | "ungrouped" ->
