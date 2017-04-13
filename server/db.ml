@@ -54,7 +54,8 @@ let _ =
           id INTEGER PRIMARY KEY AUTOINCREMENT, \
           name TEXT NOT NULL, \
           owner_id INTEGER NOT NULL, \
-          FOREIGN KEY(owner_id) REFERENCES users(id))"];
+          FOREIGN KEY(owner_id) REFERENCES users(id), \
+          UNIQUE(owner_id, name));"];
   in
   Lwt_main.run(
     make_users ()
