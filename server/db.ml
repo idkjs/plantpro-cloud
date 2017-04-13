@@ -83,32 +83,26 @@ let get_user uname =
     let creation_time =
       CalendarLib.Printer.Calendar.from_string creation_time'
     in
-    User.{
-        creation_time
-      ; name
-      ; email
-      ; salt
-      ; p_hash
-      }
+    Some (
+      User.{
+          creation_time
+        ; name
+        ; email
+        ; salt
+        ; p_hash
+        })
   with
     | Not_found ->
-        raise (Failure "Couldn't find a user with the username")
+        Lwt.return None
 
 let get_user_id uname =
-  let%lwt id =
-    S.select_one_maybe
-      db
-      [%sqlc
-        "SELECT \
-            @d{id} \
-          FROM users WHERE name = %s"]
-      uname
-  in
-  match id with
-    | Some id ->
-        Lwt.return id
-    | None ->
-        raise (Not_found)
+  S.select_one_maybe
+    db
+    [%sqlc
+      "SELECT \
+          @d{id} \
+        FROM users WHERE name = %s"]
+    uname
 
 let add_user user =
   let open User in
@@ -135,28 +129,25 @@ let add_data time device_id sensor_type value =
     sensor_type
     value
 
-let get_group_by_name name user =
-  let%lwt user_id =
-    get_user_id user.User.name
-  in
+(*let get_group_by_name name user =
   let%lwt res =
     S.select_f
       db
       (fun (id, name, owner_id) ->
         Lwt.return
           Group.({name = name; id = id; owner_id = owner_id}))
-      [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} \
+      [%sqlc "SELECT (id, name, owner_id) \
               FROM groups \
               WHERE (name = %s \
               AND owner_id = %d)"]
       name
-      user_id
+      user.User.id
   in
   match res with
     | [el] ->
         Lwt.return el
     | _ ->
-        raise (Failure ("ERROR: user " ^ user.User.name ^ " has more than one group named " ^ name))
+        raise (Failure "ERROR: the given user has more than one group")*)
 
 let get_group_by_id id =
   let%lwt res =
@@ -175,105 +166,65 @@ let get_group_by_id id =
     | _ ->
         raise (Failure "something has gone catastrophically wrong")
 
-let rename_group id new_name =
-  let%lwt group = get_group_by_id id in
-  match group with
-    | group ->
-        S.insert
-          db
-          [%sqlc "UPDATE groups SET name = %s WHERE id = %d"]
-          new_name
-          id
-    | exception e ->
-        raise Not_found
-
 let get_groups user =
   let%lwt user_id = get_user_id user in
-      S.select_f
-        db
-        (fun (id, name, owner_id) ->
-          Lwt.return
-            Group.(
-              {name = name; id = id; owner_id = owner_id}))
-        [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} FROM groups WHERE owner_id = %d"]
-        user_id
+  match user_id with
+    | None ->
+        raise (Failure "Trying to get groups from a nonexistant user")
+    | Some user_id ->
+        S.select_f
+          db
+          (fun (id, name, owner_id) ->
+            Lwt.return
+              Group.(
+                {name = name; id = id; owner_id = owner_id}))
+          [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} FROM groups WHERE owner_id = %d"]
+          user_id
 
 let add_group name user =
   let%lwt user_id = get_user_id user in
-  S.insert
-    db
-    [%sqlc "INSERT INTO groups(name, owner_id) \
-            VALUES(%s, %d)"]
-    name
-    user_id
-
-let add_device_to_group device group =
-  let device_id = device.Device.id in
-  match group with
-    | Some group ->
-        let group_id = group.Group.id in
-        S.insert
-          db
-          [%sqlc
-            "UPDATE devices
-              SET group_id = %d
-              WHERE device_id = %s"]
-          group_id
-          device_id
+  match user_id with
     | None ->
+        raise (Failure "Trying to create a group with a nonexistant user")
+    | Some user_id ->
         S.insert
           db
-          [%sqlc
-            "UPDATE devices
-              SET group_id = NULL
-              WHERE device_id = %s"]
-          device_id
-
-let get_devices_by_group group =
-  S.select_f
-    db
-    (fun (id, name, group_id) ->
-      let%lwt group =
-        match group_id with
-          | Some group_id ->
-              let%lwt x = get_group_by_id group_id in
-              Lwt.return (Some x)
-          | None ->
-              Lwt.return None
-      in
-      Lwt.return Device.{id; name; group})
-    [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE group_id = %d"]
-    group.Group.id
-
-let delete_group group =
-  S.execute
-    db
-    [%sqlc "DELETE FROM groups WHERE id = %d"]
-    group.Group.id
+          [%sqlc "INSERT INTO groups(name, owner_id) \
+                  VALUES(%s, %d)"]
+          name
+          user_id
 
 let associate_device user device name =
   let open User in
   let%lwt id = get_user_id user in
-  S.insert
-    db
-    [%sqlc "INSERT INTO devices(user_id, device_id, name) VALUES(%d, %s, %s)"]
-    id
-    device
-    name
+  match id with
+    | Some id ->
+        S.insert
+          db
+          [%sqlc "INSERT INTO devices(user_id, device_id, name) VALUES(%d, %s, %s)"]
+          id
+          device
+          name
+    | None ->
+        raise (Failure "trying to associate a device with a nonexistent user")
 
 let get_devices user : Device.t list Lwt.t =
   let%lwt id = get_user_id user in
-  S.select_f
-    db
-    (fun (id, name, group_id) ->
-      match group_id with
-        | Some group_id ->
-            let%lwt group = get_group_by_id group_id in
-            Lwt.return Device.{id = id; name = name; group = Some group}
-        | None ->
-            Lwt.return Device.{id = id; name = name; group = None})
-    [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE user_id = %d"]
-    id
+  match id with
+    | Some id ->
+        S.select_f
+          db
+          (fun (id, name, group_id) ->
+            match group_id with
+              | Some group_id ->
+                  let%lwt group = get_group_by_id group_id in
+                  Lwt.return Device.{id = id; name = name; group = Some group}
+              | None ->
+                  Lwt.return Device.{id = id; name = name; group = None})
+          [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE user_id = %d"]
+          id
+    | None ->
+        raise (Failure "trying to get devices for a nonexistent user")
 
 let get_device_by_name name =
   S.select_one_f_maybe
@@ -298,8 +249,8 @@ let get_data device =
     (fun (time, sensor_type, value) ->
       let time = CalendarLib.Printer.Calendar.from_string time in
       match sensor_type with
-        | "ChirpTemp" ->
-            Lwt.return (Device.(ChirpTemp (float_of_string value, (ttype_of_string sensor_type), time)))
+        | "temp" ->
+            Lwt.return (Device.Jeffrey (float_of_string value, time))
         | _ ->
             raise (Failure ("invalid sensor type found in database: \"" ^ sensor_type ^ "\"")))
     [%sqlc "SELECT @s{time}, @s{sensor_type}, @s{value} FROM px WHERE device_id = %s"]
