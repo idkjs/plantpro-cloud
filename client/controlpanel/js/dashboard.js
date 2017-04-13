@@ -6,7 +6,6 @@ import axios from 'axios';
 class PlantListing extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             plants: [],
             props: props,
@@ -14,46 +13,53 @@ class PlantListing extends React.Component {
     }
     
     componentDidMount() {
-        var url = `/get-devices/${this.state.props.username}/${this.state.props.groupname}`;
-        console.log(this.state);
-        console.log(url);
+        var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(this.state.props.groupname)}`;
         axios.get(url)
             .then(res => {
                 var plants = [];
-                for (var p in res.data) {
-                    if (p.group.name === this.state.props.groupname) 
+                var i;
+                for (i = 0; i < res.data.length; i++) {
+                    var p = res.data[i];
+                    if (
+                        (this.state.props.groupname === "all")
+                        || (this.state.props.groupname === "ungrouped" && p.group === null)
+                        || (p.group.name === this.state.props.groupname)) {
                         plants.push(p);
+                    }
                 }
                 console.log(plants);
-                this.setState({plants: plants});});
+                this.setState({plants: plants, props: this.state.props});});
     }
 
     render() {
+        console.log(this.state.plants.length);
+        var buttonStyle = {
+            border: 'none',
+            backgroundColor: 'transparent',
+            paddingTop: '3px'
+        };
         return (
+            <ul className="nav">
             {
                 this.state.plants.map((plant) => {
                     return (
-                        <li key={plant.name}>
-                            <a href=""><p>{plant.name}</p>
-                                <button key={plant.name} onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:trans parent;padding-top:3px;">
-                                </button>
-                            </a>
-                        </li>
+                      <li key={plant.name}>
+                        <a href="" className="dropdown-toggle">
+                          {plant.name}
+                          <button className="glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
+                        </a>
+                      </li>
                     );
                 })
             }
-
+            </ul>
         );
     }
 }
 
-
-
-
 class GroupsListing extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       groups: [],
       props: props
@@ -62,8 +68,7 @@ class GroupsListing extends React.Component {
 
   componentDidMount() {
     var url = `/get-groups/${this.state.props.username}`;
-    console.log(this.state);
-    console.log(url);
+    console.log("url: " + url);
     axios.get(url)
       .then(res => {
         var groups = res.data;
@@ -89,12 +94,10 @@ class GroupsListing extends React.Component {
   }
 }
 
-
-
 ReactDOM.render(
   <GroupsListing username={username} />,
   document.getElementById('groupsListContainer'));
 
 ReactDOM.render(
   <PlantListing username={username} groupname={'ungrouped'} />,
-  document.getElementByID('plantListContainer'));
+  document.getElementById('plantListContainer'));
