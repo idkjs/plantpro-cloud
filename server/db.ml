@@ -130,17 +130,41 @@ let add_data time device_id sensor_type value =
     value
 
 (*let get_group_by_name name user =
-  S.select_f
-    db
-    (fun (id, name, owner_id) ->
-      Lwt.return
-        Group.({name = name; id = id; owner_id = owner_id}))
-    [%sqlc "SELECT (id, name, owner_id) \
-            FROM groups \
-            WHERE (name = %s \
-            AND owner_id = %d)"]
-    name
-    user.User.id*)
+  let%lwt res =
+    S.select_f
+      db
+      (fun (id, name, owner_id) ->
+        Lwt.return
+          Group.({name = name; id = id; owner_id = owner_id}))
+      [%sqlc "SELECT (id, name, owner_id) \
+              FROM groups \
+              WHERE (name = %s \
+              AND owner_id = %d)"]
+      name
+      user.User.id
+  in
+  match res with
+    | [el] ->
+        Lwt.return el
+    | _ ->
+        raise (Failure "ERROR: the given user has more than one group")*)
+
+let get_group_by_id id =
+  let%lwt res =
+    S.select_f
+      db
+      (fun (id, name, owner_id) ->
+        Lwt.return
+          Group.(
+            {name = name; id = id; owner_id = owner_id}))
+      [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} FROM groups WHERE id = %d"]
+      id
+  in
+  match res with
+    | [el] ->
+        Lwt.return el
+    | _ ->
+        raise (Failure "something has gone catastrophically wrong")
 
 let get_groups user =
   let%lwt user_id = get_user_id user in
@@ -190,9 +214,14 @@ let get_devices user : Device.t list Lwt.t =
     | Some id ->
         S.select_f
           db
-          (fun (id, name) ->
-            Lwt.return Device.{id = id; name = name})
-          [%sqlc "SELECT @s{device_id}, @s{name} FROM devices WHERE user_id = %d"]
+          (fun (id, name, group_id) ->
+            match group_id with
+              | Some group_id ->
+                  let%lwt group = get_group_by_id group_id in
+                  Lwt.return Device.{id = id; name = name; group = Some group}
+              | None ->
+                  Lwt.return Device.{id = id; name = name; group = None})
+          [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE user_id = %d"]
           id
     | None ->
         raise (Failure "trying to get devices for a nonexistent user")
@@ -200,8 +229,17 @@ let get_devices user : Device.t list Lwt.t =
 let get_device_by_name name =
   S.select_one_f_maybe
     db
-    (fun (id, name) -> Lwt.return Device.{id; name})
-    [%sqlc "SELECT @s{device_id}, @s{name} FROM devices WHERE name = %s"]
+    (fun (id, name, group_id) -> 
+      let%lwt group =
+        match group_id with
+          | Some group_id ->
+              let%lwt group = get_group_by_id group_id in
+              Lwt.return (Some group)
+          | None ->
+              Lwt.return None
+      in
+      Lwt.return Device.{id; name; group})
+    [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE name = %s"]
     name
 
 let get_data device =

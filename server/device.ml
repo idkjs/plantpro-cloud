@@ -37,5 +37,6 @@ type data_packet =
 type t =
   { id: string
   ; name: string
+  ; group: Group.t option
   }
   [@@deriving yojson]
