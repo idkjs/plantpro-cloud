@@ -139,13 +139,34 @@ let service_login = post "/login" (fun req ->
         redirect'
           (Uri.of_string "/static/index.html#not-found"))
 
-let service_get_user_devices = get "/get-devices/:username" (fun req ->
+let service_get_user_devices = get "/get-devices/:username/:group" (fun req ->
   let username = param req "username" in
   let%lwt devices = Db.get_devices username in
-  let devices =
-    [%to_yojson: Device.t list] devices
+  let%lwt devices =
+    match param req "group" |> Netencoding.Url.decode with
+      | "all" ->
+          Lwt.return devices
+      | "ungrouped" ->
+          List.filter (fun dev -> dev.Device.group = None) devices
+          |> Lwt.return
+      | target_group_name ->
+          let%lwt user = Db.get_user username in
+          begin match user with
+            | Some user ->
+                let%lwt group = Db.get_group_by_name target_group_name user in
+                Lwt.return (
+                  List.filter
+                    (function
+                      | { Device.group = Some { name = group_name } } when group_name = target_group_name ->
+                          true
+                      | _ ->
+                          false)
+                    devices)
+            | None ->
+                raise Not_found
+          end
   in
-  `Json devices
+  `Json ([%to_yojson: Device.t list] devices)
   |> respond')
 
 let service_get_user_groups = get "/get-groups/:username" (fun req ->
