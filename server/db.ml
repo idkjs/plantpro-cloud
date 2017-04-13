@@ -96,13 +96,20 @@ let get_user uname =
         Lwt.return None
 
 let get_user_id uname =
-  S.select_one_maybe
-    db
-    [%sqlc
-      "SELECT \
-          @d{id} \
-        FROM users WHERE name = %s"]
-    uname
+  let%lwt id =
+    S.select_one_maybe
+      db
+      [%sqlc
+        "SELECT \
+            @d{id} \
+          FROM users WHERE name = %s"]
+      uname
+  in
+  match id with
+    | Some id ->
+        Lwt.return id
+    | None ->
+        raise (Not_found)
 
 let add_user user =
   let open User in
@@ -129,25 +136,28 @@ let add_data time device_id sensor_type value =
     sensor_type
     value
 
-(*let get_group_by_name name user =
+let get_group_by_name name user =
+  let%lwt user_id =
+    get_user_id user.User.name
+  in
   let%lwt res =
     S.select_f
       db
       (fun (id, name, owner_id) ->
         Lwt.return
           Group.({name = name; id = id; owner_id = owner_id}))
-      [%sqlc "SELECT (id, name, owner_id) \
+      [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} \
               FROM groups \
               WHERE (name = %s \
               AND owner_id = %d)"]
       name
-      user.User.id
+      user_id
   in
   match res with
     | [el] ->
         Lwt.return el
     | _ ->
-        raise (Failure "ERROR: the given user has more than one group")*)
+        raise (Failure "ERROR: the given user has more than one group")
 
 let get_group_by_id id =
   let%lwt res =
@@ -168,63 +178,47 @@ let get_group_by_id id =
 
 let get_groups user =
   let%lwt user_id = get_user_id user in
-  match user_id with
-    | None ->
-        raise (Failure "Trying to get groups from a nonexistant user")
-    | Some user_id ->
-        S.select_f
-          db
-          (fun (id, name, owner_id) ->
-            Lwt.return
-              Group.(
-                {name = name; id = id; owner_id = owner_id}))
-          [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} FROM groups WHERE owner_id = %d"]
-          user_id
+      S.select_f
+        db
+        (fun (id, name, owner_id) ->
+          Lwt.return
+            Group.(
+              {name = name; id = id; owner_id = owner_id}))
+        [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} FROM groups WHERE owner_id = %d"]
+        user_id
 
 let add_group name user =
   let%lwt user_id = get_user_id user in
-  match user_id with
-    | None ->
-        raise (Failure "Trying to create a group with a nonexistant user")
-    | Some user_id ->
-        S.insert
-          db
-          [%sqlc "INSERT INTO groups(name, owner_id) \
-                  VALUES(%s, %d)"]
-          name
-          user_id
+  S.insert
+    db
+    [%sqlc "INSERT INTO groups(name, owner_id) \
+            VALUES(%s, %d)"]
+    name
+    user_id
 
 let associate_device user device name =
   let open User in
   let%lwt id = get_user_id user in
-  match id with
-    | Some id ->
-        S.insert
-          db
-          [%sqlc "INSERT INTO devices(user_id, device_id, name) VALUES(%d, %s, %s)"]
-          id
-          device
-          name
-    | None ->
-        raise (Failure "trying to associate a device with a nonexistent user")
+  S.insert
+    db
+    [%sqlc "INSERT INTO devices(user_id, device_id, name) VALUES(%d, %s, %s)"]
+    id
+    device
+    name
 
 let get_devices user : Device.t list Lwt.t =
   let%lwt id = get_user_id user in
-  match id with
-    | Some id ->
-        S.select_f
-          db
-          (fun (id, name, group_id) ->
-            match group_id with
-              | Some group_id ->
-                  let%lwt group = get_group_by_id group_id in
-                  Lwt.return Device.{id = id; name = name; group = Some group}
-              | None ->
-                  Lwt.return Device.{id = id; name = name; group = None})
-          [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE user_id = %d"]
-          id
-    | None ->
-        raise (Failure "trying to get devices for a nonexistent user")
+  S.select_f
+    db
+    (fun (id, name, group_id) ->
+      match group_id with
+        | Some group_id ->
+            let%lwt group = get_group_by_id group_id in
+            Lwt.return Device.{id = id; name = name; group = Some group}
+        | None ->
+            Lwt.return Device.{id = id; name = name; group = None})
+    [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE user_id = %d"]
+    id
 
 let get_device_by_name name =
   S.select_one_f_maybe
