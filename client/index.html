@@ -3,85 +3,89 @@
 <html lang="en">
 <head>
 <title>PlantPi</title>
+<link rel="shortcut icon" href="http://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png">
 <meta charset="UTF-8">
+
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <script>
-	function showLogin() {
-		var x = document.getElementById('hidden-login');
-		var y = document.getElementById('hidden-signup');
-		if (x.style.display === 'block') {
-			x.style.display = 'none';
-		} else {
-			x.style.display = 'block';
-		}
-	};
-	function showSignup() {
-		var x = document.getElementById('hidden-signup');
-		var y = document.getElementById('hidden-login');
-		if (x.style.display === 'block') {
-			x.style.display = 'none';
-		} else {
-			x.style.display = 'block';
-		}
-	};
+    function showLogin() {
+        var login = document.getElementById('hidden-login');
+        var signup = document.getElementById('hidden-signup');
+        if (login.style.display === 'block') {
+            login.style.display = 'none';
+        } else {
+            login.style.display = 'block';
+            signup.style.display = 'none';
+        }
+    };
+    function showSignup() {
+        var signup = document.getElementById('hidden-signup');
+        var login = document.getElementById('hidden-login');
+        if (signup.style.display === 'block') {
+            signup.style.display = 'none';
+        } else {
+            signup.style.display = 'block';
+            login.style.display = 'none';
+        }
+    };
 </script>
 </head>
 <body class="backgroundImg">
-	<div class="gradienttop"></div>
-	
-	
-	<div class="topright">
-		<div class="userButtons"><a onclick="showSignup()">Signup</a></div>
-		<div class="userButtons"><a onclick="showLogin()">Login</a></div>
-	</div>
-	
-	<div class="center box">
-		<h1>PlantPi</h1>
-		<div class=fake-hr1></div>
-		<div class=fake-hr2></div>
-		<div class="lowerText">for your everyday plant monitoring needs</div>
-	</div>
-	<div id="hidden-login">
-		<h2 style="margin:0 0 10px 0; text-align:center;">Login</h2>
-	   
-		<div class = "login-container">
-		  <form action="/login" method="post">
-			<div>
-			  <label for="username">Username:</label>
-			  <input name="username" type="text" placeholder="username" />
-			</div>
-			<div>
-			  <label for="password">Password:</label>
-			  <input name="password" type="password" placeholder="password" />
-			</div>
-			
-			<div style="text-align:center;"><input type="submit" value=Login /></div>
-		  </form>
-		</div>
-	</div>
-	<div id="hidden-signup">
-		<h2 style="margin:0 0 10px 0; text-align:center;">Signup</h2>
-	   
-		<div class = "signup-container">
-		  <form action="/create-account" method="post">
-			<div>
-			  <label for="username">Username:</label>
-			  <input name="username" type="text" placeholder="username" />
-			</div>
-			<div>
-			  <label for="password1">Password:</label>
-			  <input name="password1" type="password" placeholder="password" />
-			</div>
-			<div>
-			  <label for="password2">Password:</label>
-			  <input name="password2" type="password" placeholder="password" />
-			</div>
-			
-			<div style="text-align:center;"><input type="submit" value=Login /></div>
-		  </form>
-		  <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
-		</div>
-	</div>
+    <div class="gradienttop"></div>
+    
+    
+    <div class="topright">
+        <div class="userButtons"><a onclick="showSignup()">Signup</a></div>
+        <div class="userButtons"><a onclick="showLogin()">Login</a></div>
+    </div>
+    
+    <div class="center box">
+        <h1>PlantPi</h1>
+        <div class=fake-hr1></div>
+        <div class=fake-hr2></div>
+        <div class="lowerText">for your everyday plant monitoring needs</div>
+    </div>
+    <div id="hidden-login">
+        <h2 style="margin:0 0 10px 0; text-align:center;">Login</h2>
+       
+        <div class = "login-container">
+          <form action="/login" method="post">
+            <div>
+              <label for="username">Username:</label>
+              <input name="username" type="text" placeholder="username" />
+            </div>
+            <div>
+              <label for="password">Password:</label>
+              <input name="password" type="password" placeholder="password" />
+            </div>
+            
+            <div style="text-align:center;"><input type="submit" value=Login /></div>
+          </form>
+        </div>
+    </div>
+    <div id="hidden-signup">
+        <h2 style="margin:0 0 10px 0; text-align:center;">Signup</h2>
+       
+        <div class = "signup-container">
+          <form action="/create-account" method="post">
+            <div>
+              <label for="username">Username:</label>
+              <input name="username" type="text" placeholder="username" />
+            </div>
+            <div>
+              <label for="password1">Password:</label>
+              <input name="password1" type="password" placeholder="password" />
+            </div>
+            <div>
+              <label for="password2">Password:</label>
+              <input name="password2" type="password" placeholder="password" />
+            </div>
+            
+            <div style="text-align:center;"><input type="submit" value=Login /></div>
+          </form>
+          <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
+        </div>
+    </div>
 
 
 </body>
