@@ -42,14 +42,29 @@ let _ =
           device_id TEXT PRIMARY KEY NOT NULL, \
           user_id TEXT NOT NULL, \
           name TEXT NOT NULL, \
+          group_id INTEGER, \
+          FOREIGN KEY(group_id) REFERENCES groups(id), \
           FOREIGN KEY(user_id) REFERENCES users(id))"];
+  in
+  let make_groups () =
+    S.execute
+      db
+      [%sqlc
+        "CREATE TABLE IF NOT EXISTS groups ( \
+          id INTEGER PRIMARY KEY AUTOINCREMENT, \
+          name TEXT NOT NULL, \
+          owner_id INTEGER NOT NULL, \
+          FOREIGN KEY(owner_id) REFERENCES users(id), \
+          UNIQUE(owner_id, name));"];
   in
   Lwt_main.run(
     make_users ()
     >>= fun _ ->
     make_devices ()
     >>= fun _ ->
-    make_plant_data ())
+    make_plant_data ()
+    >>= fun _ ->
+    make_groups ())
 
 let get_user uname =
   try%lwt
@@ -113,6 +128,47 @@ let add_data time device_id sensor_type value =
     device_id
     sensor_type
     value
+
+(*let get_group_by_name name user =
+  S.select_f
+    db
+    (fun (id, name, owner_id) ->
+      Lwt.return
+        Group.({name = name; id = id; owner_id = owner_id}))
+    [%sqlc "SELECT (id, name, owner_id) \
+            FROM groups \
+            WHERE (name = %s \
+            AND owner_id = %d)"]
+    name
+    user.User.id*)
+
+let get_groups user =
+  let%lwt user_id = get_user_id user in
+  match user_id with
+    | None ->
+        raise (Failure "Trying to get groups from a nonexistant user")
+    | Some user_id ->
+        S.select_f
+          db
+          (fun (id, name, owner_id) ->
+            Lwt.return
+              Group.(
+                {name = name; id = id; owner_id = owner_id}))
+          [%sqlc "SELECT @d{id}, @s{name}, @d{owner_id} FROM groups WHERE owner_id = %d"]
+          user_id
+
+let add_group name user =
+  let%lwt user_id = get_user_id user in
+  match user_id with
+    | None ->
+        raise (Failure "Trying to create a group with a nonexistant user")
+    | Some user_id ->
+        S.insert
+          db
+          [%sqlc "INSERT INTO groups(name, owner_id) \
+                  VALUES(%s, %d)"]
+          name
+          user_id
 
 let associate_device user device name =
   let open User in

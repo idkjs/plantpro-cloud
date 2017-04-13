@@ -62,6 +62,29 @@ let service_create_account = post "/create-account" (fun req ->
                 (Int64.to_int res)))
   end)
 
+let service_create_group = post "/create-group" (fun req ->
+  Cohttp_lwt_body.to_string
+    req.Opium_rock.Request.body
+  >>= fun body ->
+  let params = Fuck_stdlib.get_post_params body in
+  let _, username =
+    List.find
+      (fun (name, _) -> name = "user")
+      params
+  in
+  let _, group_name =
+    List.find
+      (fun (name, _) -> name = "groupName")
+      params
+  in
+  let%lwt user = Db.get_user username in
+  let%lwt res = Db.add_group group_name username in
+  respond'
+    (`String
+      (Printf.sprintf
+        "created group with ID %d"
+        (Int64.to_int res))))
+
 let service_login = post "/login" (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
@@ -123,6 +146,15 @@ let service_get_user_devices = get "/get-devices/:username" (fun req ->
     [%to_yojson: Device.t list] devices
   in
   `Json devices
+  |> respond')
+
+let service_get_user_groups = get "/get-groups/:username" (fun req ->
+  let username = param req "username" in
+  let%lwt groups = Db.get_groups username in
+  let groups =
+    [%to_yojson: Group.t list] groups
+  in
+  `Json groups
   |> respond')
 
 let try_unoption = function
@@ -263,10 +295,12 @@ let _ =
   in
   App.empty
   |> service_create_account
+  |> service_create_group
   |> service_login
   |> service_push_data
   |> service_associate_device
   |> service_get_user_devices
+  |> service_get_user_groups
   |> service_get_device_data
   |> middleware static
   |> App.run_command
