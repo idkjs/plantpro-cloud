@@ -12,7 +12,7 @@
         <!--Shortcut icon-->
         <link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
         <script>
-var username;
+var username = hex2a(getCookie("username"));
 
 function getCookie(name) {
     var value = "; " + document.cookie;
@@ -109,24 +109,7 @@ function doWork() {
                     <ul class="nav nav-pills nav-stacked">
                         <ul class="nav" id="groupsList">
                             <li><h4>Groups:</h4></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Backyard <span class="caret"></span></a>
-                                <ul class="dropdown-menu forAnimate" role="menu">
-                                    <li><a href="#"><span class="glyphicon glyphicon-leaf"></span> Jeffery</a></li>
-                                    <li><a href="#"><span class="glyphicon glyphicon-leaf"></span> Maple</a></li>
-                                    <li><a href="#"><span class="glyphicon glyphicon-leaf"></span> Ivy</a></li>
-                                    <br/>
-                                </ul>               
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Cara </a></li>
-                                    <li><a href="#">Raspy</a></li>
-                                    <li><a href="#">Bob</a></li>
-                                    <br/>
-                                </ul>               
-                            </li>
+                            <div id="groupsListContainer"></div>
                             <br/>
                             <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
                             <li style="font-size: 20px; float: left;"><a onclick="showCreateGroup()">+</a></li>
@@ -294,5 +277,6 @@ else{
                 <div id="version" style="position: bottom-right;">v3.0.1: semi-functional</div>
             </div><!-- End stage and sidebar-->
         </div>
+        <script src="dist/bundle.js"></script>
     </body>
 </html>
