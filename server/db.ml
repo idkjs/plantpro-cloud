@@ -157,7 +157,7 @@ let get_group_by_name name user =
     | [el] ->
         Lwt.return el
     | _ ->
-        raise (Failure "ERROR: the given user has more than one group")
+        raise (Failure ("ERROR: user " ^ user.User.name ^ " has more than one group named " ^ name))
 
 let get_group_by_id id =
   let%lwt res =

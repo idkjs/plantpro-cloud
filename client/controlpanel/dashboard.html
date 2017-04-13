@@ -56,7 +56,7 @@ function doWork() {
 
     var xhr = new XMLHttpRequest();
     console.log(hex2a(getCookie("username")));
-    xhr.open("get", "/get-devices/" + username);
+    xhr.open("get", "/get-devices/" + username + "/all");
     xhr.addEventListener("load", function() {
         var plantname = JSON.parse(this.response)[0].name;      
         //This is just to give the site some more personality
