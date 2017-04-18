@@ -36,7 +36,7 @@ class PlantListing extends React.Component {
         var buttonStyle = {
             border: 'none',
             backgroundColor: 'transparent',
-            paddingTop: '3px'
+            paddingTop: '13px'
         };
         return (
             <ul className="nav">
@@ -44,10 +44,8 @@ class PlantListing extends React.Component {
                 this.state.plants.map((plant) => {
                     return (
                       <li key={plant.name}>
-                        <a href="" className="dropdown-toggle">
-                          {plant.name}
-                          <button className="glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
-                        </a>
+                            <button onclick="location.href=''" className="glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
+                            <a href=""> {plant.name} </a>
                       </li>
                     );
                 })
