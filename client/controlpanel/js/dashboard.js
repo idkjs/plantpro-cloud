@@ -38,17 +38,28 @@ class PlantListing extends React.Component {
             backgroundColor: 'transparent',
             paddingTop: '13px'
         };
+        var pStyle = {
+          color: '#bcbcbc',
+          padding: '3px 20px',
+        }
         return (
             <ul className="nav">
             {
-                this.state.plants.map((plant) => {
+                if (this.state.plants.length == 0) { 
                     return (
-                      <li key={plant.name}>
-                            <button onclick="location.href=''" className="glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
-                            <a href=""> {plant.name} </a>
-                      </li>
+                        <li><p style={pStyle}>No Plants in Group</p></li>
                     );
-                })
+                }
+                else {  
+                    this.state.plants.map((plant) => {
+                        return (
+                            <li key={plant.name}>
+                                <button onclick="location.href=''" className="glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
+                                <a href=""> {plant.name} </a>
+                            </li>
+                        );
+                    })
+                }
             }
             </ul>
         );
