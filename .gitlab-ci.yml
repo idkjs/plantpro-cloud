@@ -4,7 +4,8 @@ before_script:
  - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash nodejs-npm@edge
 
 build_client:
-  before_script: "cd client && npm install --dev"
+  before_script:
+   - cd client && npm install --dev
   script: "cd client && npm run build && npm run webpack"
 
 build:
