@@ -5,8 +5,7 @@ build_client:
    - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
    - apk update
    - apk add make m4 perl build-base gcc zlib-dev patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev git bash nodejs-npm@edge
-   - cd client && npm install --dev
-  script: "cd client && npm run build && npm run webpack"
+  script: "cd client && npm install --dev && npm run build && npm run webpack"
 
 build:
   before_script:
