@@ -41,7 +41,7 @@ class PlantListing extends React.Component {
         var pStyle = {
           color: '#bcbcbc',
           padding: '3px 20px',
-        }
+        };
         return (
             <ul className="nav">
             {
