@@ -42,24 +42,27 @@ class PlantListing extends React.Component {
           color: '#bcbcbc',
           padding: '3px 20px',
         };
+        var contents;
+        if (this.state.plants.length == 0) { 
+          contents = (
+              <li><p style={pStyle}>No Plants in Group</p></li>
+              );
+        }
+        else {
+          contents =
+          this.state.plants.map((plant) => {
+              return (
+                  <li key={plant.name}>
+                  <button onclick="location.href=''" className="glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
+                  <a href=""> {plant.name} </a>
+                  </li>
+                  );
+              })
+        }
         return (
             <ul className="nav">
             {
-                if (this.state.plants.length == 0) { 
-                    return (
-                        <li><p style={pStyle}>No Plants in Group</p></li>
-                    );
-                }
-                else {  
-                    this.state.plants.map((plant) => {
-                        return (
-                            <li key={plant.name}>
-                                <button onclick="location.href=''" className="glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
-                                <a href=""> {plant.name} </a>
-                            </li>
-                        );
-                    })
-                }
+                contents
             }
             </ul>
         );
