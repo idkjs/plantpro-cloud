@@ -1,4 +1,4 @@
-before_script:
+image: ci.cs.nmt.edu/plantpi/cloud-side:latest
 
 build_client:
   before_script:
