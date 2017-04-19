@@ -63,13 +63,6 @@ function doWork() {
     return false;
 });
 
-$(document).ready(function(){
-  $('.dropdown-submenu a.test').on("click", function(f){
-    $(this).next('ul').toggle();
-    f.stopPropagation();
-   	f.preventDefault();
-  });
-
 }
         </script>
 
@@ -130,26 +123,13 @@ $(document).ready(function(){
                                     <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
                                       	
                                       	<!--Dank Weed-->
-				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dank Weed, 90%THC, strong stuff </a></li></ul>
 
-				                      	<div id="dropSettings" class="dropSettings" style="display: none">
-				                            	
-				                            
-				                            	
-				                           	</div>
 				                        <!--Mystery Plant-->
 				                        <ul class="nav innerMenu"><li>
-				                          	<button class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Mystery Plant</a>
-
-				                          	<!--Experimental Settings dropdown-->
-
-				                           	<div id="dropSettings" class="dropSettings" style="display: none">
-				                            	
-				                            	
-				                            	
-				                           	</div>
-				                           	</li>
+				                          	<button data-toggle="collapse" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Mystery Plant</a></li>
 				                        </ul>
+
 				                    </ul>
 				            </li>   
 				        <!--End indoors dropdown-->        
@@ -161,20 +141,14 @@ $(document).ready(function(){
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement<span class="caret" id="menu-caret"></span></a>
 
                                     <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
-                                      	
-                                      	<!--Dank Weed-->
-				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dead Twig</a></li></ul>
+                                      		
+				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dead Twig</a></li>
+                                        </ul>
 
-				                        <!--Mystery Plant-->
+				                       
 				                        <ul class="nav innerMenu"><li>
-				                          	<button onclick="displaySettings()" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html">Venus Flytrap</a>
-
-				                          	<!--Experimental Settings dropdown-->
-				                           	<div id="innerSettings" class="innerSettings" style="display: none;">
-				                            	
-				                           	</div>
-				                           	</li>
-				                            </ul>
+				                          	<button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Venus Flytrap</a></li>    
+                                        </ul>
 				                    </ul>
 				            </li>   
 				        <!--End indoors dropdown-->        
