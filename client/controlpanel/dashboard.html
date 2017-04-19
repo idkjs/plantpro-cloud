@@ -29,13 +29,7 @@ function hex2a(hexx) {
     return str;
 }
 
-$(document).ready(function() {
-    $('[data-toggle=offcanvas]').click(function() {
-        $('.row-offcanvas').toggleClass('active');
-    });
 
-
-});
 
 function doWork() {
     var EasterEgg = document.getElementById("Easter");
@@ -63,6 +57,19 @@ function doWork() {
         pname.innerHTML += plantname;
     });
     xhr.send();
+
+    $('#menuElement').on('hide.dropdown', function () {
+    	alert("clicked");
+    return false;
+});
+
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(f){
+    $(this).next('ul').toggle();
+    f.stopPropagation();
+   	f.preventDefault();
+  });
+
 }
         </script>
 
@@ -110,23 +117,72 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
                     <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"></span></a></h3><br/>
                     <ul class="nav nav-pills nav-stacked">
                         <h4>Groups:</h4>
-                        <ul class="nav" id="groupsList">
-                            <li class="dropdown keep-open">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret"></span>
+                        <ul class="nav" id="groupsList"><!--Intial start of accordian-->
 
-                                                <ul class="dropdown-menu keep-open" role="menu">
-                                                <li><a href="#">Cara </a></li>
-                                                <li><a href="#">Raspy</a></li>
-                                                <li><a href="#">Bob</a></li>
-                                                <li><p style="color:#bcbcbc; padding: 3px 20px;">No plants in group</p></li>
-                                                <br/>
-                                              </ul>
+                        <!--This entire thing is just for the indoors dropdown-->
+                            <li class="dropdown keep-open" id="menuElement">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret" id="menu-caret"></span></a>
 
-                                </li>
+                                    <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
+                                      	
+                                      	<!--Dank Weed-->
+				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+
+				                      	<div id="dropSettings" class="dropSettings" style="display: none">
+				                            	
+				                            
+				                            	
+				                           	</div>
+				                        <!--Mystery Plant-->
+				                        <ul class="nav innerMenu"><li>
+				                          	<button class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Mystery Plant</a>
+
+				                          	<!--Experimental Settings dropdown-->
+
+				                           	<div id="dropSettings" class="dropSettings" style="display: none">
+				                            	
+				                            	
+				                            	
+				                           	</div>
+				                           	</li>
+				                        </ul>
+				                    </ul>
+				            </li>   
+				        <!--End indoors dropdown-->        
+                        </ul>
+                        <ul class="nav" id="groupsList"><!--Intial start of accordian-->
+
+                        <!--This entire thing is just for the indoors dropdown-->
+                            <li class="dropdown keep-open" id="menuElement">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement<span class="caret" id="menu-caret"></span></a>
+
+                                    <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
+                                      	
+                                      	<!--Dank Weed-->
+				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dead Twig</a></li></ul>
+
+				                        <!--Mystery Plant-->
+				                        <ul class="nav innerMenu"><li>
+				                          	<button onclick="displaySettings()" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html">Venus Flytrap</a>
+
+				                          	<!--Experimental Settings dropdown-->
+				                           	<div id="innerSettings" class="innerSettings" style="display: none;">
+				                            	
+				                           	</div>
+				                           	</li>
+				                            </ul>
+				                    </ul>
+				            </li>   
+				        <!--End indoors dropdown-->        
+                        </ul>
+                          	<script>
+                          					
+				                           	
+				                           	</script>	
                             <div id="groupsListContainer"></div>
                             <br/>
                             <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
-                            <li style="font-size: 20px; float: left;"><a onclick="showCreateGroup()">+</a></li>
+                            <li class="plus" style="font-size: 13px; float: left;"><a onclick="showCreateGroup()"><span class="btn glyphicon glyphicon-plus"></span></a></li>
 
                             <br/><br/>
 
@@ -147,28 +203,60 @@ function showCreateGroup() {
     }
 };
 
-function addGroup() {
+$(document).ready(function() {
+	$('#setting_cog').on('click', function() {
+		$(this).parent('ul').siblings('.dropSettings').slideToggle(300);
+	}); // end click
+}); 
 
+//Experimental Function to display cog accordinan settings
+function displaySettings(){
+	//alert("This shit is broken");
+	var sets = document.getElementById("dropSettings");
+	if(sets.style.display === 'block'){
+		sets.style.display = 'none';
+	} else {
+		sets.style.display = 'block';
+	}
 };
 
+//These functions keep the dropdown menus open until clicked on again
 $('.dropdown.keep-open').on({
     "shown.bs.dropdown": function() { this.closable = false; },
     "click":             function() { this.closable = true; },
     "hide.bs.dropdown":  function() { return this.closable; }
 });
+$('#menuElement .dropdown-menu').on({
+    "click":function(e){
+      e.stopPropagation();
+    }
+});
+
+//This function will only allow one dropdown open at a time
+$('.dropdown-toggle').click(function(){
+  var currMen = $(this).siblings('.dropdown-menu');
+  $('.dropdown-menu').not(currMen).hide();
+  currMen.toggle();
+});
+
+
+//Toggle sidebar on button press
+$(document).ready(function() {
+    $('[data-toggle=offcanvas]').click(function() {
+        $('.row-offcanvas').toggleClass('active');
+    });
+});
                             </script>
-                        </ul>
+
+                    </ul>
                         <hr/>
-                        <h4>All:</h4>
+                        <h4 style="color: #009b09;">All:</h4>
                         <ul class="nav" style="font-size: 15px;">   
                             <div id="plantListContainer"></div>
-                            <li><a href="">Plant A
-                                    <button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:3px;"></button></a></li>
                             <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
                             <br />
                             <br />
-                        </ul>
-                    </ul>
+                        </ul>   
                 </div>
             </div>  
             <!--...........................................................................Side bar ends here..........................................................................-->
