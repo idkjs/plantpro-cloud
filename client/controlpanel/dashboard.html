@@ -119,13 +119,8 @@ function doWork() {
                                     <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
                                       	
                                       	<!--Dank Weed-->
-				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dank Weed, 90%THC, strong stuff </a></li></ul>
 
-				                      	<div id="dropSettings" class="dropSettings" style="display: none">
-				                            	
-				                            
-				                            	
-				                           	</div>
 				                        <!--Mystery Plant-->
 				                        <ul class="nav innerMenu"><li>
 				                          	<button class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Mystery Plant</a>
@@ -156,14 +151,8 @@ function doWork() {
 
 				                        <!--Mystery Plant-->
 				                        <ul class="nav innerMenu"><li>
-				                          	<button onclick="displaySettings()" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html">Venus Flytrap</a>
-
-				                          	<!--Experimental Settings dropdown-->
-				                           	<div id="innerSettings" class="innerSettings" style="display: none;">
-				                            	
-				                           	</div>
-				                           	</li>
-				                            </ul>
+				                          	<button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Venus Flytrap</a></li>    
+                                        </ul>
 				                    </ul>
 				            </li>   
 				        <!--End indoors dropdown-->        
@@ -233,6 +222,14 @@ $('.dropdown.keep-open').on({
                             <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">&nbsp;</button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
                         </li>
                     </ul>
+                        <hr/>
+                        <h4 style="color: #009b09;">All:</h4>
+                        <ul class="nav" style="font-size: 15px;">   
+                            <div id="plantListContainer"></div>
+                            <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+                            <br />
+                            <br />
+                        </ul>   
                 </div>
             </div>
             <!--...........................................................................Side bar ends here..........................................................................-->
@@ -244,9 +241,6 @@ $('.dropdown.keep-open').on({
                     <p class="visible-xs"> <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left">&nbsp;</i></button> </p>
                     <!--HEADER PLANT NAME, controled by js script dowork()-->
                     <h1> Let's see how <strong id = "pname"></strong> is doing:</h1> <br/>
-                        <p class="visible-xs"> <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i></button> </p>
-                        <!--HEADER PLANT NAME, controled by js script dowork()-->
-                            <h1> Let's see how <strong id = "pname"></strong> is doing:</h1> <br/>
 
                     <div id="panel" style="border-style: double; border-width: 2px; border-color: #ccc">
                         <div class="inner_panel">
@@ -314,9 +308,10 @@ if(code > 0){
     if(code == 3){
         document.write(" <br/>Take some time to save a life.");
     }
+    document.write("</p>");
 }
 else{ //if nothing needs attention, then is "all good" :)
-    document.write("Your plant is doing well :)");
+    document.write("<p>Your plant is doing well :)</p>");
 }
                                         var lvl1 = "Temperature", lvl2 = "Moisture", lvl3 = "Light";
                                         if(code > 0){
