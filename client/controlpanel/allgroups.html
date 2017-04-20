@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="gMain.css>">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/gmain.css">
+
+        <title>PlantPi: All your Groups</title>
+        <link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
+    </head>
+    <body>
+        <script>
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodeCookie = decodeCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                            while (c.charAt(0) == ' ') {
+                                    c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                                return c.substring(name.length, c.length);
+                        }
+                        return "";
+                }
+
+                function hex2a(hexx) {
+                var hex = hexx.toString();
+                var str = '';
+                for (var i = 0; i < hex.length; i += 2)
+                    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+                    return str;
+            }
+
+            //var username = hex2a(getCookie("username"));
+            //var xhr = new XMLHttpRequest();
+            //xhr.open("get", "/get-device" + username);
+            //xhr.send();
+            //var plantname = JSON.parse(xhr.response)[0].name;
+        </script>
+        <!--Begin NavBar-->
+        <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#TheNavBar">
+                                    <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        <a class="navbar-brand" href="dashboard.html">PlantPi</a>
+                    </div>
+
+                    <!--Allow for better compatability when resizing-->
+                    <div class="collapse navbar-collapse" id="TheNavBar">
+                        <ul class="nav navbar-nav navbar-right">
+                                   <li> <a href="dashboard.html"><span class="glyphicon glyphicon-arrow-left"></span> Go Back</a></li>
+                                   <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a></li>
+                                   <li><a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a></li>
+
+                                <div id="Easter" class="EasterEgg">
+                            <div class="EasterEgg-content">
+                                    <span class="close">&times;</span>
+                                    <img src="http://harry.enzoverder.be/cats/funny-pictures-kitten-plant-innocen-face.jpg" width="80%" height="80%"></img>
+                                </div>
+                        </div>
+                    </ul>
+                 </div>
+            </div>
+        </nav>
+        <script> //because i was bored EASTEREGG
+            var EasterEgg = document.getElementById("Easter");
+            var Leaf = document.getElementById("Leaf");
+            var xicon = document.getElementsByClassName("close")[0];
+
+            Leaf.onclick = function(){ //When leaf is clicked on
+                EasterEgg.style.display="block";
+             }
+            xicon.onclick = function() { //when "X" icon is clicked on
+                EasterEgg.style.display = "none";
+            }
+            window.onclick = function(event) { //Close window if user clicks outside the box
+                if (event.target == EasterEgg) {
+                    EasterEgg.style.display = "none";
+                }
+            }
+        </script>
+        <!--End NavBar-->
+
+        <br/><br/><br/><br/>
+
+        <div class="container" id="listStage">
+            <h1>All your Groups:</h1>
+            <hr/>
+                <div class="pageList">
+                    <div class="groupList">
+
+                        <ul id="groupRender">
+
+                            <br/>
+
+                            <li class="groupElement"><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:5px;"></button><a href="#" id="groupName">Unholy Plants</a>
+
+                                <ul class="plantList">
+                                    <br/>
+                                    <p style="font-size: 13px;"><strong>Plants</strong><p>
+
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Venus Flytrap</a></li>
+
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Poison Ivy</a></li>
+
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Ghost Chili</a></li>
+
+                                </ul><br/>
+                            </li>
+                            <br/>
+                             <li class="groupElement"><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:5px;"></button><a href="#" id="groupName">Unholy Plants</a>
+
+                                <ul class="plantList">
+                                    <br/>
+                                    <p style="font-size: 13px;"><strong>Plants</strong><p>
+
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Venus Flytrap</a></li>
+
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Poison Ivy</a></li>
+
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Ghost Chili</a></li>
+
+                                </ul><br/>
+                            </li>
+                            <br/>
+
+
+                        </ul>
+                    </div>
+                </div>
+            <div id="expandedPlantContainer"></div>
+
+
+        </div>
+        <script src="dist/bundle.js"></script>
+    </body>
+</html>

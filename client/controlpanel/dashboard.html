@@ -17,7 +17,7 @@ var username = hex2a(getCookie("username"));
 function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
-    if (parts.length == 2) 
+    if (parts.length == 2)
         return parts.pop().split(";").shift();
 }
 
@@ -28,8 +28,6 @@ function hex2a(hexx) {
         str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
     return str;
 }
-
-
 
 function doWork() {
     var EasterEgg = document.getElementById("Easter");
@@ -52,16 +50,11 @@ function doWork() {
     console.log(hex2a(getCookie("username")));
     xhr.open("get", "/get-devices/" + username + "/all");
     xhr.addEventListener("load", function() {
-        var plantname = JSON.parse(this.response)[0].name;      
+        var plantname = JSON.parse(this.response)[0].name;
         //This is just to give the site some more personality
         pname.innerHTML += plantname;
     });
     xhr.send();
-
-    $('#menuElement').on('hide.dropdown', function () {
-    	alert("clicked");
-    return false;
-});
 
 }
         </script>
@@ -106,7 +99,7 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
         <div class="row-offcanvas row-offcanvas-left">
             <div id="sidebar" class="sidebar-offcanvas">
                 <br /> <br />
-                <div class="col-xs-12"> 
+                <div class="col-xs-12">
                     <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"></span></a></h3><br/>
                     <ul class="nav nav-pills nav-stacked">
                         <h4>Groups:</h4>
@@ -115,20 +108,18 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
                         <!--This entire thing is just for the indoors dropdown-->
                             <li class="dropdown keep-open" id="menuElement">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret" id="menu-caret"></span></a>
+                                    <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
 
-                                    <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
-                                      	
-                                      	<!--Dank Weed-->
-				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+                                        <!--Dank Weed-->
+                                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dank Weed, 90%THC, strong stuff </a></li></ul>
 
-				                        <!--Mystery Plant-->
-				                        <ul class="nav innerMenu"><li>
-				                          	<button data-toggle="collapse" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Mystery Plant</a></li>
-				                        </ul>
-
-				                    </ul>
-				            </li>   
-				        <!--End indoors dropdown-->        
+                                        <!--Mystery Plant-->
+                                        <ul class="nav innerMenu"><li>
+                                            <button data-toggle="collapse" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Mystery Plant</a></li>
+                                        </ul>
+                                    </ul>
+                            </li>
+                        <!--End indoors dropdown-->
                         </ul>
                         <ul class="nav" id="groupsList"><!--Intial start of accordian-->
 
@@ -136,23 +127,52 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
                             <li class="dropdown keep-open" id="menuElement">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement<span class="caret" id="menu-caret"></span></a>
 
-                                    <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
-                                      		
-				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dead Twig</a></li>
+                                    <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
+
+                                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dead Twig</a></li>
                                         </ul>
 
-				                       
-				                        <ul class="nav innerMenu"><li>
-				                          	<button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Venus Flytrap</a></li>    
+
+                                        <ul class="nav innerMenu"><li><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Venus Flytrap</a></li>
                                         </ul>
-				                    </ul>
-				            </li>   
-				        <!--End indoors dropdown-->        
+                                    </ul>
+                            </li>
+                            <li class="dropdown keep-open" id="menuElement">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watered Sidewalks<span class="caret" id="menu-caret"></span></a>
+                                    <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
+
+                                        <!--Dank Weed-->
+                                        <div class="innerguts">
+                                        <ul class="nav innerMenu"><li><button class="sets glyphicon glyphicon-cog pull-right settings_cog" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> In front of cramer </a></li>
+
+                                                <div class="content" style="display: none">
+                                                    <ul class="group-list">
+                                                        <p>Settings</p>
+                                                        <li><a>Rename</a></li>
+                                                        <li>Change Group</li>
+                                                        <li>Delete Plant</li>
+                                                    </ul>
+                                                </div>
+                                        </ul>
+
+                                        <!--Mystery Plant-->
+                                        <ul class="nav innerMenu"><li><button type="button" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Library sidewalk</a></li>
+
+                                            <div class="content" style="display: none">
+                                                    <ul class="group-list">
+                                                        <p>Settings</p>
+                                                        <li><a>Rename</a></li>
+                                                        <li>Change Group</li>
+                                                        <li>Delete Plant</li>
+                                                    </ul>
+                                                </div>
+
+                                        </ul>
+                                    </ul>
+                            </li>
+                        <!--End indoors dropdown-->
                         </ul>
-                          	<script>
-                          					
-				                           	
-				                           	</script>	
+
                             <div id="groupsListContainer"></div>
                             <br/>
                             <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
@@ -168,6 +188,7 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
                                 </form>
                             </div>
                             <script>
+
 function showCreateGroup() {
     var hidden = document.getElementById('show_create_group');
     if (hidden.style.display === 'block') {
@@ -177,21 +198,15 @@ function showCreateGroup() {
     }
 };
 
-$(document).ready(function() {
-	$('#setting_cog').on('click', function() {
-		$(this).parent('ul').siblings('.dropSettings').slideToggle(300);
-	}); // end click
-}); 
-
 //Experimental Function to display cog accordinan settings
 function displaySettings(){
-	//alert("This shit is broken");
-	var sets = document.getElementById("dropSettings");
-	if(sets.style.display === 'block'){
-		sets.style.display = 'none';
-	} else {
-		sets.style.display = 'block';
-	}
+    //alert("This shit is broken");
+    var sets = document.getElementById("dropSettings");
+    if(sets.style.display === 'block'){
+        sets.style.display = 'none';
+    } else {
+        sets.style.display = 'block';
+    }
 };
 
 //These functions keep the dropdown menus open until clicked on again
@@ -207,11 +222,7 @@ $('#menuElement .dropdown-menu').on({
 });
 
 //This function will only allow one dropdown open at a time
-$('.dropdown-toggle').click(function(){
-  var currMen = $(this).siblings('.dropdown-menu');
-  $('.dropdown-menu').not(currMen).hide();
-  currMen.toggle();
-});
+
 
 
 //Toggle sidebar on button press
@@ -225,14 +236,14 @@ $(document).ready(function() {
                     </ul>
                         <hr/>
                         <h4 style="color: #009b09;">All:</h4>
-                        <ul class="nav" style="font-size: 15px;">   
+                        <ul class="nav" style="font-size: 15px;">
                             <div id="plantListContainer"></div>
                             <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
                             <br />
                             <br />
-                        </ul>   
+                        </ul>
                 </div>
-            </div>  
+            </div>
             <!--...........................................................................Side bar ends here..........................................................................-->
             <!--Begin Stage, To play friendly with the side bar, the "stage" must be within the same div-->
             <div id="stage">
@@ -252,7 +263,7 @@ var txt;
 var stat = "Status: ";
 var lvl1att = 0, lvl2att = 0, lvl3att = 0;  //These are the flags
 var code = 0; //by default
-var celcius = 30; 
+var celcius = 30;
 var moisture = false;
 //Temp = Celcius, Moisture=T or F, uhh what was light?
 //Check for Temperature
@@ -289,7 +300,7 @@ else if (code == 1 || code == 2){
 else if (code == 3){
     txt = "DANGER!";
     document.write(txt.fontcolor("#cc0000").fontsize(4));
-}                           
+}
                                 </script>
                                 <br/>
                                 <div class="attention">
@@ -319,9 +330,9 @@ else{ //if nothing needs attention, then is "all good" :)
                                 <br/>
                             </div>
 
-                            <ul> 
+                            <ul>
                                 <div id="Level">
-                                    <li>Temperature Level</li> 
+                                    <li>Temperature Level</li>
                                 </div>
                                 <br/>
                                 <script>
@@ -346,16 +357,16 @@ else{
                                 </script>
                                 <br/>
                                 <div id="Level">
-                                    <li>Light Level</li> 
+                                    <li>Light Level</li>
                                 </div>
                                 <br/>
                                 <p>Bright as this plants future. </p>
                                 <br/>
-                            </ul>   
+                            </ul>
                         </div>
                     </div>
                 </div>
-                
+
             </div><!-- End stage and sidebar-->
         </div>
         <script src="dist/bundle.js"></script>
