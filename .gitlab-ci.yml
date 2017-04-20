@@ -45,5 +45,5 @@ lint_client:
   stage: lint
   script:
    - cd client && tidy index.html
-   - cd client/controlpanel && tidy *.html
-   - cd client && npm run lintjs
+   - cd controlpanel && tidy *.html
+   - cd .. && npm run lintjs
