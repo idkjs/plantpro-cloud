@@ -51,4 +51,4 @@ lint_client:
   script:
    - cd client && tidy index.html
    - cd controlpanel && tidy dashboard.html
-   - cd .. && npm run lintjs
+   - cd .. && ./node_modules/.bin/eslint -c ./.eslintrc.json controlpanel/js/dashboard.js
