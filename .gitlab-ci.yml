@@ -47,7 +47,7 @@ test_client:
 lint_client:
   before_script:
    - apk add tidyhtml@edge
-  stage: build
+  stage: lint
   script:
    - cd client && tidy index.html
    - cd controlpanel && tidy dashboard.html
