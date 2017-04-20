@@ -8,36 +8,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/settings.css">
-        <title>PlantPi: Settings</title>
+        <title>PlantPi: Group Settings</title>
         <link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
     </head>
     <body>
-        <script>
-            var username = hex2a(getCookie("username"));
-
-            function getCookie(cname) {
-                var name = cname + "=";
-                var decodeCookie = decodeCookie.split(';');
-                for(var i = 0; i <ca.length; i++) {
-                    var c = ca[i];
-                            while (c.charAt(0) == ' ') {
-                                    c = c.substring(1);
-                        }
-                        if (c.indexOf(name) == 0) {
-                                return c.substring(name.length, c.length);
-                        }
-                        return "";
-                }
-                
-                function hex2a(hexx) {
-                var hex = hexx.toString();
-                var str = '';
-                for (var i = 0; i < hex.length; i += 2)
-                    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-                    return str;
-            }
-
-        </script>
         <!--Begin NavBar-->
         <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -53,7 +27,7 @@
                     <!--Allow for better compatability when resizing-->
                     <div class="collapse navbar-collapse" id="TheNavBar">
                         <ul class="nav navbar-nav navbar-right">
-                                    <li><a><span class="glyphicon glyphicon-user"></span><script> document.write("" + username + "</a>");</script></a></li>
+                                    <li><a><span class="glyphicon glyphicon-user" id="usernameRenderTarget"></span></a></li>
                                     <li> <a href="dashboard.html"><span class="glyphicon glyphicon-arrow-left"></span> Go Back</a></li>
                                     <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a></li>
                                     <li><a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a></li>
@@ -68,23 +42,6 @@
                  </div>
             </div>
         </nav>
-        <script> //because i was bored EASTEREGG
-            var EasterEgg = document.getElementById("Easter");
-            var Leaf = document.getElementById("Leaf");
-            var xicon = document.getElementsByClassName("close")[0];
-
-            Leaf.onclick = function(){ //When leaf is clicked on
-                EasterEgg.style.display="block";
-             }
-            xicon.onclick = function() { //when "X" icon is clicked on
-                EasterEgg.style.display = "none";
-            }
-            window.onclick = function(event) { //Close window if user clicks outside the box
-                if (event.target == EasterEgg) {
-                    EasterEgg.style.display = "none";
-                }
-            }
-        </script>
         <!--End NavBar-->
 
         <br/><br/><br/><br/>
@@ -125,8 +82,7 @@
                     </div>
 
                     <div class="collapse" id="rmPlantsButton">  
-                        </br>
-                        <div class="">Remove Plants</div>
+                        <div class=""><h4 style="padding-top:10px;">Remove Plants</h4></div>
                             <div>
                                 <ul class="list-group" id="rmPlants">
                                     <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove"></button> Plant 1</li>
@@ -159,5 +115,6 @@
                 }
             </script>
         </div>
+        <script src="dist/bundle.js"></script>
     </body>
 </html>
