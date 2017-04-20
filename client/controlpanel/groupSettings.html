@@ -1,120 +1,153 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/settings.css">
-        <title>PlantPi: Group Settings</title>
-        <link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
-    </head>
-    <body>
-        <!--Begin NavBar-->
-        <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#TheNavBar"
-                                    <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        <a class="navbar-brand" href="dashboard.html">PlantPi</a>
-                    </div>
-
-                    <!--Allow for better compatability when resizing-->
-                    <div class="collapse navbar-collapse" id="TheNavBar">
-                        <ul class="nav navbar-nav navbar-right">
-                                    <li><a><span class="glyphicon glyphicon-user" id="usernameRenderTarget"></span></a></li>
-                                    <li> <a href="dashboard.html"><span class="glyphicon glyphicon-arrow-left"></span> Go Back</a></li>
-                                    <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a></li>
-                                    <li><a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a></li>
-
-                                <div id="Easter" class="EasterEgg">
-                            <div class="EasterEgg-content">
-                                    <span class="close">&times;</span>
-                                    <img src="http://harry.enzoverder.be/cats/funny-pictures-kitten-plant-innocen-face.jpg" width="80%" height="80%"></img>
-                                </div>
-                        </div>
-                    </ul>
-                 </div>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
+    <link href="css/settings.css" rel="stylesheet" type="text/css">
+    <title>PlantPi: Group Settings</title>
+    <link href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" rel="shortcut icon">
+</head>
+<body>
+    <!--Begin NavBar-->
+    <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-target="#TheNavBar" data-toggle="collapse" type="button"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="dashboard.html">PlantPi</a>
+            </div><!--Allow for better compatability when resizing-->
+            <div class="collapse navbar-collapse" id="TheNavBar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a><span class="glyphicon glyphicon-user" id="usernameRenderTarget"></span></a>
+                    </li>
+                    <li>
+                        <a href="dashboard.html"><span class="glyphicon glyphicon-arrow-left"></span> Go Back</a>
+                    </li>
+                    <li>
+                        <a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a>
+                    </li>
+                    <li>
+                        <a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-        <!--End NavBar-->
-
-        <br/><br/><br/><br/>
-
+        </div>
+    </nav><!--End NavBar-->
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <h1><span class="glyphicon glyphicon-cog"></span> Group Settings for <strong></strong></h1>
+        <div id="dynamicGroupName" style="display:inline">
+            <h1></h1>
+        </div>
+        <p style="padding-left:50px;"><strong>description?</strong></p>
         <div class="container">
-            <h1><span class="glyphicon glyphicon-cog"></span> Group Settings for <strong><div style="display:inline" id="dynamicGroupName"></div></strong></h1>
-            <p style="padding-left:50px;">description</p>
+            <strong><br></strong>
+            <form action="/endpoint" id="pi_info" method="post" name="pi_info">
+                <strong></strong>
+                <div class="subsection">
+                    <strong></strong>
+                    <p><strong>Group Infomation</strong></p>
+                </div>
+                <div class="subform">
+                    <strong></strong>
+                    <div class="form-group">
+                        <strong><label for="GroupName">Group Name</label> <input class="form-control" id="GroupName" name="name" placeholder="Backyard" type="text"></strong>
+                    </div><strong><button class="btn btn-primary" id="savebutton" onclick="" type="submit"><strong>Save Settings</strong></button></strong>
+                </div>
+            </form><br>
+            <div class="subsection">
+                <p>Modify Group Member Plants</p>
+            </div>
             <div class="container">
-                <br/>
-                <form action="/endpoint" method="post" id="pi_info">
-                    <div class="subsection"><p>Group Infomation</p></div>
-                    <div class="subform">
-                        <div class="form-group">
-                            <label for="GroupName">Group Name</label>
-                                <input type="text" class="form-control" id="GroupName" name="name" placeholder="Backyard">
-                         </div>
-                        
-                        <button id="savebutton" type="submit" class="btn btn-primary" onclick="">Save Settings</button>
-
-                    </div>
-                </form>
-                <br />
-                
-                <div class="subsection"><p>Modify Group Member Plants</p></div>
-                <div class="container"><div class="container">
-                    <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#addPlantsButton">Add Plants</button>
-                    <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#rmPlantsButton">Remove Plants</button>
-                    <div class="collapse" id="addPlantsButton">
-                        <div class=""><h4 style="padding-top:10px;">Add Plants</h4></div>
-                            <div>
-                            <ul class="list-group" id="rmPlants">
-                                <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 4</li>
-                                <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 9</li>
-                                <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 6</li>
+                <div class="container">
+                    <button class="btn btn-success" data-target="#addPlantsButton" data-toggle="collapse" type="button">Add Plants</button> <button class="btn btn-danger" data-target="#rmPlantsButton" data-toggle="collapse" type="button">Remove Plants</button>
+                    <div class="collapse" id="addPlantsButton" style="margin:10px;">
+                        <div>
+                            <h4 style="padding-top:10px;">Add Plants</h4>
+                            <p style="margin: 0px 0px 10px 20px">Adding a plant from another group removes it from that group and adds it to the current one.</p>
+                        </div>
+                        <div>
+                            <ul class="list-group" id="rmPlantsGroups">
+                                <li class="list-group-item" data-target="#group1" data-toggle="collapse">Group 1 <span class="caret"></span>
+                                    <div class="collapse" id="group1">
+                                        <ul class="list-group" id="group1">
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 1</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 2</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 3</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" data-target="#group2" data-toggle="collapse">Group 2 <span class="caret"></span>
+                                    <div class="collapse" id="group2">
+                                        <ul class="list-group" id="group2">
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 12</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 34</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 45</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 56</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li style="list-style: none; display: inline">
+                                    <div>
+                                        <ul>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 8</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 9</li>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
-
                     </div>
-
-                    <div class="collapse" id="rmPlantsButton">  
-                        <div class=""><h4 style="padding-top:10px;">Remove Plants</h4></div>
-                            <div>
-                                <ul class="list-group" id="rmPlants">
-                                    <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove"></button> Plant 1</li>
-                                    <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove"></button> Plant 2</li>
-                                    <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove"></button> Plant 3</li>
-                                </ul>
-                            </div>
+                    <div class="collapse" id="rmPlantsButton">
+                        <div class="">
+                            <h4 style="padding-top:10px;">Remove Plants</h4>
                         </div>
- 
-                </div></div>
-
-
-
-                <br/>
-                <div>
-                    <div class="subsection"><p>Remove Group</p></div>
-                    <div class="container"><div class="container">
-                        <p>Removing a group will move plants out of the group and then delete the group</p>
-                        <button id="savebutton" type="submit" class="btn btn-danger" onclick="">Delete Group</button>
-                    </div></div>
+                        <div>
+                            <ul class="list-group" id="rmPlantsGroups">
+                                <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove"></button> Plant A</li>
+                                <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove"></button> Plant B</li>
+                                <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove"></button> Plant C</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-
-
-
-
+            </div><br>
+            <div>
+                <div class="subsection">
+                    <p>Remove Group</p>
+                </div>
+                <div class="container">
+                    <div class="container">
+                        <p>Removing a group will move plants out of the group and then delete the group</p><button class="btn btn-danger" data-target="#confirmDeleteModal" data-toggle="modal" type="submit">Delete Group</button>
+                    </div>
+                </div>
             </div>
-            <script>
-                function confirm_mes(){
-                    alert("Settings Successfully Saved!");
-                }
-            </script>
+            <div class="modal fade" id="confirmDeleteModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirm Delete:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you really want to delete this group?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button> <button class="btn btn-danger" type="button">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <script src="dist/bundle.js"></script>
-    </body>
+    </div>
+    <script src="dist/bundle.js">
+    </script>
+</body>
 </html>
