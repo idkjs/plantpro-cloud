@@ -82,20 +82,24 @@ function doWork() {
                 <!--Allow for better compatability when resizing-->
                 <div class="collapse navbar-collapse" id="TheNavBar">
                     <ul class="nav navbar-nav navbar-right">
-                <script>
-document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + username + "</a></li>");
-                </script>
+                        <li>
+                            <a>
+                                <span class="glyphicon glyphicon-user" />
+                                    <script>document.write(username);</script>
+                                </span>
+                            </a>
+                        </li>
                         <!--<li><a><span class="glyphicon glyphicon-user"></span> TheLegend27</a></li>-->
                         <li> <a href="settings.html"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                         <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a></li>
                         <li><a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a></li>
-                        <div id="Easter" class="EasterEgg">
+                        <li id="Easter" class="EasterEgg">
                             <div class="EasterEgg-content">
                                 <span class="close">&times;</span>
                                 <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%">
                                 <p style="color:white" >It's a feature :)</p>
                             </div>
-                        </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -108,18 +112,16 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
                 <br /> <br />
                 <div class="col-xs-12"> 
                     <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"></span></a></h3><br/>
+                    <h4>Groups:</h4>
                     <ul class="nav nav-pills nav-stacked">
-                        <h4>Groups:</h4>
                         <ul class="nav" id="groupsList">
                             <li class="dropdown keep-open">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret"></span>
-
                                                 <ul class="dropdown-menu keep-open" role="menu">
                                                 <li><a href="#">Cara </a></li>
                                                 <li><a href="#">Raspy</a></li>
                                                 <li><a href="#">Bob</a></li>
                                                 <li><p style="color:#bcbcbc; padding: 3px 20px;">No plants in group</p></li>
-                                                <br/>
                                               </ul>
 
                                 </li>
