@@ -12,7 +12,7 @@ class UsernameRender extends React.Component {
 
 
   render() {
-    return (" " + {this.state.props.username});
+    return (<span>" " + {this.state.props.username}</span>);
   }
 
 }
@@ -20,4 +20,3 @@ class UsernameRender extends React.Component {
 ReactDOM.render(
     <UsernameRender username={username} />,
     document.getElementById('usernameRenderTarget'));
-
