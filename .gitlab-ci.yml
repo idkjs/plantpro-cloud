@@ -1,13 +1,20 @@
 image: ci.cs.nmt.edu/plantpi/cloud-side:latest
 
+stages:
+ - build
+ - lint
+ - test
+
 build_client:
+  stage: build
   before_script:
    - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
    - apk update
    - apk add make m4 perl build-base gcc zlib-dev patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev git bash nodejs-npm@edge
   script: "cd client && npm install --dev && npm run build && npm run webpack"
 
-build:
+build_server:
+  stage: build
   before_script:
    - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
    - apk update
@@ -30,8 +37,13 @@ build:
    - opam install camlp4
    - opam pin add opium https://github.com/chrismamo1/opium.git
    - eval `opam config env`
-   - ocaml -version
-   - opam --version
-   - camlp4 -version
-   - echo $PATH
   script: "cd server && opam pin add plantpi ."
+
+lint_client:
+  before_script:
+   - apk add tidyhtml@edge
+  stage: lint
+  script:
+   - cd client && tidy index.html
+   - cd client/controlpanel && tidy *.html
+   - cd client && npm run lintjs
