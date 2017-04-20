@@ -47,5 +47,5 @@ lint_client:
    - build_client
   script:
    - cd client && tidy index.html
-   - cd controlpanel && tidy *.html
+   - cd controlpanel && tidy dashboard.html
    - cd .. && npm run lintjs
