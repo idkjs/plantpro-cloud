@@ -62,11 +62,24 @@ let create_account_handler = (fun req ->
                 (Int64.to_int res)))
   end)
 
+type create_group_request =
+  { user: string
+  ; groupName: string
+  }
+  [@@deriving yojson]
+
 let create_group_handler = (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
   >>= fun body ->
-  let params = Fuck_stdlib.get_post_params body in
+  let {user = username; groupName = group_name} =
+    Yojson.Safe.from_string body
+    |> create_group_request_of_yojson
+    |> function
+      | Ok x -> x
+      | Error _ -> raise (Failure "fuck")
+  in
+  (*let params = Fuck_stdlib.get_post_params body in
   let _, username =
     List.find
       (fun (name, _) -> name = "user")
@@ -76,14 +89,19 @@ let create_group_handler = (fun req ->
     List.find
       (fun (name, _) -> name = "groupName")
       params
-  in
+  in*)
   let%lwt user = Db.get_user username in
-  let%lwt res = Db.add_group group_name username in
-  respond'
-    (`String
-      (Printf.sprintf
-        "created group with ID %d"
-        (Int64.to_int res))))
+  match%lwt Db.add_group group_name username with
+    | res ->
+        respond'
+          (`String
+            (Printf.sprintf
+              "created group with ID %d"
+              (Int64.to_int res)))
+    | exception exn ->
+        respond'
+          ~code:(`Bad_request)
+          (`String "Error"))
 
 let login_handler = (fun req ->
   Cohttp_lwt_body.to_string

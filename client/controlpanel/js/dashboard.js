@@ -106,6 +106,55 @@ class GroupsListing extends React.Component {
     }
 }
 
+class NewGroupComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            response: null,
+            props: props,
+            outputTray: <div></div>
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e) {
+        var url = "/create-group";
+        console.log(url);
+        axios.post(url,
+            { user: this.state.props.username
+            , groupName: document.getElementById("PlantName").value
+            })
+        .then(res => {
+            var style = {
+                paddingLeft: "1.5em"
+            };
+            this.setState({
+                response: res.status,
+                props: this.state.props,
+                outputTray: <span style={style}>Valid!</span>});})
+            .catch(res => {
+                var style = {
+                    color: "red",
+                    paddingLeft: "1.5em"
+                };
+                this.setState({
+                    response: 200,
+                    props: this.state.props,
+                    outputTray: <span style={style}>Invalid!</span>
+                });});
+    }
+
+    render() {
+        return(
+                <div>
+                <input type="text" className="form-control" id="PlantName" name="groupName" placeholder="new group name" />
+                <button id="savebutton" className="btn btn-primary" onClick={this.handleClick}>Create Group</button>
+                {this.state.outputTray}
+                </div>);
+    }
+}
+
 function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
@@ -130,3 +179,7 @@ ReactDOM.render(
 ReactDOM.render(
   <PlantListing username={username} groupname={"ungrouped"} />,
   document.getElementById("plantListContainer"));
+
+ReactDOM.render(
+  <NewGroupComponent username={username} />,
+  document.getElementById("show_create_group"));
