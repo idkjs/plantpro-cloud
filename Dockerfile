@@ -18,4 +18,4 @@ RUN apk update \
   && opam switch 4.03.0 \
   && eval `opam config env` \
   && opam update \
-  && opam install camlp4 ocamlnet uri cryptokit re ppx_deriving
+  && opam install camlp4 ocamlnet uri cryptokit re ppx_deriving cohttp calendar

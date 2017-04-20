@@ -47,7 +47,7 @@ test_client:
 lint_client:
   before_script:
    - apk add tidyhtml@edge
-  stage: lint
+  stage: build
   dependencies:
    - build_client
   script:
