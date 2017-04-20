@@ -12,7 +12,7 @@ class UsernameRender extends React.Component {
 
 
   render() {
-    return (<span>" " + {this.state.props.username}</span>);
+    return (<span>" " + {this.state.props.username}<span>);
   }
 
 }
