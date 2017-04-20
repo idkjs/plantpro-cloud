@@ -21,7 +21,7 @@ let _ =
   `String ("received request \"" ^ body ^ "\"")
   |> respond')*)
 
-let service_create_account = post "/create-account" (fun req ->
+let create_account_handler = (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
   >>= fun body ->
@@ -62,7 +62,7 @@ let service_create_account = post "/create-account" (fun req ->
                 (Int64.to_int res)))
   end)
 
-let service_create_group = post "/create-group" (fun req ->
+let create_group_handler = (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
   >>= fun body ->
@@ -85,7 +85,7 @@ let service_create_group = post "/create-group" (fun req ->
         "created group with ID %d"
         (Int64.to_int res))))
 
-let service_login = post "/login" (fun req ->
+let login_handler = (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
   >>= fun body ->
@@ -139,7 +139,7 @@ let service_login = post "/login" (fun req ->
         redirect'
           (Uri.of_string "/static/index.html#not-found"))
 
-let service_get_user_devices = get "/get-devices/:username/:group" (fun req ->
+let get_user_devices_handler = (fun req ->
   let username = param req "username" in
   let%lwt devices = Db.get_devices username in
   let%lwt devices =
@@ -169,7 +169,7 @@ let service_get_user_devices = get "/get-devices/:username/:group" (fun req ->
   `Json ([%to_yojson: Device.t list] devices)
   |> respond')
 
-let service_get_user_groups = get "/get-groups/:username" (fun req ->
+let get_user_groups_handler = (fun req ->
   let username = param req "username" in
   let%lwt groups = Db.get_groups username in
   let groups =
@@ -182,7 +182,7 @@ let try_unoption = function
   | Some x -> x
   | None -> raise (Failure "gambled and lost, mate *shrugs*")
 
-let service_get_device_data = get "/get-data/:device" (fun req ->
+let get_device_data_handler = (fun req ->
   let device_name = param req "device" in
   let%lwt device =
     Db.get_device_by_name device_name
@@ -196,7 +196,7 @@ let service_get_device_data = get "/get-data/:device" (fun req ->
   `Json res
   |> respond')
 
-let service_associate_device = post "/associate-device" (fun req ->
+let associate_device_handler = (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
   >>= fun body ->
@@ -229,7 +229,7 @@ let service_associate_device = post "/associate-device" (fun req ->
     | _ ->
         respond' (`String "Error: device association unsuccessful"))
 
-let service_push_data = post "/push-data" (fun req ->
+let push_data_handler = (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
   >>= fun body ->
@@ -255,46 +255,52 @@ let service_push_data = post "/push-data" (fun req ->
     | Error msg ->
         raise (Failure ("MALFORMED JSON: " ^ msg));)
 
-(*let auth_static =
+let middleware_auth =
   let filter handler req =
     let headers = Request.headers req in
-    let auth_token =
-      Cohttp.Cookie.Set_cookie_hdr.(
-        extract headers
-        |> List.find (fun (name, _) -> name = "auth_token")
-        |> snd
-        |> value)
+    let _ = Lwt_io.printf "Auth middleware is running...\n" in
+    let auth_token, username =
+      match Cohttp.Header.get (Request.headers req) "Cookie" with
+        | Some s ->
+            let ls = Fuck_stdlib.get_post_params ~split_on:";" s in
+            let username =
+              List.find (fun (name, _) -> String.trim name = "username") ls
+              |> snd
+              |> Encrypt.hex_decode
+            in
+            let auth_token =
+              List.find (fun (name, _) -> String.trim name = "auth_token") ls
+              |> snd
+              |> Encrypt.hex_decode
+            in
+            Some auth_token, Some username
+        | None -> None, None
     in
-    let username =
-      Cohttp.Cookie.Set_cookie_hdr.(
-        extract headers
-        |> List.find (fun (name, _) -> name = "name")
-        |> snd
-        |> value)
-    in
-    let is_secure =
-      try
-        Cohttp.Request.uri req.request
-        |> Uri.path
-        |> String.substr_index ~pattern:"/secure/"
-        |> Option.is_some
-      with
-        | Not_found -> false
-    in
-    match Session.check username auth_token, is_secure with
-      | `Expired, true ->
-        redirect'
-          (Uri.of_string "/static/login.html#session-expired")
-      | `Nope, true ->
-        redirect'
-          (Uri.of_string "/static/login.html#bad-auth")
-      | `Ok, true
-      | `Nope, false
-      | `Expired, false ->
-          Printf.printf "Handling with normal handler\n";
-          handler req
+    match auth_token, username with
+      | None, None
+      | Some _, None
+      | None, Some _ ->
+          let _ = Lwt_io.printf "resource: \"%s\"\n" req.request.Cohttp.Request.resource in
+          if Uri.(of_string req.request.Cohttp.Request.resource |> path) = "/static/login.html"
+          then
+            handler req
+          else
+            redirect'
+              (Uri.of_string "/static/login.html")
+      | (Some auth_token'), (Some username') -> begin
+          match Session.check username' auth_token' with
+            | `Expired ->
+              redirect'
+                (Uri.of_string "/static/index.html#session-expired")
+            | `Nope ->
+              redirect'
+                (Uri.of_string "/static/index.html#bad-auth")
+            | `Ok ->
+                Printf.printf "Handling with normal handler\n";
+                handler req
+      end
   in
-  Rock.Middleware.create ~filter*)
+  Rock.Middleware.create ~filter ~name:"authorize users"
 
 let _ =
   let plantpi_handle_signal = function
@@ -314,14 +320,23 @@ let _ =
   let static =
     Middleware.static ~local_path:"../client" ~uri_prefix:"/static"
   in
+  let auth_filter = Rock.Middleware.filter middleware_auth in
+  let service_login = post "/login" login_handler in
+  let service_create_account = post "/create-account" create_account_handler in
+  let service_create_group = post "/create-group" (auth_filter create_group_handler) in
+  let service_push_data = post "/push-data" (auth_filter push_data_handler) in
+  let service_associate_device = post "/associate-device" (auth_filter associate_device_handler) in
+  let service_get_device_data = get "/get-data/:device" (auth_filter get_device_data_handler) in
+  let service_get_user_devices = get "/get-devices/:username/:group" (auth_filter get_user_devices_handler) in
+  let service_get_user_groups = get "/get-groups/:username" (auth_filter get_user_groups_handler) in
   App.empty
+  |> middleware static
   |> service_create_account
-  |> service_create_group
   |> service_login
+  |> service_create_group
   |> service_push_data
   |> service_associate_device
   |> service_get_user_devices
   |> service_get_user_groups
   |> service_get_device_data
-  |> middleware static
   |> App.run_command
