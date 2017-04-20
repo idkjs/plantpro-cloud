@@ -182,6 +182,47 @@ let try_unoption = function
   | Some x -> x
   | None -> raise (Failure "gambled and lost, mate *shrugs*")
 
+type rename_group_parameters =
+  { old_name: string
+  ; new_name: string
+  }
+  [@@deriving yojson]
+
+let rename_group_handler = (fun req ->
+  let open Result in
+  let%lwt body =
+    Cohttp_lwt_body.to_string
+      req.Opium_rock.Request.body
+  in
+  let Ok { old_name; new_name } =
+    Yojson.Safe.from_string body
+    |> rename_group_parameters_of_yojson
+  in
+  let username =
+    match Cohttp.Header.get (Request.headers req) "Cookie" with
+      | Some s ->
+          Fuck_stdlib.get_post_params ~split_on:";" s
+          |> List.find (fun (name, _) -> String.trim name = "username")
+          |> snd
+          |> Encrypt.hex_decode
+      | None -> raise (Failure "could not get username from cookie")
+  in
+  let%lwt user = Db.get_user username in
+  match user with
+    | None ->
+        raise (Failure "could not find user with that username")
+    | Some user ->
+        let%lwt group = Db.get_group_by_name old_name user in
+        match%lwt Db.rename_group group.Group.id new_name with
+          | _ ->
+              respond' (`String "OK")
+          | exception Not_found ->
+              raise (Failure "renaming the group"))
+
+let try_unoption = function
+  | Some x -> x
+  | None -> raise (Failure "gambled and lost, mate *shrugs*")
+
 let get_device_data_handler = (fun req ->
   let device_name = param req "device" in
   let%lwt device =
@@ -329,6 +370,7 @@ let _ =
   let service_get_device_data = get "/get-data/:device" (auth_filter get_device_data_handler) in
   let service_get_user_devices = get "/get-devices/:username/:group" (auth_filter get_user_devices_handler) in
   let service_get_user_groups = get "/get-groups/:username" (auth_filter get_user_groups_handler) in
+  let service_rename_group = get "/rename-group" (auth_filter rename_group_handler) in
   App.empty
   |> middleware static
   |> service_create_account
@@ -339,4 +381,5 @@ let _ =
   |> service_get_user_devices
   |> service_get_user_groups
   |> service_get_device_data
+  |> service_rename_group
   |> App.run_command
