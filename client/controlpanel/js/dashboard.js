@@ -107,53 +107,53 @@ class GroupsListing extends React.Component {
 }
 
 class NewGroupComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      response: null,
-      props: props,
-      outputTray: <div></div>
-    };
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
-    var url = `/create-group`;
-    console.log(url);
-    axios.post(url,
-        { user: this.state.props.username
-        , groupName: PlantName.value
-        })
-      .then(res => {
-        var style = {
-          paddingLeft: '1.5em'
+    constructor(props) {
+        super(props);
+        this.state = {
+            response: null,
+            props: props,
+            outputTray: <div></div>
         };
-        this.setState({
-          response: res.status,
-          props: this.state.props,
-          outputTray: <span style={style}>Valid!</span>});})
-      .catch(res => {
-        var style = {
-          color: 'red',
-          paddingLeft: '1.5em'
-        };
-        this.setState({
-            response: 200,
-            props: this.state.props,
-            outputTray: <span style={style}>Invalid!</span>
-          });});
-  }
 
-  render() {
-    return(
-      <div>
-        <input type="text" className="form-control" id="PlantName" name="groupName" placeholder="new group name" />
-        <button id="savebutton" className="btn btn-primary" onClick={this.handleClick}>Create Group</button>
-        {this.state.outputTray}
-      </div>);
-  }
-};
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e) {
+        var url = "/create-group";
+        console.log(url);
+        axios.post(url,
+                { user: this.state.props.username
+                    , groupName: PlantName.value
+                })
+        .then(res => {
+            var style = {
+                paddingLeft: "1.5em"
+            };
+            this.setState({
+                response: res.status,
+                props: this.state.props,
+                outputTray: <span style={style}>Valid!</span>});})
+            .catch(res => {
+                var style = {
+                    color: "red",
+                    paddingLeft: "1.5em"
+                };
+                this.setState({
+                    response: 200,
+                    props: this.state.props,
+                    outputTray: <span style={style}>Invalid!</span>
+                });});
+    }
+
+    render() {
+        return(
+                <div>
+                <input type="text" className="form-control" id="PlantName" name="groupName" placeholder="new group name" />
+                <button id="savebutton" className="btn btn-primary" onClick={this.handleClick}>Create Group</button>
+                {this.state.outputTray}
+                </div>);
+    }
+}
 
 function getCookie(name) {
     var value = "; " + document.cookie;
