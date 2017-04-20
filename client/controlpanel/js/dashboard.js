@@ -122,9 +122,9 @@ class NewGroupComponent extends React.Component {
         var url = "/create-group";
         console.log(url);
         axios.post(url,
-                { user: this.state.props.username
-                    , groupName: PlantName.value
-                })
+            { user: this.state.props.username
+            , groupName: document.getElementById("PlantName").value
+            })
         .then(res => {
             var style = {
                 paddingLeft: "1.5em"
