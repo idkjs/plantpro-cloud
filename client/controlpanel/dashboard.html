@@ -73,9 +73,9 @@ function doWork() {
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#TheNavBar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="icon-bar" />
+                        <span class="icon-bar" />
+                        <span class="icon-bar" />
                     </button>
                     <a class="navbar-brand" href="dashboard.html">PlantPi</a>
                 </div>
@@ -126,12 +126,11 @@ function doWork() {
                                         <li><p style="color:#bcbcbc; padding: 3px 20px;">No plants in group</p></li>
                                     </ul>
                                 </li>
-                                <div id="groupsListContainer"></div>
+                                <li id="groupsListContainer"></li>
                                 <br/>
                                 <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
                                 <li style="font-size: 20px; float: left;"><a onclick="showCreateGroup()">+</a></li>
 
-                                <br/><br/>
 
                                 <div id="show_create_group" style="display: none;">
                                     <form action="/create-group" method="post">
@@ -162,15 +161,12 @@ $('.dropdown.keep-open').on({
                                 </script>
                             </ul>
                         </li>
-                        <hr/>
                         <h4>All:</h4>
                         <ul class="nav" style="font-size: 15px;">   
-                            <div id="plantListContainer"></div>
+                            <li id="plantListContainer"></li>
                             <li><a href="">Plant A
                                     <button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:3px;"></button></a></li>
                             <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
-                            <br />
-                            <br />
                         </ul>
                     </ul>
                 </div>
@@ -219,7 +215,7 @@ if(!moisture){
 
 //what determines the status display is the sum of all level attention
 var code = lvl1att + lvl2att + lvl3att;
-//document.write("<p><strong>" + stat.fontsize(5)  + "</strong> ");
+document.write(stat.fontsize(5));
 if(code == 0){
     txt  = "It's All Good :)";
     document.write(txt.fontcolor("#009b09").fontsize(4));
@@ -251,10 +247,9 @@ if(code > 0){
     if(code == 3){
         document.write(" <br/>Take some time to save a life.");
     }
-    document.write("</p>");
 }
 else{ //if nothing needs attention, then is "all good" :)
-    document.write("<p>Your plant is doing well :)</p>");
+    document.write("Your plant is doing well :)");
 }
                                     </script>
                                 </div>
@@ -262,22 +257,22 @@ else{ //if nothing needs attention, then is "all good" :)
                             </div>
 
                             <ul> 
-                                <div id="Level">
-                                    <li>Temperature Level</li> 
-                                </div>
-                                <br/>
+                                <li id="Level">
+                                    Temperature Level
+                                </li>
+                                <li>
+                                    <p>
                                 <script>
-document.write("<p>Current: " + celcius + "&#8451, " + faren + "&#8457 </p>");
+document.write("Current: " + celcius + "&#8451, " + faren + "&#8457");
 if(faren > 119){
-    document.write("<br/><p>Your plant is not far from spontaneously combusting! <span class=\"glyphicon glyphicon-fire\"></span> throw some ice on it or something! <span class=\"glyphicon glyphicon-ice-lolly\"></span> </p>");
+    document.write("Your plant is not far from spontaneously combusting! <span class=\"glyphicon glyphicon-fire\"></span> throw some ice on it or something! <span class=\"glyphicon glyphicon-ice-lolly\"></span>");
 }
                                 </script>
-
-                                <br/>
-                                <div id="Level">
-                                    <li>Mositure Level</li>
-                                </div>
-                                <br/>
+                                    </p>
+                                </li>
+                                <li id="Level">
+                                    Mositure Level
+                                </li>
                                 <script>
 if(moisture){
     document.write("<p> There seems to be mositure present :) </p>");
@@ -286,13 +281,12 @@ else{
     document.write("<p>Needs some moisture!</p>");
 }
                                 </script>
-                                <br/>
-                                <div id="Level">
-                                    <li>Light Level</li> 
-                                </div>
-                                <br/>
-                                <p>Bright as this plants future. </p>
-                                <br/>
+                                <li id="Level">
+                                    Light Level
+                                </li>
+                                <li>
+                                    <p>Bright as this plants future. </p>
+                                </li>
                             </ul>   
                         </div>
                     </div>
