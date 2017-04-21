@@ -100,7 +100,8 @@ class GroupsListing extends React.Component {
     };
 
     return (
-    	<div> {
+    	<div>
+    	{
     		this.state.groups.map((group) => {
     			return(
     			<li className="groupElement">
