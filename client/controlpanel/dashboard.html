@@ -156,9 +156,9 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
                                         </ul>
 
                                         <!--Mystery Plant-->
-                                        <ul class="nav innerMenu"><li><button type="button" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Library sidewalk</a></li>
+                                        <ul class="nav innerMenu"><li><button id="cog1" type="button" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Library sidewalk</a></li>
 
-                                            <div class="content" style="display: none">
+                                            <div class="content" id="settingContents" style="display: none">
                                                     <ul class="group-list">
                                                         <p>Settings</p>
                                                         <li><a>Rename</a></li>
@@ -188,6 +188,12 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
                                 </form>
                             </div>
                             <script>
+
+$(document).ready(function() {
+    $("#cog1").click(function () {
+        $("#settingContents").slideToggle();
+    });
+});
 
 function showCreateGroup() {
     var hidden = document.getElementById('show_create_group');
