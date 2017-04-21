@@ -176,6 +176,18 @@ let get_group_by_id id =
     | _ ->
         raise (Failure "something has gone catastrophically wrong")
 
+let rename_group id new_name =
+  let%lwt group = get_group_by_id id in
+  match group with
+    | group ->
+        S.insert
+          db
+          [%sqlc "UPDATE groups SET name = %s WHERE id = %d"]
+          new_name
+          id
+    | exception e ->
+        raise Not_found
+
 let get_groups user =
   let%lwt user_id = get_user_id user in
       S.select_f
