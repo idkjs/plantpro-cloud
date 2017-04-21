@@ -148,11 +148,14 @@ function doWork() {
 
                                         <!--Dank Weed-->
                                         <div class="innerguts">
-                                        <ul class="nav innerMenu"><li><button class="sets glyphicon glyphicon-cog pull-right settings_cog" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> In front of cramer </a></li>
+                                        <ul class="nav innerMenu">
+                                            <li>
+                                                <button id="cog1" class="sets glyphicon glyphicon-cog pull-right settings_cog" style="border:none;background-color:transparent;padding-top:13px;"></button>
+                                                <a href="#"> In front of cramer </a>
+                                            </li>
 
-                                                <div class="content" style="display: none">
+                                                <div id="settingPlant1" class="content" style="display: none">
                                                     <ul class="group-list">
-                                                        <p>Settings</p>
                                                         <li><a>Rename</a></li>
                                                         <li>Change Group</li>
                                                         <li>Delete Plant</li>
@@ -161,16 +164,19 @@ function doWork() {
                                         </ul>
 
                                         <!--Mystery Plant-->
-                                        <ul class="nav innerMenu"><li><button type="button" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Library sidewalk</a></li>
+                                        <ul class="nav innerMenu">
+                                            <li>
+                                                <button id="cog2" type="button" onclick="" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button>
+                                                <a href="#">Library sidewalk</a>
+                                            </li>
 
-                                            <div class="content" style="display: none">
+                                            <div class="content" id="settingPlant2" style="display: none">
                                                     <ul class="group-list">
-                                                        <p>Settings</p>
                                                         <li><a>Rename</a></li>
                                                         <li>Change Group</li>
                                                         <li>Delete Plant</li>
                                                     </ul>
-                                                </div>
+                                            </div>
 
                                         </ul>
                                     </ul>
@@ -192,7 +198,19 @@ function doWork() {
                                     <button id="savebutton" type="submit" class="btn btn-primary" onclick="addGroup()">Create Group</button>
                                 </form>
                             </div>
-                            <script>
+<script>
+
+$(document).ready(function() {
+    $("#cog1").click(function () {
+        $("#settingPlant1").slideToggle();
+    });
+});
+$(document).ready(function() {
+    $("#cog2").click(function () {
+        $("#settingPlant2").slideToggle();
+    });
+});
+
 function showCreateGroup() {
     var hidden = document.getElementById('show_create_group');
     if (hidden.style.display === 'block') {
@@ -201,12 +219,6 @@ function showCreateGroup() {
         hidden.style.display = 'block';
     }
 };
-
-$(document).ready(function() {
-	$('#setting_cog').on('click', function() {
-		$(this).parent('ul').siblings('.dropSettings').slideToggle(300);
-	}); // end click
-}); 
 
 //Experimental Function to display cog accordinan settings
 function displaySettings(){
@@ -225,28 +237,33 @@ $('.dropdown.keep-open').on({
     "click":             function() { this.closable = true; },
     "hide.bs.dropdown":  function() { return this.closable; }
 });
-                                    </script>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <h4>All:</h4>
-                    <ul class="nav nav-pills nav-stacked" style="font-size: 15px;">
-                        <li id="plantListContainer"></li>
-                        <li><a href="#">Plant A
-                                <button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:3px;">&nbsp;</button></a></li>
-                        <li>
-                            <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">&nbsp;</button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
-                        </li>
+$('#menuElement .dropdown-menu').on({
+    "click":function(e){
+      e.stopPropagation();
+    }
+});
+
+//This function will only allow one dropdown open at a time
+
+
+
+//Toggle sidebar on button press
+$(document).ready(function() {
+    $('[data-toggle=offcanvas]').click(function() {
+        $('.row-offcanvas').toggleClass('active');
+    });
+});
+                            </script>
+
                     </ul>
                         <hr/>
                         <h4 style="color: #009b09;">All:</h4>
-                        <ul class="nav" style="font-size: 15px;">   
+                        <ul class="nav" style="font-size: 15px;">
                             <div id="plantListContainer"></div>
                             <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
                             <br />
                             <br />
-                        </ul>   
+                        </ul>
                 </div>
             </div>
             <!--...........................................................................Side bar ends here..........................................................................-->
