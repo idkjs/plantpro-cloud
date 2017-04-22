@@ -83,17 +83,16 @@ let get_user uname =
     let creation_time =
       CalendarLib.Printer.Calendar.from_string creation_time'
     in
-    Some (
-      User.{
-          creation_time
-        ; name
-        ; email
-        ; salt
-        ; p_hash
-        })
+    User.{
+        creation_time
+      ; name
+      ; email
+      ; salt
+      ; p_hash
+      }
   with
     | Not_found ->
-        Lwt.return None
+        raise (Failure "Couldn't find a user with the username")
 
 let get_user_id uname =
   let%lwt id =
@@ -207,6 +206,50 @@ let add_group name user =
             VALUES(%s, %d)"]
     name
     user_id
+
+let add_device_to_group device group =
+  let device_id = device.Device.id in
+  match group with
+    | Some group ->
+        let group_id = group.Group.id in
+        S.insert
+          db
+          [%sqlc
+            "UPDATE devices
+              SET group_id = %d
+              WHERE device_id = %s"]
+          group_id
+          device_id
+    | None ->
+        S.insert
+          db
+          [%sqlc
+            "UPDATE devices
+              SET group_id = NULL
+              WHERE device_id = %s"]
+          device_id
+
+let get_devices_by_group group =
+  S.select_f
+    db
+    (fun (id, name, group_id) ->
+      let%lwt group =
+        match group_id with
+          | Some group_id ->
+              let%lwt x = get_group_by_id group_id in
+              Lwt.return (Some x)
+          | None ->
+              Lwt.return None
+      in
+      Lwt.return Device.{id; name; group})
+    [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE group_id = %d"]
+    group.Group.id
+
+let delete_group group =
+  S.execute
+    db
+    [%sqlc "DELETE FROM groups WHERE id = %d"]
+    group.Group.id
 
 let associate_device user device name =
   let open User in
