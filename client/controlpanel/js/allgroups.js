@@ -56,7 +56,7 @@ class PlantListing extends React.Component {
           this.state.plants.map((plant) => {
               return (
                   <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left">
-                  {plant.name}</li>
+                  </button>{plant.name}</li>
                   );
               })
         }
