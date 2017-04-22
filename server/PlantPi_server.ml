@@ -44,13 +44,14 @@ let create_account_handler = (fun req ->
   if password1 <> password2
   then respond' (`String ("passwords do not match: " ^ username))
   else begin
-    match%lwt Db.get_user username with
-      | Some _ ->
-          respond'
-            ~headers:(Cohttp.Header.init_with "Location" "/static/index.html#failed")
-            ~code:(`Moved_permanently)
-            (`String ("Error: User " ^ username ^ " already exists"))
-      | None ->
+    try%lwt
+      let _ = Db.get_user username in
+      respond'
+        ~headers:(Cohttp.Header.init_with "Location" "/static/index.html#failed")
+        ~code:(`Moved_permanently)
+        (`String ("Error: User " ^ username ^ " already exists"))
+    with
+      | exn ->
           let user =
             User.create username "none@example.com" password1
           in
@@ -118,44 +119,39 @@ let login_handler = (fun req ->
       (fun (name, _) -> name = "password")
       params
   in
-  let%lwt user = Db.get_user username in
-  match user with
-    | Some u ->
-        begin match User.check username password u with
-          | `Ok ->
-              let session =
-                Session.create username
-              in
-              let lifetime = Int64.of_int Session.lifetime in
-              let cookie =
-                Cohttp.Cookie.Set_cookie_hdr.make
-                  ~expiration:(`Max_age (lifetime))
-                  ~path:"/"
-                  ~secure:false
-                  ("auth_token", Encrypt.hex_encode session.auth_token)
-              in
-              let cookie' =
-                Cohttp.Cookie.Set_cookie_hdr.make
-                  ~expiration:(`Max_age (lifetime))
-                  ~path:"/"
-                  ~secure:false
-                  ("username", Encrypt.hex_encode session.user)
-              in
-              let headers =
-                let k, v = Cohttp.Cookie.Set_cookie_hdr.serialize cookie in
-                let k', v' = Cohttp.Cookie.Set_cookie_hdr.serialize cookie' in
-                Cohttp.Header.(add (init_with k v) k' v')
-              in
-              redirect'
-                ~headers
-                (Uri.of_string "/static/controlpanel/dashboard.html")
-          | `Nope ->
-              redirect'
-                (Uri.of_string "/static/index.html#bad-pass")
-        end
-    | None ->
+  let%lwt u = Db.get_user username in
+  begin match User.check username password u with
+    | `Ok ->
+        let session =
+          Session.create username
+        in
+        let lifetime = Int64.of_int Session.lifetime in
+        let cookie =
+          Cohttp.Cookie.Set_cookie_hdr.make
+            ~expiration:(`Max_age (lifetime))
+            ~path:"/"
+            ~secure:false
+            ("auth_token", Encrypt.hex_encode session.auth_token)
+        in
+        let cookie' =
+          Cohttp.Cookie.Set_cookie_hdr.make
+            ~expiration:(`Max_age (lifetime))
+            ~path:"/"
+            ~secure:false
+            ("username", Encrypt.hex_encode session.user)
+        in
+        let headers =
+          let k, v = Cohttp.Cookie.Set_cookie_hdr.serialize cookie in
+          let k', v' = Cohttp.Cookie.Set_cookie_hdr.serialize cookie' in
+          Cohttp.Header.(add (init_with k v) k' v')
+        in
         redirect'
-          (Uri.of_string "/static/index.html#not-found"))
+          ~headers
+          (Uri.of_string "/static/controlpanel/dashboard.html")
+    | `Nope ->
+        redirect'
+          (Uri.of_string "/static/index.html#bad-pass")
+  end)
 
 let get_user_devices_handler = (fun req ->
   let username = param req "username" in
@@ -169,20 +165,15 @@ let get_user_devices_handler = (fun req ->
           |> Lwt.return
       | target_group_name ->
           let%lwt user = Db.get_user username in
-          begin match user with
-            | Some user ->
-                let%lwt group = Db.get_group_by_name target_group_name user in
-                Lwt.return (
-                  List.filter
-                    (function
-                      | { Device.group = Some { name = group_name } } when group_name = target_group_name ->
-                          true
-                      | _ ->
-                          false)
-                    devices)
-            | None ->
-                raise Not_found
-          end
+          let%lwt group = Db.get_group_by_name target_group_name user in
+          Lwt.return (
+            List.filter
+              (function
+                | { Device.group = Some { name = group_name } } when group_name = target_group_name ->
+                    true
+                | _ ->
+                    false)
+              devices)
   in
   `Json ([%to_yojson: Device.t list] devices)
   |> respond')
@@ -226,16 +217,41 @@ let rename_group_handler = (fun req ->
       | None -> raise (Failure "could not get username from cookie")
   in
   let%lwt user = Db.get_user username in
-  match user with
-    | None ->
-        raise (Failure "could not find user with that username")
-    | Some user ->
-        let%lwt group = Db.get_group_by_name old_name user in
-        match%lwt Db.rename_group group.Group.id new_name with
-          | _ ->
-              respond' (`String "OK")
-          | exception Not_found ->
-              raise (Failure "renaming the group"))
+  let%lwt group = Db.get_group_by_name old_name user in
+  match%lwt Db.rename_group group.Group.id new_name with
+    | _ ->
+        respond' (`String "OK")
+    | exception Not_found ->
+        raise (Failure "renaming the group"))
+
+let delete_group_handler = (fun req ->
+  let open Result in
+  let%lwt group_name =
+    Cohttp_lwt_body.to_string
+      req.Opium_rock.Request.body
+  in
+  let username =
+    match Cohttp.Header.get (Request.headers req) "Cookie" with
+      | Some s ->
+          Fuck_stdlib.get_post_params ~split_on:";" s
+          |> List.find (fun (name, _) -> String.trim name = "username")
+          |> snd
+          |> Encrypt.hex_decode
+      | None -> raise (Failure "could not get username from cookie")
+  in
+  let%lwt user = Db.get_user username in
+  let%lwt group = Db.get_group_by_name group_name user in
+  let%lwt devices = Db.get_devices_by_group group in
+  let%lwt () =
+    Lwt_list.iter_p
+      (fun device ->
+        let%lwt _ = Db.add_device_to_group device None in
+        Lwt.return ())
+      devices
+  in
+  let%lwt () = Db.delete_group group in
+  `String "OK"
+  |> respond')
 
 let try_unoption = function
   | Some x -> x
@@ -389,6 +405,7 @@ let _ =
   let service_get_user_devices = get "/get-devices/:username/:group" (auth_filter get_user_devices_handler) in
   let service_get_user_groups = get "/get-groups/:username" (auth_filter get_user_groups_handler) in
   let service_rename_group = get "/rename-group" (auth_filter rename_group_handler) in
+  let service_delete_group = get "/delete-group" (auth_filter delete_group_handler) in
   App.empty
   |> middleware static
   |> service_create_account
@@ -400,4 +417,5 @@ let _ =
   |> service_get_user_groups
   |> service_get_device_data
   |> service_rename_group
+  |> service_delete_group
   |> App.run_command
