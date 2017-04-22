@@ -35,7 +35,7 @@ class PlantListing extends React.Component {
         var buttonStyle = {
             border: 'none',
             backgroundColor: 'transparent',
-            paddingTop: '13px'
+            paddingTop: '2px'
         };
         var pStyle = {
             color: '#bcbcbc',
@@ -57,8 +57,9 @@ class PlantListing extends React.Component {
         else {
           this.state.plants.map((plant) => {
               return (
-                  <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left">
-                  {plant.name}</li>
+                  <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
+                  <a href="#">{plant.name}</a></button>
+                  </li>
                   );
               })
         }
