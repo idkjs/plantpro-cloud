@@ -1,26 +1,24 @@
-before_script:
+image: ci.cs.nmt.edu/plantpi/cloud-side:latest
+
+stages:
+ - build
+ - lint
+ - test
 
 build_client:
+  stage: build
   before_script:
    - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
    - apk update
    - apk add make m4 perl build-base gcc zlib-dev patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev git bash nodejs-npm@edge
   script: "cd client && npm install --dev && npm run build && npm run webpack"
 
-build:
+build_server:
+  stage: build
   before_script:
    - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
    - apk update
    - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash nodejs-npm@edge
-   - npm install --save -g nightmare
-   - npm install --save nightmare
-   - npm install -g nightmare
-   - npm install --save -g mocha
-   - npm install --save mocha
-   - npm install -g mocha
-   - npm install --save -g chai
-   - npm install --save chai
-   - npm install -g chai
    - export OPAMYES=true
    - comp=${1:-system}
    - opam init --comp="${comp}"
@@ -30,8 +28,29 @@ build:
    - opam install camlp4
    - opam pin add opium https://github.com/chrismamo1/opium.git
    - eval `opam config env`
-   - ocaml -version
-   - opam --version
-   - camlp4 -version
-   - echo $PATH
   script: "cd server && opam pin add plantpi ."
+
+test_client:
+  stage: test
+  before_script:
+   - npm install --save -g nightmare
+   - npm install --save nightmare
+   - npm install -g nightmare
+   - npm install --save -g mocha
+   - npm install --save mocha
+   - npm install -g mocha
+   - npm install --save -g chai
+   - npm install --save chai
+   - npm install -g chai
+  script: "echo not yet implemented"
+
+lint_client:
+  before_script:
+   - apk add tidyhtml@edge
+  stage: lint
+  script:
+   - cd client && npm install --only=dev
+   - cd client && tidy index.html
+   - cd controlpanel && tidy dashboard.html
+   - pwd
+   - cd .. && ./node_modules/.bin/eslint -c ./.eslintrc.json controlpanel/js/dashboard.js

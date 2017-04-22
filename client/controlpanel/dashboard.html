@@ -66,9 +66,9 @@ function doWork() {
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#TheNavBar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="icon-bar">&nbsp;</span>
+                        <span class="icon-bar">&nbsp;</span>
+                        <span class="icon-bar">&nbsp;</span>
                     </button>
                     <a class="navbar-brand" href="dashboard.html">PlantPi</a>
                 </div>
@@ -81,16 +81,16 @@ function doWork() {
 //document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + username + "</a></li>");
                 </script>
                         <!--<li><a><span class="glyphicon glyphicon-user"></span> TheLegend27</a></li>-->
-                        <li> <a href="settings.html"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                        <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Signout</a></li>
-                        <li><a id="Leaf"><span class="glyphicon glyphicon-leaf"></span></a></li>
-                        <div id="Easter" class="EasterEgg">
+                        <li><a href="settings.html"><span class="glyphicon glyphicon-cog">&nbsp;</span>Settings</a></li>
+                        <li><a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Signout</a></li>
+                        <li><a id="Leaf"><span class="glyphicon glyphicon-leaf">&nbsp;</span></a></li>
+                        <li id="Easter" class="EasterEgg">
                             <div class="EasterEgg-content">
                                 <span class="close">&times;</span>
-                                <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%">
+                                <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%" alt="an easter egg">
                                 <p style="color:white" >It's a feature :)</p>
                             </div>
-                        </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -217,18 +217,10 @@ function showCreateGroup() {
     }
 };
 
-//Experimental Function to display cog accordinan settings
-function displaySettings(){
-    //alert("This shit is broken");
-    var sets = document.getElementById("dropSettings");
-    if(sets.style.display === 'block'){
-        sets.style.display = 'none';
-    } else {
-        sets.style.display = 'block';
-    }
+function addGroup() {
+
 };
 
-//These functions keep the dropdown menus open until clicked on again
 $('.dropdown.keep-open').on({
     "shown.bs.dropdown": function() { this.closable = false; },
     "click":             function() { this.closable = true; },
@@ -272,7 +264,7 @@ $(document).ready(function() {
                 <div class="col-md-12">
                     <br/>
                     <!--Spawn button for sidebar collapse for better resizing compatability-->
-                    <p class="visible-xs"> <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i></button> </p>
+                    <p class="visible-xs"> <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left">&nbsp;</i></button> </p>
                     <!--HEADER PLANT NAME, controled by js script dowork()-->
                     <h1> Let's see how <strong id = "pname"></strong> is doing:</h1> <br/>
 
@@ -310,7 +302,7 @@ if(!moisture){
 
 //what determines the status display is the sum of all level attention
 var code = lvl1att + lvl2att + lvl3att;
-document.write("<p><strong>" + stat.fontsize(5)  + "</strong> ");
+document.write(stat.fontsize(5));
 if(code == 0){
     txt  = "It's All Good :)";
     document.write(txt.fontcolor("#009b09").fontsize(4));
@@ -342,10 +334,9 @@ if(code > 0){
     if(code == 3){
         document.write(" <br/>Take some time to save a life.");
     }
-    document.write("</p>");
 }
 else{ //if nothing needs attention, then is "all good" :)
-    document.write("<p>Your plant is doing well :)</p>");
+    document.write("Your plant is doing well :)");
 }
                                     </script>
                                 </div>
@@ -358,23 +349,19 @@ else{ //if nothing needs attention, then is "all good" :)
                                 </div>
                                 <br/>
                                 <script>
-document.write("<p>Current: " + celcius + "&#8451, " + faren + "&#8457 </p>");
-if(faren > 119){
-    document.write("<br/><p>Your plant is not far from spontaneously combusting! <span class=\"glyphicon glyphicon-fire\"></span> throw some ice on it or something! <span class=\"glyphicon glyphicon-ice-lolly\"></span> </p>");
-}
+document.write("Current: " + celcius + "&#8451, " + faren + "&#8457");
                                 </script>
-
-                                <br/>
-                                <div id="Level">
-                                    <li>Mositure Level</li>
-                                </div>
-                                <br/>
+                                    </p>
+                                </li>
+                                <li id="Level">
+                                    Moisture Level&nbsp;
+                                    <p>
                                 <script>
 if(moisture){
-    document.write("<p> There seems to be mositure present :) </p>");
+    document.write("There seems to be moisture present :)");
 }
 else{
-    document.write("<p>Needs some moisture!</p>");
+    document.write("Needs some moisture!");
 }
                                 </script>
                                 <br/>
