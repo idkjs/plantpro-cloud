@@ -11,14 +11,15 @@ CREATE TABLE IF NOT EXISTS users (
         user_name varchar(256) NOT NULL,
         salt varchar(256) NOT NULL,
         p_hash text NOT NULL
-        CONSTRAINT uc_user UNIQUE (email, user_name));
+        CONSTRAINT uc_user UNIQUE (email, user_name)
+        int is_verified);
 
 //setting data
-INSERT INTO users(creation_time, name, email, user_name, salt, p_hash)
-        VALUES(%s, %s, %s, %s, %s, %s);
+INSERT INTO users(creation_time, name, email, user_name, salt, p_hash, is_verified)
+        VALUES(%s, %s, %s, %s, %s, %s, %d);
         
 //getting data
-        SELECT creation_time , name , email , user_name , salt , p_hash FROM users;
+        SELECT creation_time , name , email , user_name , salt , p_hash , is_verified FROM users;
 
 _______________________________________________________________________________
 // group table
