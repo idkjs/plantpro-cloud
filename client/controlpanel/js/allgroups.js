@@ -32,6 +32,11 @@ class PlantListing extends React.Component {
 
     render() {
         console.log(this.state.plants.length);
+        var p_buttonStyle = {
+            border: 'none',
+            backgroundColor: 'transparent',
+            paddingTop: '2px'
+        };
         var buttonStyle = {
             border: 'none',
             backgroundColor: 'transparent',
@@ -55,8 +60,8 @@ class PlantListing extends React.Component {
         else {
           this.state.plants.map((plant) => {
               return (
-                  <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left">
-                  </button>{plant.name}</li>
+                  <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
+                  </button><a href="#">{plant.name}></a></li>
                   );
               })
         }
