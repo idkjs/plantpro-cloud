@@ -53,11 +53,36 @@ hr {
 }
 /*---------------------------------NavBar End--------------------------------------------*/
 
-h1 {	
+h1 {
   	color:black;
   	height: 2%;
 	width: 100%;
  }
+
+.plantRender{
+    font-size: 18px;
+}
+
+.plantRender li{
+    list-style-type: none;
+
+}
+
+.plantRender a{
+    color: #009b09;
+    text-decoration: none;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.plantRender a:hover{
+    color: #232323;
+}
+
+.plantElement a{
+    font-size: 19px;
+}
+
 
 .pageList{
 	width: 95%;
@@ -71,19 +96,20 @@ h1 {
 	width:85%;
 }
 
-.groupList{
-
-}
-
 .plantList ul{
 	border-style: solid;
 }
 
 .groupList a{
 	font-size: 18px;
+    text-decoration: none;
 	color: #009b09;
 	font-weight: bold;
 }
+.groupList a:hover{
+    color: #232323;
+}
+
 .groupList li{
 	list-style-type: none;
 }

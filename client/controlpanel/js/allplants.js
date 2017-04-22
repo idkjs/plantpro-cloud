@@ -39,17 +39,19 @@ class PlantListing extends React.Component {
         };
         var pStyle = {
             color: '#bcbcbc',
-            padding: '3px 20px',
         };
         var li_style = {
             border: 'none',
             backgroundColor: 'transparent',
             paddingTop: '2px'
         };
+        var a_style = {
+            fontSize: '18px',
+        }
         var contents;
         if (this.state.plants.length == 0) {
           contents = (
-              <li><p style={pStyle}>No Plants in Group</p></li>
+              <li><p style={pStyle}>You have no plants</p></li>
               );
         }
         else {
@@ -62,61 +64,8 @@ class PlantListing extends React.Component {
         }
     }
 }
-
-class GroupsListing extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groups: [],
-      props: props
-    };
-  }
-
-  componentDidMount() {
-    var url = `/get-groups/${this.state.props.username}`;
-    console.log("url: " + url);
-    axios.get(url)
-      .then(res => {
-        var groups = res.data;
-        console.log(groups);
-        this.setState({groups: groups});});
-  }
-
-  render() {
-  	var button_style = {
-  		border: 'none',
-        backgroundColor: 'transparent',
-        paddingTop: '5px'
-  	};
-
-    var P_Style = {
-        fontSize: '13px',
-        fontWeight: 'bold',
-    };
-
-    return (
-    	<div>
-    	{
-    		this.state.groups.map((group) => {
-    			return(
-    			<li className="groupElement">
-    			<button className="glyphicon glyphicon-cog pull-right" style={button_style}></button>
-    			<a href="#">{group.name}</a>
-                    <ul className="plantList" key={group.name}>
-                        <br/>
-                        <p style={P_Style}>Plants:</p>
-    				    <PlantListing username={this.state.props.username} groupname={group.name} />
-                    </ul><
-    			</li><br/>)})
-    	}
-    	</div>);
-  	}
-}
+<li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#" style="font-size: 18px;">Venus Flytrap</a></li>
 
 ReactDOM.render(
-  <GroupsListing username={username} />,
-  document.getElementById('groupRender'));
-
-ReactDOM.render(
-  <PlantListing username={username} groupname={'ungrouped'} />,
-  document.getElementById(''));
+  <PlantListing username={username} groupname={'all'} />,
+  document.getElementById('explandedPlantContainer'));
