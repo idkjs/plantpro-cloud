@@ -5,10 +5,8 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="css/settings.css" rel="stylesheet" type="text/css">
     <title>PlantPi: Group Settings</title>
     <link href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" rel="shortcut icon">
@@ -60,8 +58,13 @@
                 <div class="subform">
                     <strong></strong>
                     <div class="form-group">
-                        <strong><label for="GroupName">Enter New Group Name</label><input class="form-control" id="GroupName" name="name" placeholder="Backyard" type="text"></strong>
-                    </div><strong><button class="btn btn-primary" id="savebutton" onclick="" type="submit"><strong>Rename Group</strong></button></strong>
+                        <form action="/rename-group" method="post">
+                            
+                            <label for="GroupName"><strong>Enter New Group Name</strong></label>
+                            <input class="form-control" id="GroupName" name="name" placeholder="Backyard" type="text">
+                            <button class="btn btn-primary" type="submit" style="margin-top:10px;"><strong>Rename Group</strong></button>
+                        </form>
+                    </div>
                 </div>
             </form><br>
             <div class="subsection">
@@ -98,10 +101,8 @@
                                 </li>
                                 <li style="list-style: none; display: inline">
                                     <div>
-                                        <ul>
-                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 8</li>
-                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 9</li>
-                                        </ul>
+                                        <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 8</li>
+                                        <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus"></button> Plant 9</li>
                                     </div>
                                 </li>
                             </ul>
@@ -141,14 +142,17 @@
                             <p>Do you really want to delete this group?</p>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button> <button class="btn btn-danger" type="button">Delete</button>
+                            <form action="/delete-group" method="post">
+                                <input type="hidden" value=groupname name="gname" id="gname" />
+                                <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="dist/bundle.js">
-    </script>
+    <script src="dist/bundle.js"></script>
 </body>
 </html>
