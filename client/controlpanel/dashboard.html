@@ -186,7 +186,7 @@ function doWork() {
 
                             <div id="groupsListContainer"></div>
                             <br/>
-                            <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
+                            <li style="font-size: 12px; float: right;"><a href="allgroups.html">Manage Groups</a></li>
                             <li class="plus" style="font-size: 13px; float: left;"><a onclick="showCreateGroup()"><span class="btn glyphicon glyphicon-plus"></span></a></li>
 
                             <br/><br/>
@@ -261,6 +261,9 @@ $(document).ready(function() {
                         <ul class="nav" style="font-size: 15px;">
                             <div id="plantListContainer"></div>
                             <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+
+                            <br />
+                            <li style="font-size: 12px; float: right;"><a href="allplants.html">All Plants</a></li>
                             <br />
                             <br />
                         </ul>
@@ -347,26 +350,6 @@ if(code > 0){
 else{ //if nothing needs attention, then is "all good" :)
     document.write("<p>Your plant is doing well :)</p>");
 }
-                                        var lvl1 = "Temperature", lvl2 = "Moisture", lvl3 = "Light";
-                                        if(code > 0){
-                                            document.write("<p>Attention needed at: ");
-                                            if(lvl1att){
-                                                document.write(lvl1 + ", ");
-                                            }
-                                            if (lvl2att) {
-                                                document.write(lvl2 + ", ");
-                                            }
-                                            if(lvl3att){
-                                                document.write(lvl3 + " ");
-                                            }
-                                            if(code == 3){
-                                                document.write(" <br/>Take some time to save a life.");
-                                            }
-                                            document.write("</p>");
-                                        }
-                                        else{ //if nothing needs attention, then is "all good" :)
-                                            document.write("<p>Your plant is doing well :)</p>");
-                                        }
                                     </script>
                                 </div>
                                 <br/>
