@@ -54,11 +54,9 @@ class RenameGroup extends React.Component {
                 });});
     }
 
-    var mStyle = {
-        marginTop: "10px",
-    };
 
     render() {
+        var mStyle = {marginTop: "10px",};
         return(
             <div>
                 <label for="GroupName"><strong>Enter New Group Name</strong></label>
