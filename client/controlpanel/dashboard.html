@@ -17,7 +17,7 @@ var username = hex2a(getCookie("username"));
 function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
-    if (parts.length == 2) 
+    if (parts.length == 2)
         return parts.pop().split(";").shift();
 }
 
@@ -52,7 +52,7 @@ function doWork() {
     console.log(hex2a(getCookie("username")));
     xhr.open("get", "/get-devices/" + username + "/all");
     xhr.addEventListener("load", function() {
-        var plantname = JSON.parse(this.response)[0].name;      
+        var plantname = JSON.parse(this.response)[0].name;
         //This is just to give the site some more personality
         pname.innerHTML += plantname;
     });
@@ -110,7 +110,7 @@ function doWork() {
         <div class="row-offcanvas row-offcanvas-left">
             <div id="sidebar" class="sidebar-offcanvas">
                 <br /> <br />
-                <div class="col-xs-12"> 
+                <div class="col-xs-12">
                     <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"></span></a></h3><br/>
                     <ul class="nav nav-pills nav-stacked">
                         <h4>Groups:</h4>
@@ -121,7 +121,7 @@ function doWork() {
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret" id="menu-caret"></span></a>
 
                                     <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
-                                      	
+
                                       	<!--Dank Weed-->
 				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dank Weed, 90%THC, strong stuff </a></li></ul>
 
@@ -131,8 +131,8 @@ function doWork() {
 				                        </ul>
 
 				                    </ul>
-				            </li>   
-				        <!--End indoors dropdown-->        
+				            </li>
+				        <!--End indoors dropdown-->
                         </ul>
                         <ul class="nav" id="groupsList"><!--Intial start of accordian-->
 
@@ -141,22 +141,22 @@ function doWork() {
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement<span class="caret" id="menu-caret"></span></a>
 
                                     <ul id="menuDrop" class="dropdown-menu keep-open collapsed" role="menu">
-                                      		
+
 				                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dead Twig</a></li>
                                         </ul>
 
-				                       
+
 				                        <ul class="nav innerMenu"><li>
-				                          	<button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Venus Flytrap</a></li>    
+				                          	<button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Venus Flytrap</a></li>
                                         </ul>
 				                    </ul>
-				            </li>   
-				        <!--End indoors dropdown-->        
+				            </li>
+				        <!--End indoors dropdown-->
                         </ul>
                           	<script>
-                          					
-				                           	
-				                           	</script>	
+
+
+				                           	</script>
                             <div id="groupsListContainer"></div>
                             <br/>
                             <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
@@ -185,7 +185,7 @@ $(document).ready(function() {
 	$('#setting_cog').on('click', function() {
 		$(this).parent('ul').siblings('.dropSettings').slideToggle(300);
 	}); // end click
-}); 
+});
 
 //Experimental Function to display cog accordinan settings
 function displaySettings(){
@@ -229,14 +229,14 @@ $(document).ready(function() {
                     </ul>
                         <hr/>
                         <h4 style="color: #009b09;">All:</h4>
-                        <ul class="nav" style="font-size: 15px;">   
+                        <ul class="nav" style="font-size: 15px;">
                             <div id="plantListContainer"></div>
                             <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
                             <br />
                             <br />
-                        </ul>   
+                        </ul>
                 </div>
-            </div>  
+            </div>
             <!--...........................................................................Side bar ends here..........................................................................-->
             <!--Begin Stage, To play friendly with the side bar, the "stage" must be within the same div-->
             <div id="stage">
@@ -256,7 +256,7 @@ var txt;
 var stat = "Status: ";
 var lvl1att = 0, lvl2att = 0, lvl3att = 0;  //These are the flags
 var code = 0; //by default
-var celcius = 30; 
+var celcius = 30;
 var moisture = false;
 //Temp = Celcius, Moisture=T or F, uhh what was light?
 //Check for Temperature
@@ -293,7 +293,7 @@ else if (code == 1 || code == 2){
 else if (code == 3){
     txt = "DANGER!";
     document.write(txt.fontcolor("#cc0000").fontsize(4));
-}                           
+}
                                 </script>
                                 <br/>
                                 <div class="attention">
@@ -322,7 +322,7 @@ else{ //if nothing needs attention, then is "all good" :)
                                 <br/>
                             </div>
 
-                            <ul> 
+                            <ul>
                                 <li id="Level">
                                     Temperature Level
                                 </li>
@@ -352,7 +352,7 @@ else{
                                 <li>
                                     <p>Bright as this plants future. </p>
                                 </li>
-                            </ul>   
+                            </ul>
                         </div>
                     </div>
                 </div>
