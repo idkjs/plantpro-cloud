@@ -87,9 +87,7 @@ class DeleteGroup extends React.Component {
     handleClick(e) {
         var url = "/delete-group";
         console.log(url);
-        axios.post(url,
-            { groupname: this.state.props.groupname
-            })
+        axios.post(url, this.state.props.groupname)
         .then(res => {
             var style = {
                 paddingLeft: "1.5em"
@@ -122,6 +120,8 @@ class DeleteGroup extends React.Component {
     }
 }
 
+var groupname = location.hash;
+groupname = groupname.slice(1); //removes the # from location.hash
 
 ReactDOM.render(
   <RenameGroup groupname={groupname} />,
