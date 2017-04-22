@@ -112,4 +112,4 @@ ReactDOM.render(
 
 ReactDOM.render(
   <PlantListing username={username} groupname={'ungrouped'} />,
-  document.getElementById('plantListContainer'));
+  document.getElementById('expandedGroupContainer'));
