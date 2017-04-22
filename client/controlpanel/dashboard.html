@@ -17,7 +17,7 @@ var username = hex2a(getCookie("username"));
 function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
-    if (parts.length == 2) 
+    if (parts.length == 2)
         return parts.pop().split(";").shift();
 }
 
@@ -58,7 +58,7 @@ function doWork() {
     console.log(hex2a(getCookie("username")));
     xhr.open("get", "/get-devices/" + username + "/all");
     xhr.addEventListener("load", function() {
-        var plantname = JSON.parse(this.response)[0].name;      
+        var plantname = JSON.parse(this.response)[0].name;
         //This is just to give the site some more personality
         pname.innerHTML += plantname;
     });
@@ -110,7 +110,7 @@ function doWork() {
         <div class="row-offcanvas row-offcanvas-left">
             <div id="sidebar" class="sidebar-offcanvas">
                 <br /> <br />
-                <div class="col-xs-12"> 
+                <div class="col-xs-12">
                     <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;">&nbsp;</span></a></h3><br/>
                     <h4>Groups:</h4>
 
@@ -171,7 +171,7 @@ $('.dropdown.keep-open').on({
                         </li>
                     </ul>
                 </div>
-            </div>  
+            </div>
             <!--...........................................................................Side bar ends here..........................................................................-->
             <!--Begin Stage, To play friendly with the side bar, the "stage" must be within the same div-->
             <div id="stage">
@@ -191,7 +191,7 @@ var txt;
 var stat = "Status: ";
 var lvl1att = 0, lvl2att = 0, lvl3att = 0;  //These are the flags
 var code = 0; //by default
-var celcius = 30; 
+var celcius = 30;
 var moisture = false;
 //Temp = Celcius, Moisture=T or F, uhh what was light?
 //Check for Temperature
@@ -228,7 +228,7 @@ else if (code == 1 || code == 2){
 else if (code == 3){
     txt = "DANGER!";
     document.write(txt.fontcolor("#cc0000").fontsize(4));
-}                           
+}
                                 </script>
                                 <br/>
                                 <div class="attention">
@@ -257,7 +257,7 @@ else{ //if nothing needs attention, then is "all good" :)
                                 <br/>
                             </div>
 
-                            <ul> 
+                            <ul>
                                 <li id="Level">
                                     Temperature Level
                                 </li>
@@ -287,7 +287,7 @@ else{
                                 <li>
                                     <p>Bright as this plants future. </p>
                                 </li>
-                            </ul>   
+                            </ul>
                         </div>
                     </div>
                 </div>
