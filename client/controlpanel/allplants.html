@@ -10,7 +10,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/gmain.css">
 
-        <title>PlantPi: All your Groups</title>
+        <title>PlantPi: All your plants</title>
         <link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
     </head>
     <body>
@@ -94,53 +94,19 @@
         <br/><br/><br/><br/>
 
         <div class="container" id="listStage">
-            <h1>All your Groups:</h1>
+            <h1>All your Plants:</h1>
             <hr/>
-                <div class="pageList">
-                    <div class="groupList">
 
-                        <ul id="groupRender">
+            <div class="pageList">
+                <div class="plantRender">
+                    <ul class="plantList" id="expandedPlantContainer">
+                        <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#" style="font-size: 18px;">Venus Flytrap</a></li>
+                        <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#" style="font-size: 18px;">Venus Flytrap</a></li>
+                        <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#" style="font-size: 18px;">Venus Flytrap</a></li>
 
-                            <br/>
-
-                            <li class="groupElement"><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:5px;"></button><a href="#" id="groupName">Unholy Plants</a>
-
-                                <ul class="plantList">
-                                    <br/>
-                                    <p style="font-size: 13px;"><strong>Plants</strong><p>
-
-                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Venus Flytrap</a></li>
-
-                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Poison Ivy</a></li>
-
-                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Ghost Chili</a></li>
-
-                                </ul><br/>
-                            </li>
-                            <br/>
-                             <li class="groupElement"><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:5px;"></button><a href="#" id="groupName">Unholy Plants</a>
-
-                                <ul class="plantList">
-                                    <br/>
-                                    <p style="font-size: 13px;"><strong>Plants</strong><p>
-
-                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Venus Flytrap</a></li>
-
-                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Poison Ivy</a></li>
-
-                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Ghost Chili</a></li>
-
-                                </ul><br/>
-                            </li>
-                            <br/>
-
-
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
-            <div id="expandedPlantContainer"></div>
-
-
+            </div>
         </div>
         <script src="dist/bundle.js"></script>
     </body>

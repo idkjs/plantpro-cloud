@@ -75,8 +75,10 @@ function doWork() {
                 <!--Allow for better compatability when resizing-->
                 <div class="collapse navbar-collapse" id="TheNavBar">
                     <ul class="nav navbar-nav navbar-right">
+
+                <li><a><span id="usernameRenderTarget" class="glyphicon glyphicon-user"</span></a></li>
                 <script>
-document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + username + "</a></li>");
+//document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + username + "</a></li>");
                 </script>
                         <!--<li><a><span class="glyphicon glyphicon-user"></span> TheLegend27</a></li>-->
                         <li> <a href="settings.html"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
@@ -150,7 +152,7 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
                                             </li>
 
                                                 <div id="settingPlant1" class="content" style="display: none">
-                                                    <ul class="group-list">
+                                                    <ul class="group-list accordinan">
                                                         <li><a>Rename</a></li>
                                                         <li>Change Group</li>
                                                         <li>Delete Plant</li>
@@ -181,7 +183,7 @@ document.write("<li><a><span class=\"glyphicon glyphicon-user\"></span> " + user
 
                             <div id="groupsListContainer"></div>
                             <br/>
-                            <li style="font-size: 12px; float: right;"><a href="settings.html">Manage Groups</a></li>
+                            <li style="font-size: 12px; float: right;"><a href="allgroups.html">Manage Groups</a></li>
                             <li class="plus" style="font-size: 13px; float: left;"><a onclick="showCreateGroup()"><span class="btn glyphicon glyphicon-plus"></span></a></li>
 
                             <br/><br/>
@@ -256,6 +258,9 @@ $(document).ready(function() {
                         <ul class="nav" style="font-size: 15px;">
                             <div id="plantListContainer"></div>
                             <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+
+                            <br />
+                            <li style="font-size: 12px; float: right;"><a href="allplants.html">All Plants</a></li>
                             <br />
                             <br />
                         </ul>
