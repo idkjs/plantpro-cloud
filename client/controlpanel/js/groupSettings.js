@@ -105,10 +105,6 @@ class DeleteGroup extends React.Component {
                 });});
     }
 
-    var mStyle = {
-        marginTop: "10px",
-    };
-
     render() {
         return(
                 <span>
