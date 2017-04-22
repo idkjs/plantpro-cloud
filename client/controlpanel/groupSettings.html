@@ -41,12 +41,11 @@
     <br>
     <br>
     <div class="container">
-        <h1><span class="glyphicon glyphicon-cog"></span> Group Settings for <strong></strong></h1>
+        <h1><span class="glyphicon glyphicon-cog"></span> Group Settings for <strong id=renderGroupName></strong></h1>
         <div id="dynamicGroupName" style="display:inline">
             <h1></h1>
         </div>
 
-        <p style="padding-left:50px;"><strong>description?</strong></p>
         <div class="container">
             <strong><br></strong>
             <form action="/endpoint" id="pi_info" method="post" name="pi_info">
@@ -57,13 +56,8 @@
                 </div>
                 <div class="subform">
                     <strong></strong>
-                    <div class="form-group">
-                        <form action="/rename-group" method="post">
-                            
-                            <label for="GroupName"><strong>Enter New Group Name</strong></label>
-                            <input class="form-control" id="GroupName" name="name" placeholder="Backyard" type="text">
-                            <button class="btn btn-primary" type="submit" style="margin-top:10px;"><strong>Rename Group</strong></button>
-                        </form>
+                    <div class="form-group" id="renderRenameForm">
+
                     </div>
                 </div>
             </form><br>
@@ -122,7 +116,7 @@
                     </div>
                 </div>
             </div><br>
-            <div>
+            <div class="container">
                 <div class="subsection">
                     <p>Remove Group</p>
                 </div>
@@ -143,9 +137,9 @@
                         </div>
                         <div class="modal-footer">
                             <form action="/delete-group" method="post">
-                                <input type="hidden" value=groupname name="gname" id="gname" />
                                 <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
-                                <button class="btn btn-danger" type="submit">Delete</button>
+                                <span id="renderDelete">
+                                </span>
                             </form>
                         </div>
                     </div>
