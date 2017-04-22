@@ -54,16 +54,23 @@ hr {
 /*---------------------------------NavBar End--------------------------------------------*/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 h1 {
 =======
 h1 {	
 >>>>>>> 96f54a4... some react stuff for display all plants/groups
+=======
+h1 {
+>>>>>>> 112905c... add allplants page, dashboard sidebar changes to dropbox, double check allgroups
   	color:black;
   	height: 2%;
 	width: 100%;
  }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 112905c... add allplants page, dashboard sidebar changes to dropbox, double check allgroups
 .plantRender{
     font-size: 18px;
 }
@@ -89,8 +96,11 @@ h1 {
 }
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> 96f54a4... some react stuff for display all plants/groups
+=======
+>>>>>>> 112905c... add allplants page, dashboard sidebar changes to dropbox, double check allgroups
 .pageList{
 	width: 95%;
 
@@ -104,12 +114,15 @@ h1 {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 .groupList{
 
 }
 
 >>>>>>> 96f54a4... some react stuff for display all plants/groups
+=======
+>>>>>>> 112905c... add allplants page, dashboard sidebar changes to dropbox, double check allgroups
 .plantList ul{
 	border-style: solid;
 }
@@ -117,6 +130,9 @@ h1 {
 .groupList a{
 	font-size: 18px;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 112905c... add allplants page, dashboard sidebar changes to dropbox, double check allgroups
     text-decoration: none;
 	color: #009b09;
 	font-weight: bold;
@@ -125,11 +141,14 @@ h1 {
     color: #232323;
 }
 
+<<<<<<< HEAD
 =======
 	color: #009b09;
 	font-weight: bold;
 }
 >>>>>>> 96f54a4... some react stuff for display all plants/groups
+=======
+>>>>>>> 112905c... add allplants page, dashboard sidebar changes to dropbox, double check allgroups
 .groupList li{
 	list-style-type: none;
 }
@@ -178,7 +197,11 @@ h1 {
     text-decoration: none;
     cursor: pointer;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
 }
 >>>>>>> 96f54a4... some react stuff for display all plants/groups
+=======
+}
+>>>>>>> 112905c... add allplants page, dashboard sidebar changes to dropbox, double check allgroups

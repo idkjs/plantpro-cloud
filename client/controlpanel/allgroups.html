@@ -37,10 +37,10 @@
                     return str;
             }
 
-            //var username = hex2a(getCookie("username"));
-            //var xhr = new XMLHttpRequest();
-            //xhr.open("get", "/get-device" + username);
-            //xhr.send();
+            var username = hex2a(getCookie("username"));
+            var xhr = new XMLHttpRequest();
+            xhr.open("get", "/get-device" + username);
+            xhr.send();
             //var plantname = JSON.parse(xhr.response)[0].name;
         </script>
         <!--Begin NavBar-->
