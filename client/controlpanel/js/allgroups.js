@@ -106,7 +106,7 @@ class GroupsListing extends React.Component {
                         <br/>
                         <p style={P_Style}>Plants:</p>
     				    <PlantListing username={this.state.props.username} groupname={group.name} />
-                    </ul><
+                    </ul>
     			<br/>)})
     	}
     	</div>);
