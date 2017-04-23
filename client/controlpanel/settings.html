@@ -49,7 +49,7 @@ function hex2a(hexx) {
                 <div class="collapse navbar-collapse" id="TheNavBar">
                     <ul class="nav navbar-nav navbar-right">
                         <!--Username-->
-                        <li><a><span id="usernameRenderTarget" class="glyphicon glyphicon-user"</span></a></li>
+                        <li><a><span id="usernameRenderTarget" class="glyphicon glyphicon-user"><!----></span></a></li>
 
                         <li><a href="dashboard.html"><span class="glyphicon glyphicon-arrow-left">&nbsp;</span>Go back</a></li>
                         <li><a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Signout</a></li>
@@ -67,23 +67,6 @@ function hex2a(hexx) {
                 </div>
             </div>
         </nav>
-		<script> //because i was bored EASTEREGG
-var EasterEgg = document.getElementById("Easter");
-var Leaf = document.getElementById("Leaf");
-var xicon = document.getElementsByClassName("close")[0];
-
-Leaf.onclick = function(){ //When leaf is clicked on
-	EasterEgg.style.display="block";
-}
-xicon.onclick = function() { //when "X" icon is clicked on
-   	EasterEgg.style.display = "none";
-}
-window.onclick = function(event) { //Close window if user clicks outside the box
-	if (event.target == EasterEgg) {
-		EasterEgg.style.display = "none";
-	}
-}
-	   </script>
 		<!--End NavBar-->
 
 		<br/><br/><br/><br/>
@@ -102,14 +85,13 @@ window.onclick = function(event) { //Close window if user clicks outside the box
 					<div class="subform">
 						<div class="form-group">
 						 	<label for="PlantName">Plant Name</label>
-						    	<input type="text" class="form-control" id="PlantName" name="name" placeholder="Maple">
+						    <input type="text" class="form-control" id="PlantName" name="name" placeholder="Maple"/>
 						 </div>
 						 <div class="form-group">
-						    	<label for="Pi_Device_ID">PlantPi Device ID</label>
-						    	<input type="text" class="form-control" id="Pi_Device_ID" name="device" placeholder="A113">
+						   	<label for="Pi_Device_ID">PlantPi Device ID</label>
+						   	<input type="text" class="form-control" id="Pi_Device_ID" name="device" placeholder="A113"/>
 						</div>
 						<button id="savebutton" type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button>
-
 						<br/>
 					</div>
 				</form>
@@ -121,39 +103,59 @@ window.onclick = function(event) { //Close window if user clicks outside the box
 					<div class="subform" action="">
                         <p>Email Infomation</p>
                         <div class="form-group">
-                                <label for="cur_password">Email Address</label>
-                                <input type="text" class="form-control" id="email_address" placeholder="plantpi_is_awesome27@gmail.com">
+                            <label for="cur_password">Email Address</label>
+                            <input type="text" class="form-control" id="email_address" placeholder="plantpi_is_awesome27@gmail.com"/>
                         </div>
+                    </div>
+                    <button id="submitemail" type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button><br/>
                 </form>
                 <form action="#" method="post">
-                        <hr/>
+                    <hr/>
+                    <div class="subsection">
                         <p>Password Infomation</p>
-                        <div class="form-group">
-						    	<label for="cur_password">Current Password</label>
-						    	<input type="text" class="form-control" id="cur_password" placeholder="">
-						</div>
-						<div class="form-group">
-						    	<label for="cur_password">Re-enter Password</label>
-						    	<input type="text" class="form-control" id="cur_password" placeholder="">
-						</div>
-						<div class="form-group">
-						    	<label for="new_password">New Password</label>
-						    	<input type="text" class="form-control" id="new_password" placeholder="">
-						</div>
-						<div class="form-group">
-						    	<label for="verify_password">Verify Password</label>
-						    	<input type="text" class="form-control" id="verify_password" placeholder="">
-						</div>
-						<button id="savebutton" type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button><br/>
+                    </div>
+                    <div class="form-group">
+					    	<label for="cur_password">Current Password</label>
+					    	<input type="text" class="form-control" id="cur_password" placeholder=""/>
 					</div>
+					<div class="form-group">
+						   	<label for="cur_password">Re-enter Password</label>
+						   	<input type="text" class="form-control" id="cur_password" placeholder=""/>
+					</div>
+					<div class="form-group">
+					    	<label for="new_password">New Password</label>
+					    	<input type="text" class="form-control" id="new_password" placeholder=""/>
+					</div>
+					<div class="form-group">
+					    	<label for="verify_password">Verify Password</label>
+					    	<input type="text" class="form-control" id="verify_password" placeholder=""/>
+					</div>
+					<button id="submitpassword" type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button>
+                    <br/>
 				</form>
 				<br/>
 			</div>
-			<script>
-				function confirm_mes(){
-					alert("Settings Successfully Saved!");
-				}
-			</script>
 		</div>
+        <script>
+function confirm_mes(){
+    alert("Settings Successfully Saved!");
+}
+
+var EasterEgg = document.getElementById("Easter");
+var Leaf = document.getElementById("Leaf");
+var xicon = document.getElementsByClassName("close")[0];
+
+Leaf.onclick = function(){ //When leaf is clicked on
+    EasterEgg.style.display="block";
+}
+xicon.onclick = function() { //when "X" icon is clicked on
+    EasterEgg.style.display = "none";
+}
+window.onclick = function(event) { //Close window if user clicks outside the box
+    if (event.target == EasterEgg) {
+        EasterEgg.style.display = "none";
+    }
+}
+        </script>
 	</body>
 </html>
