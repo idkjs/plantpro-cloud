@@ -11,7 +11,7 @@ class PlantListing extends React.Component {
             props: props,
         };
     }
-    
+
     componentDidMount() {
         var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(this.state.props.groupname)}`;
         axios.get(url)
@@ -43,7 +43,7 @@ class PlantListing extends React.Component {
             padding: "3px 20px",
         };
         var contents;
-        if (this.state.plants.length == 0) { 
+        if (this.state.plants.length == 0) {
             contents = (
                 <li><p style={pStyle}>No Plants in Group</p></li>
             );
@@ -158,7 +158,7 @@ class NewGroupComponent extends React.Component {
 function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
-    if (parts.length == 2) 
+    if (parts.length == 2)
         return parts.pop().split(";").shift();
 }
 

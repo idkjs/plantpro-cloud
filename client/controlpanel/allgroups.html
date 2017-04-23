@@ -29,10 +29,6 @@ function hex2a(hexx) {
     return str;
 }
 
-var EasterEgg = document.getElementById("Easter");
-var Leaf = document.getElementById("Leaf");
-var xicon = document.getElementsByClassName("close")[0];
-
 var username = hex2a(getCookie("username"));
 var xhr = new XMLHttpRequest();
 xhr.open("get", "/get-device" + username);
@@ -123,6 +119,9 @@ xhr.send();
         </div>
         <script src="dist/bundle.js"></script>
         <script> //because i was bored EASTEREGG
+var EasterEgg = document.getElementById("Easter");
+var Leaf = document.getElementById("Leaf");
+var xicon = document.getElementsByClassName("close")[0];
 
 Leaf.onclick = function(){ //When leaf is clicked on
     EasterEgg.style.display="block";
