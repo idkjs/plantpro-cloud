@@ -14,7 +14,7 @@ hr {
 }
 /*-----------------------------Nav Bar-------------------------------------------*/
 
-.navbar{	
+.navbar{
 	border-bottom: solid;
 	border-color: #009b09
 }
@@ -41,9 +41,8 @@ hr {
 	color:#007a2a !important;
 }
 
-
- .nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
- 	background-color: #232323 !important;
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
+	background-color: #232323 !important;
  }
 .nav{
 	color:#009b09 !important;
