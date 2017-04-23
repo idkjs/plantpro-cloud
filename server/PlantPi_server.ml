@@ -45,10 +45,9 @@ let create_account_handler = (fun req ->
   then respond' (`String ("passwords do not match: " ^ username))
   else begin
     try%lwt
-      let _ = Db.get_user username in
+      let%lwt _ = Db.get_user username in
       respond'
-        ~headers:(Cohttp.Header.init_with "Location" "/static/index.html#failed")
-        ~code:(`Moved_permanently)
+        ~code:(`Conflict)
         (`String ("Error: User " ^ username ^ " already exists"))
     with
       | exn ->
@@ -316,14 +315,25 @@ let push_data_handler = (fun req ->
   match packet with
     | Ok packet ->
         let open Device in
-        let sclass = sclass_of_data_packet_payload packet.payload in
-        let `Jeffrey(value, _) = packet.payload in
-        let%lwt _ =
-          Db.add_data
-            (Calendar.now ())
-            (B64.decode packet.Device.device)
-            sclass
-            (string_of_float value)
+        let%lwt () =
+          Lwt_list.iter_p
+            (fun payload ->
+              let reading = Device.sensor_reading_of_payload payload in
+              let now = CalendarLib.Calendar.now () in
+              let sensor_type =
+                Device.sclass_of_data_packet_payload payload
+              in
+              let%lwt _ =
+                Db.add_data
+                  now
+                  (B64.decode packet.Device.device)
+                  sensor_type
+                  (payload
+                    |> Device.data_packet_payload_to_yojson
+                    |> Yojson.Safe.to_string)
+              in
+              Lwt.return ())
+            packet.payload
         in
         `String "OK"
         |> respond'
