@@ -49,10 +49,10 @@ lint_client:
    - apk add tidyhtml@edge
   stage: lint
   script:
-   - cd client && npm install --only=dev
    - pwd
    - ls
    - bash -c "tidy client/*.html"
    - bash -c "tidy client/controlpanel/*.html"
    - pwd
+   - cd client && npm install --only=dev
    - cd .. && ./node_modules/.bin/eslint -c ./.eslintrc.json controlpanel/js/dashboard.js
