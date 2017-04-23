@@ -96,9 +96,9 @@ function doWork() {
                 </div>
             </div>
         </nav>
-        <!--..................................................................................................End NavBar...................................................................................-->
+        <!--.....................End NavBar............................-->
         <br /><br />
-        <!--........................................................................................Begin sidebar and stage.....................................................................-->
+        <!--..............Begin sidebar and stage......................-->
         <div class="row-offcanvas row-offcanvas-left">
             <div id="sidebar" class="sidebar-offcanvas">
                 <br /> <br />
@@ -107,8 +107,9 @@ function doWork() {
                     <h4>Groups:</h4>
 
                     <ul class="nav nav-pills nav-stacked">
-                        <h4>Groups:</h4>
-                        <ul class="nav" id="groupsList"><!--Intial start of accordian-->
+                        <li><h4>Groups:</h4></li>
+                        <li>
+                            <ul class="nav" id="groupsList"><!--Intial start of accordian-->
 
                         <!--This entire thing is just for the indoors dropdown-->
                             <li class="dropdown keep-open" id="menuElement">
@@ -138,58 +139,74 @@ function doWork() {
                                         </ul>
 
 
-                                        <ul class="nav innerMenu"><li><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Venus Flytrap</a></li>
-                                        </ul>
-                                    </ul>
-                            </li>
-                            <li class="dropdown keep-open" id="menuElement">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watered Sidewalks<span class="caret" id="menu-caret"></span></a>
-                                    <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
+                                <li>
+                                    <ul class="nav innerMenu"><li><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
+                                    </button><a href="#">Venus Flytrap</a></li></ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown keep-open" id="menuElement">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watered Sidewalks<span class="caret" id="menu-caret"></span></a>
+                            <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
+                                <!--Dank Weed-->
+                                <li>
+                                    <ul class="nav innerMenu">
+                                        <li>
+                                            <button id="cog1" class="sets glyphicon glyphicon-cog pull-right settings_cog" style="border:none;background-color:transparent;padding-top:13px;"></button>
+                                            <a href="#"> In front of cramer </a>
+                                        </li>
 
-                                        <!--Dank Weed-->
-                                        <div class="innerguts">
-                                        <ul class="nav innerMenu">
-                                            <li>
-                                                <button id="cog1" class="sets glyphicon glyphicon-cog pull-right settings_cog" style="border:none;background-color:transparent;padding-top:13px;"></button>
-                                                <a href="#"> In front of cramer </a>
-                                            </li>
-
-                                                <div id="settingPlant1" class="content" style="display: none">
-                                                    <ul class="group-list">
-                                                        <li><a>Rename</a></li>
-                                                        <li>Change Group</li>
-                                                        <li>Delete Plant</li>
-                                                    </ul>
-                                                </div>
-                                        </ul>
-
-                                        <!--Mystery Plant-->
-                                        <ul class="nav innerMenu">
-                                            <li>
-                                                <button id="cog2" type="button" onclick="" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button>
-                                                <a href="#">Library sidewalk</a>
-                                            </li>
-
-                                            <div class="content" id="settingPlant2" style="display: none">
-                                                    <ul class="group-list">
-                                                        <li><a>Rename</a></li>
-                                                        <li>Change Group</li>
-                                                        <li>Delete Plant</li>
-                                                    </ul>
+                                        <li>
+                                            <div id="settingPlant1" class="content" style="display: none; border-right: solid; border-width: 1px; padding-right: 20px; font-weight: bold; text-align: right;">
+                                                    <a href="#" style="border-style:none;">Rename</a><br/>
+                                                    <a href="#" style="border-style:none;">Change Group</a><br/>
+                                                    <a href="#" style="border-style:none;">Delete Plant</a><br/>
                                             </div>
-
-                                        </ul>
+                                        </li>
                                     </ul>
-                            </li>
-                        <!--End indoors dropdown-->
-                        </ul>
+                                    <!--Mystery Plant-->
+                                    <ul class="nav innerMenu">
+                                        <li>
+                                            <button id="cog2" type="button" onclick="" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button>
+                                            <a href="#">Library sidewalk</a>
+                                        </li>
 
-                            <div id="groupsListContainer"></div>
+                                        <li>
+                                            <div id="settingPlant2" class="content" style="display: none; border-right: solid; border-width: 1px; padding-right: 20px; font-weight: bold; text-align: right;">
+                                                    <a href="#" style="border-style:none;" onclick="showRenamePlant()">Rename</a>
+                                                        <div id="show_rename_plant" style="display: none;">
+                                                            <br/>
+                                                            <form action="/rename-plant" method="post"> <!--Idk the backend name-->
+                                                                <input type="hidden" value=username name="user" id="uname" />
+                                                                <input type="text" class="form-control" id="PlantName" name="groupName" placeholder="new plant name" />
+                                                                <button id="savebutton" type="submit" class="btn btn-success" onclick="addGroup()">Rename Plant</button>
+                                                            </form>
+                                                        </div>
+                                                    <br/>
+                                                    <a href="#" style="border-style:none;" onclick="showChangePlantGroup()">Change Group</a>
+                                                        <div id="show_change_plant_group" style="display: none;">
+                                                            <br/>
+                                                            <form action="/change-group-plant" method="post"> <!--Idk the backend name-->
+                                                                <input type="hidden" value=username name="user" id="uname" />
+                                                                <input type="text" class="form-control" id="PlantName" name="groupName" placeholder="new plant name" />
+                                                                <button id="savebutton" type="submit" class="btn btn-success" onclick="addGroup()">Create Group</button>
+                                                            </form>
+                                                        </div>
+                                                    <br/>
+                                                    <a href="#" style="border-style:none;" onclick="deletionConfirmation()">Delete Plant</a>
+                                                    <br/>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </ul>
+                            </li>
                             <br/>
                             <li style="font-size: 12px; float: right;"><a href="allgroups.html">Manage Groups</a></li>
                             <li class="plus" style="font-size: 13px; float: left;"><a onclick="showCreateGroup()"><span class="btn glyphicon glyphicon-plus"></span></a></li>
+                        </ul>
+                        <!--End indoors dropdown-->
 
-                            <br/><br/>
+                        <div id="groupsListContainer"></div>
 
                             <div id="show_create_group" style="display: none;">
                                 <form action="/create-group" method="post">
@@ -198,74 +215,23 @@ function doWork() {
                                     <button id="savebutton" type="submit" class="btn btn-primary" onclick="addGroup()">Create Group</button>
                                 </form>
                             </div>
-<script>
-
-$(document).ready(function() {
-    $("#cog1").click(function () {
-        $("#settingPlant1").slideToggle();
-    });
-});
-$(document).ready(function() {
-    $("#cog2").click(function () {
-        $("#settingPlant2").slideToggle();
-    });
-});
-
-function showCreateGroup() {
-    var hidden = document.getElementById('show_create_group');
-    if (hidden.style.display === 'block') {
-        hidden.style.display = 'none';
-    } else {
-        hidden.style.display = 'block';
-    }
-};
-
-//Experimental Function to display cog accordinan settings
-function displaySettings(){
-    //alert("This shit is broken");
-    var sets = document.getElementById("dropSettings");
-    if(sets.style.display === 'block'){
-        sets.style.display = 'none';
-    } else {
-        sets.style.display = 'block';
-    }
-};
-
-//These functions keep the dropdown menus open until clicked on again
-$('.dropdown.keep-open').on({
-    "shown.bs.dropdown": function() { this.closable = false; },
-    "click":             function() { this.closable = true; },
-    "hide.bs.dropdown":  function() { return this.closable; }
-});
-$('#menuElement .dropdown-menu').on({
-    "click":function(e){
-      e.stopPropagation();
-    }
-});
-
-//This function will only allow one dropdown open at a time
-
-
-
-//Toggle sidebar on button press
-$(document).ready(function() {
-    $('[data-toggle=offcanvas]').click(function() {
-        $('.row-offcanvas').toggleClass('active');
-    });
-});
-                            </script>
-
-                    </ul>
                         <hr/>
-                        <h4 style="color: #009b09;">All:</h4>
-                        <ul class="nav" style="font-size: 15px;">
-                            <div id="plantListContainer"></div>
-                            <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
 
-                            <br />
-                            <li style="font-size: 12px; float: right;"><a href="allplants.html">All Plants</a></li>
-                            <br />
-                            <br />
+                        <ul class="nav" style="font-size: 15px;">
+                            <li>
+                                <h4 style="color: #009b09;">All:</h4>
+                            </li>
+                            <li><div id="plantListContainer"></div></li>
+
+                            <li>
+                                <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+                                <br/>
+                            </li>
+
+                            <li style="font-size: 12px; float: right;"><a href="allplants.html">All Plants</a>
+                            <br/>
+                            <br/>
+                            </li>
                         </ul>
                 </div>
             </div>
@@ -313,7 +279,7 @@ if(!moisture){
 
 //what determines the status display is the sum of all level attention
 var code = lvl1att + lvl2att + lvl3att;
-document.write("<p><strong>" + stat.fontsize(5)  + "</strong> ");
+document.write(stat.fontsize(5));
 if(code == 0){
     txt  = "It's All Good :)";
     document.write(txt.fontcolor("#009b09").fontsize(4));
@@ -345,10 +311,9 @@ if(code > 0){
     if(code == 3){
         document.write(" <br/>Take some time to save a life.");
     }
-    document.write("</p>");
 }
 else{ //if nothing needs attention, then is "all good" :)
-    document.write("<p>Your plant is doing well :)</p>");
+    document.write("Your plant is doing well :)");
 }
                                     </script>
                                 </div>
@@ -393,5 +358,69 @@ else{
             </div><!-- End stage and sidebar-->
         </div>
         <script src="dist/bundle.js"></script>
+        <script>
+
+$(document).ready(function() {
+    $("#cog1").click(function () {
+        $("#settingPlant1").slideToggle();
+    });
+});
+$(document).ready(function() {
+    $("#cog2").click(function () {
+        $("#settingPlant2").slideToggle();
+    });
+});
+
+function showCreateGroup() {
+    var hidden = document.getElementById('show_create_group');
+    if (hidden.style.display === 'block') {
+        hidden.style.display = 'none';
+    } else {
+        hidden.style.display = 'block';
+    }
+};
+
+function showRenamePlant() {
+    var hidden = document.getElementById('show_rename_plant');
+    if (hidden.style.display === 'block') {
+        hidden.style.display = 'none';
+    } else {
+        hidden.style.display = 'block';
+    }
+};
+
+function showChangePlantGroup() {
+    var hidden = document.getElementById('show_change_plant_group');
+    if (hidden.style.display === 'block') {
+        hidden.style.display = 'none';
+    } else {
+        hidden.style.display = 'block';
+    }
+};
+
+function deletionConfirmation(){
+    confirm("Are you sure you want to delete this plant?");
+    //for sure needs more logic
+}
+
+//These functions keep the dropdown menus open until clicked on again
+$('.dropdown.keep-open').on({
+    "shown.bs.dropdown": function() { this.closable = false; },
+    "click":             function() { this.closable = true; },
+    "hide.bs.dropdown":  function() { return this.closable; }
+});
+$('#menuElement .dropdown-menu').on({
+    "click":function(e){
+        e.stopPropagation();
+    }
+});
+
+//Toggle sidebar on button press
+$(document).ready(function() {
+    $('[data-toggle=offcanvas]').click(function() {
+        $('.row-offcanvas').toggleClass('active');
+    });
+});
+    </script>
     </body>
 </html>

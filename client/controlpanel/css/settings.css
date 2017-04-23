@@ -14,15 +14,15 @@ hr {
 }
 /*-----------------------------Nav Bar-------------------------------------------*/
 
-.navbar{
-	z-index: 1;
+.navbar{	
+	border-bottom: solid;
+	border-color: #009b09
 }
 
 .navbar-brand {
   	color:#009b09 !important;
   	font-size: 40px;
  	margin: 0px;
-
 }
 .navbar-brand:hover{
 	color:#007a2a !important;
@@ -34,11 +34,20 @@ hr {
 }
 
 .navbar-right li a:hover{
-	color:#007a2a !important;
+	color:#ffffff !important;
 }
 
 .leaf li a:hover{
 	color:#007a2a !important;
+}
+
+
+ .nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
+ 	background-color: #232323 !important;
+ }
+.nav{
+	color:#009b09 !important;
+	list-style-position: inside;
 }
 /*---------------------------------NavBar End--------------------------------------------*/
 
