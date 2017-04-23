@@ -4,7 +4,8 @@
   "scripts": {
     "webpack": "webpack",
     "dev": "npm run webpack-watch",
-    "build": "babel controlpanel/js -d controlpanel/lib"
+    "build": "babel controlpanel/js -d controlpanel/lib",
+    "lintjs": "./node_modules/.bin/eslint -c ./.eslintrc.json controlpanel/js/"
   },
   "devDependencies": {
     "axios": "^0.16.1",
@@ -13,6 +14,8 @@
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "concurrently": "^3.4.0",
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^6.10.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "webpack": "^2.3.3"

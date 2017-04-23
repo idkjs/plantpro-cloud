@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="css/settings.css" rel="stylesheet" type="text/css">
+    <title>PlantPi: Group Settings</title>
+    <link href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" rel="shortcut icon">
+</head>
+<body>
+    <!--Begin NavBar-->
+    <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-target="#TheNavBar" data-toggle="collapse" type="button">
+                    <span class="icon-bar">&#8203;</span>
+                    <span class="icon-bar">&#8203;</span>
+                    <span class="icon-bar">&#8203;</span>
+                </button>
+                <a class="navbar-brand" href="dashboard.html">PlantPi</a>
+            </div><!--Allow for better compatability when resizing-->
+            <div class="collapse navbar-collapse" id="TheNavBar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a><span class="glyphicon glyphicon-user" id="usernameRenderTarget">&nbsp;</span></a>
+                    </li>
+                    <li>
+                        <a href="dashboard.html"><span class="glyphicon glyphicon-arrow-left">&nbsp;</span>Go Back</a>
+                    </li>
+                    <li>
+                        <a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Signout</a>
+                    </li>
+                    <li>
+                        <a id="Leaf"><span class="glyphicon glyphicon-leaf">&nbsp;</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--End NavBar-->
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <h1><span class="glyphicon glyphicon-cog">&nbsp;</span>Group Settings for <strong id=renderGroupName>&#8203;</strong></h1>
+
+
+        <div class="container">
+            <br />
+            <form action="/endpoint" id="pi_info" method="post" name="pi_info">
+                <div class="subsection">
+                    <p><strong>Group Infomation</strong></p>
+                </div>
+                <div class="subform">
+                    <div class="form-group" id="renderRenameForm">
+
+                    </div>
+                </div>
+            </form><br />
+            <div class="subsection">
+                <p>Modify Group Member Plants</p>
+            </div>
+            <div class="container">
+                <div class="container">
+                    <button class="btn btn-success" data-target="#addPlantsButton" data-toggle="collapse" type="button">Add Plants</button> <button class="btn btn-danger" data-target="#rmPlantsButton" data-toggle="collapse" type="button">Remove Plants</button>
+                    <div class="collapse" id="addPlantsButton" style="margin:10px;">
+                        <div>
+                            <h4 style="padding-top:10px;">Add Plants</h4>
+                            <p style="margin: 0px 0px 10px 20px">Adding a plant from another group removes it from that group and adds it to the current one.</p>
+                        </div>
+                        <div>
+                            <ul class="list-group" id="rmPlantsGroups">
+                                <li class="list-group-item" data-target="#group1" data-toggle="collapse">Group 1 <span class="caret">&nbsp;</span>
+                                    <div class="collapse" id="group1">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 1</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 2</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 3</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="list-group-item" data-target="#group2" data-toggle="collapse">Group 2 <span class="caret">&#8203;</span>
+                                    <div class="collapse" id="group2">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 12</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 34</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 45</li>
+                                            <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 56</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li style="list-style: none; display: inline">
+                                    <ul style="padding: 0">
+                                        <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 8</li>
+                                        <li class="list-group-item"><button class="btn btn-success glyphicon glyphicon-plus">&#8203;</button> Plant 9</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="collapse" id="rmPlantsButton">
+                        <div class="">
+                            <h4 style="padding-top:10px;">Remove Plants</h4>
+                        </div>
+                        <div>
+                            <ul class="list-group" id="rmPlantsGroups">
+                                <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove">&#8203;</button> Plant A</li>
+                                <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove">&#8203;</button> Plant B</li>
+                                <li class="list-group-item"><button class="btn btn-danger glyphicon glyphicon-remove">&#8203;</button> Plant C</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+            <div>
+                <div class="subsection">
+                    <p>Remove Group</p>
+                </div>
+                <div class="container">
+                    <div class="container">
+                        <p>Removing a group will move plants out of the group and then delete the group</p><button class="btn btn-danger" data-target="#confirmDeleteModal" data-toggle="modal" type="submit">Delete Group</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmDeleteModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirm Delete:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you really want to delete this group?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <form action="/delete-group" method="post">
+                                <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+                                <span id="renderDelete">&#8203;
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="dist/bundle.js"></script>
+</body>
+</html>

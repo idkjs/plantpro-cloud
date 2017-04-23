@@ -1,29 +1,57 @@
-before_script:
- - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
- - apk update
- - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash nodejs-npm@edge
- - npm install --save -g nightmare
- - npm install --save nightmare
- - npm install -g nightmare
- - npm install --save -g mocha
- - npm install --save mocha
- - npm install -g mocha
- - npm install --save -g chai
- - npm install --save chai
- - npm install -g chai
- - export OPAMYES=true
- - comp=${1:-system}
- - opam init --comp="${comp}"
- - opam switch 4.03.0
- - eval `opam config env`
- - opam update
- - opam install camlp4
- - opam pin add opium https://github.com/chrismamo1/opium.git
- - eval `opam config env`
- - ocaml -version
- - opam --version
- - camlp4 -version
- - echo $PATH
+image: ci.cs.nmt.edu/plantpi/cloud-side:latest
 
-build:
+stages:
+ - lint
+ - build
+ - test
+
+build_client:
+  stage: build
+  before_script:
+   - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
+   - apk update
+   - apk add make m4 perl build-base gcc zlib-dev patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev git bash nodejs-npm@edge
+  script: "cd client && npm install --dev && npm run build && npm run webpack"
+
+build_server:
+  stage: build
+  before_script:
+   - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
+   - apk update
+   - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash nodejs-npm@edge
+   - export OPAMYES=true
+   - comp=${1:-system}
+   - opam init --comp="${comp}"
+   - opam switch 4.03.0
+   - eval `opam config env`
+   - opam update
+   - opam install camlp4
+   - opam pin add opium https://github.com/chrismamo1/opium.git
+   - eval `opam config env`
   script: "cd server && opam pin add plantpi ."
+
+test_client:
+  stage: test
+  before_script:
+   - npm install --save -g nightmare
+   - npm install --save nightmare
+   - npm install -g nightmare
+   - npm install --save -g mocha
+   - npm install --save mocha
+   - npm install -g mocha
+   - npm install --save -g chai
+   - npm install --save chai
+   - npm install -g chai
+  script: "echo not yet implemented"
+
+lint_client:
+  before_script:
+   - apk add tidyhtml@edge
+  stage: lint
+  script:
+   - pwd
+   - ls
+   - tidy -help
+   - bash -c "tidy client/controlpanel/*.html > /dev/null"
+   - pwd
+   - cd client && npm install --only=dev && ./node_modules/.bin/eslint -c ./.eslintrc.json controlpanel/js/*.js

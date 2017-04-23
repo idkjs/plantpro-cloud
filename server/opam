@@ -27,7 +27,7 @@ depends: [
         "cryptokit"
         "base64"
         "ocamlnet"
-
+        "rresult"
         "ocamlfind" {build}
         "omake" {build}
 ]

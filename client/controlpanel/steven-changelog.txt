@@ -1,0 +1,16 @@
+4/18
+
+//Sidebar
+--Fixed sidebar toggle not working.
+--UI improvements in groups for accordion stucture
+--added cogs to plants listed under groups
+--Keep dropdown open on element click.
+--Removed some unnecessary js
+--Replaced plus "+" symbol with bootstrap glyphicon
+--removed background color from most <a> tag elements, use white hover text instead
+--Made it to where only one dropdown can be active at a time.
+--Fixed the dreaded white background bug
+
+WIP
+--Create new expanded settings pages for plants/groups
+--get accordion settings to work with cogs within groups, probably would be easier to do popups because this is taking me a while to figure out.
