@@ -259,12 +259,10 @@ var celcius = 30;
 var moisture = false;
 //Temp = Celcius, Moisture=T or F, uhh what was light?
 //Check for Temperature
-
 //we just need to have a way to figure out what will trigger lvl attention to 1
 //Like the temperature is too high, set off the flag, the moisture is too low,
 //set off the flag, light levels are low (for a duration), set off the flag.
 //This is highly dependant on what type of units we are gonna use though.
-
 //-------------------Determination of attention will go here------------------
 //Temp check
 var faren = (celcius * (9/5) + 32);
@@ -277,7 +275,6 @@ if(!moisture){
 }
 //if 0, no attention needed, if 1, attention is needed
 //lvl1 is temperature, lvl2 is moisture, and lvl3 is light level
-
 //what determines the status display is the sum of all level attention
 var code = lvl1att + lvl2att + lvl3att;
 document.write(stat.fontsize(5));
@@ -300,21 +297,21 @@ else if (code == 3){
 var lvl1 = "Temperature", lvl2 = "Moisture", lvl3 = "Light";
 if(code > 0){
     document.write("<p>Attention needed at: ");
-    if(lvl1att){
-        document.write(lvl1 + ", ");
-    }
-    if (lvl2att) {
-        document.write(lvl2 + ", ");
-    }
-    if(lvl3att){
-        document.write(lvl3 + " ");
-    }
-    if(code == 3){
-        document.write(" <br/>Take some time to save a life.");
-    }
+}
+if(lvl1att){
+    document.write(lvl1 + ", ");
+}
+if (lvl2att) {
+    document.write(lvl2 + ", ");
+}
+if(lvl3att){
+    document.write(lvl3 + " ");
+}
+if(code == 3){
+    document.write(" <br/>Take some time to save a life.");
 }
 else{ //if nothing needs attention, then is "all good" :)
-    document.write("Your plant is doing well :)");
+        document.write("Your plant is doing well :)");
 }
                                     </script>
                                 </div>
@@ -322,43 +319,43 @@ else{ //if nothing needs attention, then is "all good" :)
                             </div>
 
                             <ul>
-                                <div id="Level">
-                                    <li>Temperature Level</li>
-                                </div>
-                                <br/>
-                                <script>
+                                <li id="Level">
+                                    Temperature Level
+                                </li>
+                                <li>
+                                    <p>
+                                        <script>
 document.write("Current: " + celcius + "&#8451, " + faren + "&#8457");
-                                </script>
+                                        </script>
                                     </p>
                                 </li>
                                 <li id="Level">
                                     Moisture Level&nbsp;
                                     <p>
-                                <script>
+                                    <script>
 if(moisture){
     document.write("There seems to be moisture present :)");
 }
 else{
     document.write("Needs some moisture!");
 }
-                                </script>
-                                <br/>
-                                <div id="Level">
-                                    <li>Light Level</li>
-                                </div>
-                                <br/>
-                                <p>Bright as this plants future. </p>
-                                <br/>
+                                    </script>
+                                    </p>
+                                </li>
+                                <li id="Level">
+                                    Light Level
+                                </li>
+                                <li>
+                                    <p>Bright as this plants future. </p>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-
             </div><!-- End stage and sidebar-->
         </div>
         <script src="dist/bundle.js"></script>
         <script>
-
 $(document).ready(function() {
     $("#cog1").click(function () {
         $("#settingPlant1").slideToggle();
