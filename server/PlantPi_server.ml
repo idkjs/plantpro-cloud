@@ -45,10 +45,9 @@ let create_account_handler = (fun req ->
   then respond' (`String ("passwords do not match: " ^ username))
   else begin
     try%lwt
-      let _ = Db.get_user username in
+      let%lwt _ = Db.get_user username in
       respond'
-        ~headers:(Cohttp.Header.init_with "Location" "/static/index.html#failed")
-        ~code:(`Moved_permanently)
+        ~code:(`Conflict)
         (`String ("Error: User " ^ username ^ " already exists"))
     with
       | exn ->
