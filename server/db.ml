@@ -298,8 +298,8 @@ let get_data device =
     (fun (time, sensor_type, value) ->
       let time = CalendarLib.Printer.Calendar.from_string time in
       match sensor_type with
-        | "temp" ->
-            Lwt.return (Device.Jeffrey (float_of_string value, time))
+        | "ChirpTemp" ->
+            Lwt.return (Device.(ChirpTemp (float_of_string value, (ttype_of_string sensor_type), time)))
         | _ ->
             raise (Failure ("invalid sensor type found in database: \"" ^ sensor_type ^ "\"")))
     [%sqlc "SELECT @s{time}, @s{sensor_type}, @s{value} FROM px WHERE device_id = %s"]
