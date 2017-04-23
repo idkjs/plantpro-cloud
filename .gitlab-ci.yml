@@ -50,6 +50,8 @@ lint_client:
   stage: lint
   script:
    - cd client && npm install --only=dev
+   - pwd
+   - ls
    - bash -c "tidy client/*.html"
    - bash -c "tidy client/controlpanel/*.html"
    - pwd
