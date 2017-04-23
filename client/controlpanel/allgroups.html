@@ -4,12 +4,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="gMain.css>">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/gmain.css">
-
         <title>PlantPi: All your Groups</title>
         <link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
     </head>
@@ -30,6 +28,10 @@ function hex2a(hexx) {
         str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
     return str;
 }
+
+var EasterEgg = document.getElementById("Easter");
+var Leaf = document.getElementById("Leaf");
+var xicon = document.getElementsByClassName("close")[0];
 
 var username = hex2a(getCookie("username"));
 var xhr = new XMLHttpRequest();
@@ -85,7 +87,7 @@ xhr.send();
 
                             <br/>
 
-                            <li class="groupElement"><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:5px;">&nbsp;Settings</button><a href="#" id="groupName">Unholy Plants</a>
+                            <li class="groupElement"><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:5px;">&nbsp;Settings</button><a href="#" id="groupName1">Unholy Plants</a>
 
                                 <ul class="plantList">
                                     <br/>
@@ -100,7 +102,7 @@ xhr.send();
                                 </ul><br/>
                             </li>
                             <br/>
-                             <li class="groupElement"><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:5px;">&nbsp;Settings</button><a href="#" id="groupName">Unholy Plants</a>
+                             <li class="groupElement"><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:5px;">&nbsp;Settings</button><a href="#" id="groupName2">Unholy Plants</a>
 
                                 <ul class="plantList">
                                     <br/>
@@ -111,7 +113,6 @@ xhr.send();
                                     <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName5" href="#">Poison Ivy</a></li>
 
                                     <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName6" href="#">Ghost Chili</a></li>
-
                                 </ul><br/>
                             </li>
                             <br/>
@@ -122,9 +123,6 @@ xhr.send();
         </div>
         <script src="dist/bundle.js"></script>
         <script> //because i was bored EASTEREGG
-var EasterEgg = document.getElementById("Easter");
-var Leaf = document.getElementById("Leaf");
-var xicon = document.getElementsByClassName("close")[0];
 
 Leaf.onclick = function(){ //When leaf is clicked on
     EasterEgg.style.display="block";

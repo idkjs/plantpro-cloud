@@ -61,7 +61,7 @@ function doWork() {
 
     </head>
     <body onload="doWork();">
-        <!--.....................................................................................................Begin NavBar............................................................................-->
+        <!--........................Begin NavBar.................................-->
         <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -75,22 +75,19 @@ function doWork() {
                 <!--Allow for better compatability when resizing-->
                 <div class="collapse navbar-collapse" id="TheNavBar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a>
-                                <span class="glyphicon glyphicon-user">
-                                    <script>document.write(username);</script>
-                                </span>
-                            </a>
-                        </li>
-                        <!--<li><a><span class="glyphicon glyphicon-user"></span> TheLegend27</a></li>-->
+                        <!--Username-->
+                        <li><a><span id="usernameRenderTarget" class="glyphicon glyphicon-user"></span></a></li>
+
                         <li><a href="settings.html"><span class="glyphicon glyphicon-cog">&nbsp;</span>Settings</a></li>
                         <li><a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Signout</a></li>
                         <li><a id="Leaf"><span class="glyphicon glyphicon-leaf">&nbsp;</span></a></li>
-                        <li id="Easter" class="EasterEgg">
-                            <div class="EasterEgg-content">
-                                <span class="close">&times;</span>
-                                <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%" alt="an easter egg">
-                                <p style="color:white" >It's a feature :)</p>
+
+                        <li><div id="Easter" class="EasterEgg">
+                                <div class="EasterEgg-content">
+                                    <span class="close">&times;</span>
+                                    <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%" alt="dank memes">
+                                    <p style="color:white" >It's a feature :)</p>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -104,8 +101,7 @@ function doWork() {
             <div id="sidebar" class="sidebar-offcanvas">
                 <br /> <br />
                 <div class="col-xs-12">
-                    <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;">&nbsp;</span></a></h3><br/>
-                    <h4>Groups:</h4>
+                    <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"><!----></span></a></h3><br/>
 
                     <ul class="nav nav-pills nav-stacked">
                         <li><h4>Groups:</h4></li>
@@ -132,8 +128,8 @@ function doWork() {
                             </ul>
                         </li>
                         <!--End indoors dropdown-->
-                        </ul>
-                        <ul class="nav" id="groupsList"><!--Intial start of accordian-->
+                    </ul>
+                    <ul class="nav" id="groupsList"><!--Intial start of accordian-->
 
                         <!--This entire thing is just for the indoors dropdown-->
                         <li class="dropdown keep-open" id="menuElement">
@@ -195,8 +191,8 @@ function doWork() {
                                                             <br/>
                                                             <form action="/change-group-plant" method="post"> <!--Idk the backend name-->
                                                                 <input type="hidden" value=username name="user" id="uname2" />
-                                                                <input type="text" class="form-control" id="changegroupform1" name="groupName2" placeholder="new plant name" />
-                                                                <button id="changegroupbutton1" type="submit" class="btn btn-success" onclick="addGroup()">Create Group</button>
+                                                                <input type="text" class="form-control" id="changegroupform1" name="groupName2" placeholder="new group name" />
+                                                                <button id="changegroupbutton1" type="submit" class="btn btn-success" onclick="addGroup()">Change name</button>
                                                             </form>
                                                         </div>
                                                     <br/>
@@ -317,7 +313,7 @@ if(code == 3){
     document.write(" <br/>Take some time to save a life.");
 }
 else{ //if nothing needs attention, then is "all good" :)
-    document.write("Your plant is doing well :)");
+        document.write("Your plant is doing well :)");
 }
                                     </script>
                                 </div>

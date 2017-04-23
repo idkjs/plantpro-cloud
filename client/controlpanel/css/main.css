@@ -12,7 +12,7 @@ html{
 
 /*-----------------------------Nav Bar-------------------------------------------*/
 
-.navbar{	
+.navbar{
 	border-bottom: solid;
 	border-color: #009b09
 }
@@ -70,7 +70,7 @@ html{
     transition: all 0.30s ease-out;
     width:calc(100% + 20px);
   }
-    
+
   .row-offcanvas-left
   {
     left: -250px;
@@ -179,29 +179,6 @@ html{
 }
 
 
-.nav{
-	color:#009b09 !important;
-	list-style-position: inside;
-}
-
-.nav li{
-	max-width: 220px;
-	overflow: hidden;
-  	white-space: nowrap;
-  	text-overflow: ellipsis;
-}
-.nav a{
-	max-width: 190px;
-	overflow: hidden;
-  	white-space: nowrap;
-  	text-overflow: ellipsis;
-
-}
-.glyphicon-cog:hover{
-	color:#bcbcbc;
-}
-
-
 /*---------------------------End side Bar-----------------------*/
 /*-------------------------Begin Stage------------------------*/
 
@@ -213,23 +190,23 @@ html{
   width: 81%;
 }
 
-#panel{ 
-	width: 100%; 
-	
+#panel{
+	width: 100%;
+
 }
 .panel_status{
 	padding-left: 2%;
 }
-#status{ 
+#status{
 	margin-left: 0%;
 }
-  
+
 #panel.inner_panel li {
 	border-bottom: 1px solid #bbb;
 	margin-left: 0;
 }
-  
-#panel.inner_panel ul {		
+
+#panel.inner_panel ul {
 	list-style-type: none;
     	overflow: hidden;
     	width: 100%;
@@ -242,7 +219,7 @@ html{
 }
 
 #Level li {
-	
+
 	font-size: 18px;
 	font-weight: normal;
 	text-decoration: underline;
@@ -259,7 +236,7 @@ hr {
 }
 
 /*---------------------------End Stage--------------------*/
-h1 {	
+h1 {
   	color:black;
   	height: 2%;
 	width: 100%;
