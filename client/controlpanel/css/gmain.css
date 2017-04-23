@@ -68,7 +68,7 @@ h1 {
 .plantRender a{
     color: #009b09;
     text-decoration: none;
-    font-size: 19px;
+    font-size: 17px;
     font-weight: bold;
 }
 
@@ -77,9 +77,8 @@ h1 {
 }
 
 .plantElement a{
-    font-size: 19px;
+    font-size: 16px;
 }
-
 
 .pageList{
 	width: 95%;
@@ -98,7 +97,7 @@ h1 {
 }
 
 .groupList a{
-	font-size: 18px;
+	font-size: 17px;
     text-decoration: none;
 	color: #009b09;
 	font-weight: bold;
@@ -114,10 +113,6 @@ h1 {
 .groupElement{
 	border-bottom: solid;
 	border-width: .1px
-}
-
-#plantName{
-	font-size: 15px;
 }
 
 .EasterEgg {
