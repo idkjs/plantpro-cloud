@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import React from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
 
 class PlantListing extends React.Component {
     constructor(props) {
@@ -32,39 +32,40 @@ class PlantListing extends React.Component {
 
     render() {
         console.log(this.state.plants.length);
-        var p_buttonStyle = {
-            border: 'none',
-            backgroundColor: 'transparent',
-            paddingTop: '2px'
-        };
         var buttonStyle = {
-            border: 'none',
-            backgroundColor: 'transparent',
-            paddingTop: '13px'
+            border: "none",
+            backgroundColor: "transparent",
+            paddingTop: "2px"
         };
         var pStyle = {
-            color: '#bcbcbc',
-            padding: '3px 20px',
-        };
-        var li_style = {
-            border: 'none',
-            backgroundColor: 'transparent',
-            paddingTop: '2px'
+            color: "#bcbcbc",
+            padding: "3px 20px",
         };
         var contents;
         if (this.state.plants.length == 0) {
-          contents = (
-              <li><p style={pStyle}>No Plants in Group</p></li>
-              );
+            contents = (
+                <li><p style={pStyle}>No Plants in Group</p></li>
+            );
         }
         else {
-          this.state.plants.map((plant) => {
-              return (
-                  <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
-                  </button><a href="#">{plant.name}></a></li>
-                  );
-              })
+            contents =
+            this.state.plants.map((plant) => {
+                return (
+                    <li className="plantElement" key={plant.name}>
+                        <button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
+                        <!----></button><a href="#">{plant.name}></a>
+                    </li>
+                );
+            });
         }
+
+        return(
+            <div>
+            {
+                contents
+            }
+            </div>
+        );
     }
 }
 
@@ -89,14 +90,14 @@ class GroupsListing extends React.Component {
 
   render() {
   	var button_style = {
-  		border: 'none',
-        backgroundColor: 'transparent',
-        paddingTop: '5px'
+  		border: "none",
+        backgroundColor: "transparent",
+        paddingTop: "5px"
   	};
 
     var P_Style = {
-        fontSize: '13px',
-        fontWeight: 'bold',
+        fontSize: "13px",
+        fontWeight: "bold",
     };
 
     return (
@@ -105,16 +106,16 @@ class GroupsListing extends React.Component {
     		this.state.groups.map((group) => {
     			return(
     			<li className="groupElement">
-    			<button className="glyphicon glyphicon-cog pull-right" style={button_style}></button>
-    			<a href="#">{group.name}</a>
+    			    <button className="glyphicon glyphicon-cog pull-right" style={button_style}></button>
+    			    <a href="#">{group.name}</a>
+
                     <ul className="plantList" key={group.name}>
-                        <br/>
-                        <p style={P_Style}>Plants:</p>
-    				    <PlantListing username={this.state.props.username} groupname={group.name} />
+                        <li><br/><p style={P_Style}>Plants:</p></li>
+                        <PlantListing username={this.state.props.username} groupname={group.name} />
                     </ul>
                     <br/>
                 </li>
-    			)})
+            );})
         }
     	</div>);
   	}

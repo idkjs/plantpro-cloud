@@ -40,15 +40,8 @@ class PlantListing extends React.Component {
         var pStyle = {
             color: '#bcbcbc',
         };
-        var li_style = {
-            border: 'none',
-            backgroundColor: 'transparent',
-            paddingTop: '2px'
-        };
-        var a_style = {
-            fontSize: '18px',
-        }
         var contents;
+
         if (this.state.plants.length == 0) {
           contents = (
               <li><p style={pStyle}>You have no plants</p></li>
@@ -57,16 +50,23 @@ class PlantListing extends React.Component {
         else {
           this.state.plants.map((plant) => {
               return (
+                  contents = (
                   <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
                   <a href="#">{plant.name}</a></button>
                   </li>
                   );
-              })
+              }))
         }
+        return(
+            <div>
+            {
+                contents
+            }
+            </div>
+        );
     }
 }
-<li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#" style="font-size: 18px;">Venus Flytrap</a></li>
 
 ReactDOM.render(
   <PlantListing username={username} groupname={'all'} />,
-  document.getElementById('explandedPlantContainer'));
+  document.getElementById('expandedPlantContainer'));
