@@ -76,7 +76,7 @@ function doWork() {
                 <div class="collapse navbar-collapse" id="TheNavBar">
                     <ul class="nav navbar-nav navbar-right">
                         <!--Username-->
-                        <li><a><span id="usernameRenderTarget" class="glyphicon glyphicon-user"</span></a></li>
+                        <li><a><span id="usernameRenderTarget" class="glyphicon glyphicon-user"></span></a></li>
 
                         <li><a href="settings.html"><span class="glyphicon glyphicon-cog">&nbsp;</span>Settings</a></li>
                         <li><a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Signout</a></li>
@@ -85,7 +85,7 @@ function doWork() {
                         <li><div id="Easter" class="EasterEgg">
                                 <div class="EasterEgg-content">
                                     <span class="close">&times;</span>
-                                    <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%">
+                                    <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%" alt="dank memes">
                                     <p style="color:white" >It's a feature :)</p>
                                 </div>
                             </div>
@@ -113,14 +113,14 @@ function doWork() {
                                         <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
 
                                             <!--Dank Weed-->
-                                            <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
+                                            <li><ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
                                                 </button><a href="#">&nbsp;Dank Weed, 90%THC, strong stuff </a></li>
-                                            </ul>
+                                            </ul></li>
 
                                             <!--Mystery Plant-->
-                                            <ul class="nav innerMenu"><li>
+                                            <li><ul class="nav innerMenu"><li>
                                                 <button data-toggle="collapse" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Mystery Plant</a></li>
-                                            </ul>
+                                            </ul></li>
                                         </ul>
                                 </li>
                             </ul>
@@ -132,11 +132,11 @@ function doWork() {
                         <!--This entire thing is just for the indoors dropdown-->
                         <li class="dropdown keep-open" id="menuElement">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement&nbsp;<span class="caret" id="menu-caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement&nbsp;<span class="caret"></span></a>
 
                             <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
                                 <li>
-                                    <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
+                                    <ul class="nav innerMenu"><li><button class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
                                     </button><a href="#">&nbsp;Dead Twig</a></li></ul>
                                 </li>
 
@@ -147,7 +147,7 @@ function doWork() {
                             </ul>
                         </li>
                         <li class="dropdown keep-open" id="menuElement">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watered Sidewalks<span class="caret" id="menu-caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watered Sidewalks<span class="caret"></span></a>
                             <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
                                 <!--Dank Weed-->
                                 <li>
@@ -178,9 +178,9 @@ function doWork() {
                                                         <div id="show_rename_plant" style="display: none;">
                                                             <br/>
                                                             <form action="/rename-plant" method="post"> <!--Idk the backend name-->
-                                                                <input type="hidden" value=username name="user" id="uname" />
-                                                                <input type="text" class="form-control" id="PlantName" name="groupName" placeholder="new plant name" />
-                                                                <button id="savebutton" type="submit" class="btn btn-success" onclick="addGroup()">Rename Plant</button>
+                                                                <input type="hidden" value=username name="user" id="uname1" />
+                                                                <input type="text" class="form-control" id="renameform1" name="groupName1" placeholder="new plant name" />
+                                                                <button id="renamebutton1" type="submit" class="btn btn-success" onclick="addGroup()">Rename Plant</button>
                                                             </form>
                                                         </div>
                                                     <br/>
@@ -188,9 +188,9 @@ function doWork() {
                                                         <div id="show_change_plant_group" style="display: none;">
                                                             <br/>
                                                             <form action="/change-group-plant" method="post"> <!--Idk the backend name-->
-                                                                <input type="hidden" value=username name="user" id="uname" />
-                                                                <input type="text" class="form-control" id="PlantName" name="groupName" placeholder="new plant name" />
-                                                                <button id="savebutton" type="submit" class="btn btn-success" onclick="addGroup()">Create Group</button>
+                                                                <input type="hidden" value=username name="user" id="uname2" />
+                                                                <input type="text" class="form-control" id="changegroupform1" name="groupName2" placeholder="new plant name" />
+                                                                <button id="changegroupbutton1" type="submit" class="btn btn-success" onclick="addGroup()">Create Group</button>
                                                             </form>
                                                         </div>
                                                     <br/>
@@ -201,8 +201,8 @@ function doWork() {
                                     </ul>
                                 </ul>
                             </li>
-                            <br/>
-                            <li style="font-size: 12px; float: right;"><a href="allgroups.html">Manage Groups</a></li>
+
+                            <li style="font-size: 12px; float: right;"><br/><a href="allgroups.html">Manage Groups</a></li>
                             <li class="plus" style="font-size: 13px; float: left;"><a onclick="showCreateGroup()"><span class="btn glyphicon glyphicon-plus"></span></a></li>
                         </ul>
                         <!--End indoors dropdown-->
