@@ -1,8 +1,8 @@
 image: ci.cs.nmt.edu/plantpi/cloud-side:latest
 
 stages:
- - build
  - lint
+ - build
  - test
 
 build_client:
@@ -49,8 +49,9 @@ lint_client:
    - apk add tidyhtml@edge
   stage: lint
   script:
-   - cd client && npm install --only=dev
-   - cd client && tidy index.html
-   - cd controlpanel && tidy dashboard.html
    - pwd
-   - cd .. && ./node_modules/.bin/eslint -c ./.eslintrc.json controlpanel/js/dashboard.js
+   - ls
+   - tidy -help
+   - bash -c "tidy client/controlpanel/*.html > /dev/null"
+   - pwd
+   - cd client && npm install --only=dev && ./node_modules/.bin/eslint -c ./.eslintrc.json controlpanel/js/*.js
