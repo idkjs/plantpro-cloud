@@ -51,6 +51,7 @@ lint_client:
   script:
    - pwd
    - ls
+   - tidy -help
    - bash -c "tidy client/controlpanel/*.html"
    - pwd
    - cd client && npm install --only=dev
