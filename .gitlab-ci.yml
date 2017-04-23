@@ -1,8 +1,8 @@
 image: ci.cs.nmt.edu/plantpi/cloud-side:latest
 
 stages:
- - build
  - lint
+ - build
  - test
 
 build_client:
