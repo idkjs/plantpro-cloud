@@ -48,14 +48,14 @@ class PlantListing extends React.Component {
               );
         }
         else {
+            contents =
           this.state.plants.map((plant) => {
               return (
-                  contents = (
                   <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
                   <a href="#">{plant.name}</a></button>
                   </li>
-                  );
-              }))
+              );
+            });
         }
         return(
             <div>

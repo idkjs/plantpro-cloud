@@ -53,7 +53,7 @@ class PlantListing extends React.Component {
                 return (
                     <li className="plantElement" key={plant.name}>
                         <button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
-                        <!----></button><a href="#">{plant.name}></a>
+                        &nbsp;</button><a href="#">{plant.name}></a>
                     </li>
                 );
             });
