@@ -15,32 +15,26 @@
     </head>
     <body>
         <script>
-            function getCookie(cname) {
-                var name = cname + "=";
-                var decodeCookie = decodeCookie.split(';');
-                for(var i = 0; i <ca.length; i++) {
-                    var c = ca[i];
-                            while (c.charAt(0) == ' ') {
-                                    c = c.substring(1);
-                        }
-                        if (c.indexOf(name) == 0) {
-                                return c.substring(name.length, c.length);
-                        }
-                        return "";
-                }
+var username = hex2a(getCookie("username"));
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2)
+        return parts.pop().split(";").shift();
+}
 
-                function hex2a(hexx) {
-                var hex = hexx.toString();
-                var str = '';
-                for (var i = 0; i < hex.length; i += 2)
-                    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-                    return str;
-            }
+function hex2a(hexx) {
+    var hex = hexx.toString();
+    var str = '';
+    for (var i = 0; i < hex.length; i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+}
 
-            var username = hex2a(getCookie("username"));
-            var xhr = new XMLHttpRequest();
-            xhr.open("get", "/get-device" + username);
-            xhr.send();
+var username = hex2a(getCookie("username"));
+var xhr = new XMLHttpRequest();
+xhr.open("get", "/get-device" + username);
+xhr.send();
             //var plantname = JSON.parse(xhr.response)[0].name;
         </script>
         <!--Begin NavBar-->
@@ -77,23 +71,6 @@
                 </div>
             </div>
         </nav>
-        <script> //because i was bored EASTEREGG
-            var EasterEgg = document.getElementById("Easter");
-            var Leaf = document.getElementById("Leaf");
-            var xicon = document.getElementsByClassName("close")[0];
-
-            Leaf.onclick = function(){ //When leaf is clicked on
-                EasterEgg.style.display="block";
-             }
-            xicon.onclick = function() { //when "X" icon is clicked on
-                EasterEgg.style.display = "none";
-            }
-            window.onclick = function(event) { //Close window if user clicks outside the box
-                if (event.target == EasterEgg) {
-                    EasterEgg.style.display = "none";
-                }
-            }
-        </script>
         <!--End NavBar-->
 
         <br/><br/><br/><br/>
@@ -114,11 +91,11 @@
                                     <br/>
                                     <p style="font-size: 13px;"><strong>Plants</strong><p>
 
-                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Venus Flytrap</a></li>
+                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName1" href="#">Venus Flytrap</a></li>
 
-                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Poison Ivy</a></li>
+                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName2" href="#">Poison Ivy</a></li>
 
-                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Ghost Chili</a></li>
+                                    <li class="plantElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName3" href="#">Ghost Chili</a></li>
 
                                 </ul><br/>
                             </li>
@@ -129,11 +106,11 @@
                                     <br/>
                                     <p style="font-size: 13px;"><strong>Plants</strong><p>
 
-                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Venus Flytrap</a></li>
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName4" href="#">Venus Flytrap</a></li>
 
-                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Poison Ivy</a></li>
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName5" href="#">Poison Ivy</a></li>
 
-                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName" href="#">Ghost Chili</a></li>
+                                    <li class="planetElement"><button onclick="" class="glyphicon glyphicon-cog pull-left" style="border:none;background-color:transparent;padding-top: 2px;"></button>&nbsp;<a id="plantName6" href="#">Ghost Chili</a></li>
 
                                 </ul><br/>
                             </li>
@@ -144,5 +121,22 @@
             <div id="expandedPlantContainer"></div>
         </div>
         <script src="dist/bundle.js"></script>
+        <script> //because i was bored EASTEREGG
+var EasterEgg = document.getElementById("Easter");
+var Leaf = document.getElementById("Leaf");
+var xicon = document.getElementsByClassName("close")[0];
+
+Leaf.onclick = function(){ //When leaf is clicked on
+    EasterEgg.style.display="block";
+}
+xicon.onclick = function() { //when "X" icon is clicked on
+    EasterEgg.style.display = "none";
+}
+window.onclick = function(event) { //Close window if user clicks outside the box
+    if (event.target == EasterEgg) {
+        EasterEgg.style.display = "none";
+    }
+}
+        </script>
     </body>
 </html>
