@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import React from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
 
 class RenderGroupNameTitle extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ class RenderGroupNameTitle extends React.Component {
         };
     }
     render() {
-      return (<span>"" + {this.state.groupname}</span>);
+        return (<span>"" + {this.state.groupname}</span>);
     }
 }
 
