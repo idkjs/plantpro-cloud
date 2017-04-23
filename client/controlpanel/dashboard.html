@@ -55,6 +55,7 @@ function doWork() {
         pname.innerHTML += plantname;
     });
     xhr.send();
+
 }
         </script>
 
@@ -112,16 +113,20 @@ function doWork() {
                             <ul class="nav" id="groupsList"><!--Intial start of accordian-->
 
                         <!--This entire thing is just for the indoors dropdown-->
-                            <li class="dropdown keep-open" id="menuElement">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret" id="menu-caret"></span></a>
-                                    <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
+                                <li class="dropdown keep-open" id="menuElement">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret" id="menu-caret"></span></a>
+                                        <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
 
-                                        <!--Dank Weed-->
-                                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+                                            <!--Dank Weed-->
+                                            <li><ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
+                                             <!----></button><a href="#">&nbsp;Dank Weed, 90%THC, strong stuff&nbsp;</a></li>
+                                            </ul></li>
 
-                                        <!--Mystery Plant-->
-                                        <ul class="nav innerMenu"><li>
-                                            <button data-toggle="collapse" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#">Mystery Plant</a></li>
+                                            <!--Mystery Plant-->
+                                            <li><ul class="nav innerMenu"><li>
+                                                <button data-toggle="collapse" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">&nbsp;
+                                                  <!----></button><a href="#">Mystery Plant</a></li>
+                                            </ul></li>
                                         </ul>
                                 </li>
                             </ul>
@@ -131,34 +136,30 @@ function doWork() {
                         <ul class="nav" id="groupsList"><!--Intial start of accordian-->
 
                         <!--This entire thing is just for the indoors dropdown-->
-                            <li class="dropdown keep-open" id="menuElement">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement<span class="caret" id="menu-caret"></span></a>
+                        <li class="dropdown keep-open" id="menuElement">
 
-                                    <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
-
-                                        <ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="#"> Dead Twig</a></li>
-                                        </ul>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement&nbsp;<span class="caret"><!----></span></a>
 
                             <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
                                 <li>
                                     <ul class="nav innerMenu"><li><button class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
-                                    </button><a href="#">&nbsp;Dead Twig</a></li></ul>
+                                    <!----></button><a href="#">&nbsp;Dead Twig</a></li></ul>
                                 </li>
 
                                 <li>
                                     <ul class="nav innerMenu"><li><button onclick="" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
-                                    </button><a href="#">Venus Flytrap</a></li></ul>
+                                    <!----></button><a href="#">Venus Flytrap</a></li></ul>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown keep-open" id="menuElement">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watered Sidewalks<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watered Sidewalks<span class="caret"><!----></span></a>
                             <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
                                 <!--Dank Weed-->
                                 <li>
                                     <ul class="nav innerMenu">
                                         <li>
-                                            <button id="cog1" class="sets glyphicon glyphicon-cog pull-right settings_cog" style="border:none;background-color:transparent;padding-top:13px;"></button>
+                                            <button id="cog1" class="sets glyphicon glyphicon-cog pull-right settings_cog" style="border:none;background-color:transparent;padding-top:13px;"><!----></button>
                                             <a href="#"> In front of cramer </a>
                                         </li>
 
@@ -173,7 +174,7 @@ function doWork() {
                                     <!--Mystery Plant-->
                                     <ul class="nav innerMenu">
                                         <li>
-                                            <button id="cog2" type="button" onclick="" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button>
+                                            <button id="cog2" type="button" onclick="" class="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"><!----></button>
                                             <a href="#">Library sidewalk</a>
                                         </li>
 
@@ -208,7 +209,7 @@ function doWork() {
                             </li>
 
                             <li style="font-size: 12px; float: right;"><br/><a href="allgroups.html">Manage Groups</a></li>
-                            <li class="plus" style="font-size: 13px; float: left;"><a onclick="showCreateGroup()"><span class="btn glyphicon glyphicon-plus"></span></a></li>
+                            <li class="plus" style="font-size: 13px; float: left;"><a onclick="showCreateGroup()"><span class="btn glyphicon glyphicon-plus"><!----></span></a></li>
                         </ul>
                         <!--End indoors dropdown-->
 
@@ -230,7 +231,7 @@ function doWork() {
                             <li><div id="plantListContainer"></div></li>
 
                             <li>
-                                <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
+                                <ul class="nav"><li><button onclick="location.href='http:/google.com/'" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"><!----></button><a href="broken.html"> Dank Weed, 90%THC, strong stuff </a></li></ul>
                                 <br/>
                             </li>
 
@@ -260,7 +261,7 @@ var txt;
 var stat = "Status: ";
 var lvl1att = 0, lvl2att = 0, lvl3att = 0;  //These are the flags
 var code = 0; //by default
-var celcius = 30; 
+var celcius = 30;
 var moisture = false;
 //Temp = Celcius, Moisture=T or F, uhh what was light?
 //Check for Temperature
@@ -337,14 +338,14 @@ document.write("Current: " + celcius + "&#8451, " + faren + "&#8457");
                                 <li id="Level">
                                     Moisture Level&nbsp;
                                     <p>
-                                <script>
+                                    <script>
 if(moisture){
     document.write("There seems to be moisture present :)");
 }
 else{
     document.write("Needs some moisture!");
 }
-                                </script>
+                                    </script>
                                     </p>
                                 </li>
                                 <li id="Level">
