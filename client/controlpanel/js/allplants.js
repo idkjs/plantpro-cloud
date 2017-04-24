@@ -33,28 +33,28 @@ class PlantListing extends React.Component {
     render() {
         console.log(this.state.plants.length);
         var buttonStyle = {
-          border: "none",
-          backgroundColor: "transparent",
-          paddingTop: "2px"
+            border: "none",
+            backgroundColor: "transparent",
+            paddingTop: "2px"
         };
         var pStyle = {
-          color: "#bcbcbc",
+            color: "#bcbcbc",
         };
         var contents;
 
         if (this.state.plants.length == 0) {
-          contents = (
-            <li><p style={pStyle}>You have no plants</p></li>
-          );
+            contents = (
+              <li><p style={pStyle}>You have no plants</p></li>
+            );
         }
         else {
           contents =
           this.state.plants.map((plant) => {
-            return (
-              <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
-                <a href="#">{plant.name}</a></button>
-              </li>
-            );
+              return (
+                <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
+                  <a href="#">{plant.name}</a></button>
+                </li>
+              );
           });
         }
         return(
@@ -66,6 +66,28 @@ class PlantListing extends React.Component {
         );
     }
 }
+
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2)
+        return parts.pop().split(";").shift();
+}
+
+function hex2a(hexx) {
+    var hex = hexx.toString();
+    var str = "";
+    for (var i = 0; i < hex.length; i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+}
+
+var username = hex2a(getCookie("username"));
+
+ReactDOM.render(
+  <GroupsListing username={username} />,
+  document.getElementById('groupRender'));
+
 
 ReactDOM.render(
   <PlantListing username={username} groupname={"all"} />,
