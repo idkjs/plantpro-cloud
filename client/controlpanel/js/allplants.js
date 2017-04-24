@@ -48,7 +48,7 @@ class PlantListing extends React.Component {
             );
         }
         else {
-          contents =
+            contents =
           this.state.plants.map((plant) => {
               return (
                 <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
@@ -86,7 +86,7 @@ var username = hex2a(getCookie("username"));
 
 ReactDOM.render(
   <GroupsListing username={username} />,
-  document.getElementById('groupRender'));
+  document.getElementById("groupRender"));
 
 
 ReactDOM.render(

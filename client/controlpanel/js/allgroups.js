@@ -6,8 +6,8 @@ class PlantListing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-              plants: [],
-              props: props,
+            plants: [],
+            props: props,
         };
     }
 
@@ -50,13 +50,13 @@ class PlantListing extends React.Component {
         else {
             contents =
             this.state.plants.map((plant) => {
-              return (
-                <li className="plantElement" key={plant.name}>
-                <button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
-                &nbsp;</button><a href="#">{plant.name}></a>
-                </li>
+                return (
+                  <li className="plantElement" key={plant.name}>
+                  <button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
+                  &nbsp;</button><a href="#">{plant.name}></a>
+                  </li>
               );
-          });
+            });
         }
         return(
           <div>
@@ -101,19 +101,19 @@ class GroupsListing extends React.Component {
           <div>
           {
             this.state.groups.map((group) => {
-              return(
-                <li className="groupElement">
-                  <button className="glyphicon glyphicon-cog pull-right" style={button_style}></button>
-                  <a href="#">{group.name}</a>
-                  <ul className="plantList" key={group.name}>
-                    <li><br/><p style={P_Style}>Plants:</p></li>
-                      <PlantListing username={this.state.props.username} groupname={group.name} />
+                return(
+                  <li className="groupElement">
+                    <button className="glyphicon glyphicon-cog pull-right" style={button_style}></button>
+                    <a href="#">{group.name}</a>
+                    <ul className="plantList" key={group.name}>
+                      <li><br/><p style={P_Style}>Plants:</p></li>
+                        <PlantListing username={this.state.props.username} groupname={group.name} />
                   </ul>
                   <br/>
                 </li>
               );})
         }
-        </div>);
+          </div>);
       }
 }
 
@@ -136,8 +136,8 @@ var username = hex2a(getCookie("username"));
 
 ReactDOM.render(
   <GroupsListing username={username} />,
-  document.getElementById('groupRender'));
+  document.getElementById("groupRender"));
 
 ReactDOM.render(
-  <PlantListing username={username} groupname={'ungrouped'} />,
-  document.getElementById(''));
+  <PlantListing username={username} groupname={"ungrouped"} />,
+  document.getElementById(""));
