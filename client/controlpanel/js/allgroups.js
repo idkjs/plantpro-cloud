@@ -114,7 +114,7 @@ class GroupsListing extends React.Component {
                 );})
         }
           </div>);
-      }
+    }
 }
 
 function getCookie(name) {
