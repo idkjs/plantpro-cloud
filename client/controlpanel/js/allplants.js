@@ -31,39 +31,39 @@ class PlantListing extends React.Component {
     }
 
     render() {
-      console.log(this.state.plants.length);
-      var buttonStyle = {
-        border: "none",
-        backgroundColor: "transparent",
-        paddingTop: "2px"
-      };
-      var pStyle = {
-        color: "#bcbcbc",
-      };
-      var contents;
+        console.log(this.state.plants.length);
+        var buttonStyle = {
+          border: "none",
+          backgroundColor: "transparent",
+          paddingTop: "2px"
+        };
+        var pStyle = {
+          color: "#bcbcbc",
+        };
+        var contents;
 
-      if (this.state.plants.length == 0) {
-        contents = (
-          <li><p style={pStyle}>You have no plants</p></li>
-        );
-      }
-      else {
-        contents =
-        this.state.plants.map((plant) => {
-          return (
-            <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
-              <a href="#">{plant.name}</a></button>
-            </li>
+        if (this.state.plants.length == 0) {
+          contents = (
+            <li><p style={pStyle}>You have no plants</p></li>
           );
-        });
-      }
-      return(
-        <div>
-        {
-          contents
         }
-        </div>
-      );
+        else {
+          contents =
+          this.state.plants.map((plant) => {
+            return (
+              <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
+                <a href="#">{plant.name}</a></button>
+              </li>
+            );
+          });
+        }
+        return(
+          <div>
+          {
+            contents
+          }
+          </div>
+        );
     }
 }
 
