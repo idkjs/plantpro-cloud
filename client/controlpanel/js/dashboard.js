@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import React from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
 
 
 class PlantListing extends React.Component {
@@ -34,9 +34,9 @@ class PlantListing extends React.Component {
     render() {
         console.log(this.state.plants.length);
         var buttonStyle = {
-            border: 'none',
-            backgroundColor: 'transparent',
-            paddingTop: '13px'
+            border: "none",
+            backgroundColor: "transparent",
+            paddingTop: "13px"
         };
         var pStyle = {
             color: "#bcbcbc",

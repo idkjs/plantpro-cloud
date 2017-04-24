@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import React from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
 
 class PlantListing extends React.Component {
     constructor(props) {
@@ -31,42 +31,42 @@ class PlantListing extends React.Component {
     }
 
     render() {
-        console.log(this.state.plants.length);
-        var buttonStyle = {
-            border: 'none',
-            backgroundColor: 'transparent',
-            paddingTop: '2px'
-        };
-        var pStyle = {
-            color: '#bcbcbc',
-        };
-        var contents;
+      console.log(this.state.plants.length);
+      var buttonStyle = {
+        border: "none",
+        backgroundColor: "transparent",
+        paddingTop: "2px"
+      };
+      var pStyle = {
+        color: "#bcbcbc",
+      };
+      var contents;
 
-        if (this.state.plants.length == 0) {
-          contents = (
-              <li><p style={pStyle}>You have no plants</p></li>
-              );
-        }
-        else {
-            contents =
-          this.state.plants.map((plant) => {
-              return (
-                  <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
-                  <a href="#">{plant.name}</a></button>
-                  </li>
-              );
-            });
-        }
-        return(
-            <div>
-            {
-                contents
-            }
-            </div>
+      if (this.state.plants.length == 0) {
+        contents = (
+          <li><p style={pStyle}>You have no plants</p></li>
         );
+      }
+      else {
+        contents =
+        this.state.plants.map((plant) => {
+          return (
+            <li className="plantElement" key={plant.name}><button className="glyphicon glyphicon-cog pull-left" style={buttonStyle}>
+              <a href="#">{plant.name}</a></button>
+            </li>
+          );
+        });
+      }
+      return(
+        <div>
+        {
+          contents
+        }
+        </div>
+      );
     }
 }
 
 ReactDOM.render(
-  <PlantListing username={username} groupname={'all'} />,
-  document.getElementById('expandedPlantContainer'));
+  <PlantListing username={username} groupname={"all"} />,
+  document.getElementById("expandedPlantContainer"));

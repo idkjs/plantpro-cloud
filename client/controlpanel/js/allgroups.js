@@ -6,8 +6,8 @@ class PlantListing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            plants: [],
-            props: props,
+          plants: [],
+          props: props,
         };
     }
 
@@ -31,93 +31,91 @@ class PlantListing extends React.Component {
     }
 
     render() {
-        console.log(this.state.plants.length);
-        var buttonStyle = {
-            border: "none",
-            backgroundColor: "transparent",
-            paddingTop: "2px"
-        };
-        var pStyle = {
-            color: "#bcbcbc",
-            padding: "3px 20px",
-        };
-        var contents;
-        if (this.state.plants.length == 0) {
-            contents = (
-                <li><p style={pStyle}>No Plants in Group</p></li>
-            );
-        }
-        else {
-            contents =
-            this.state.plants.map((plant) => {
-                return (
-                    <li className="plantElement" key={plant.name}>
-                        <button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
-                        &nbsp;</button><a href="#">{plant.name}></a>
-                    </li>
-                );
-            });
-        }
-
-        return(
-            <div>
-            {
-                contents
-            }
-            </div>
+      console.log(this.state.plants.length);
+      var p_buttonStyle = {
+        border: "none",
+        backgroundColor: "transparent",
+        paddingTop: "2px"
+      };
+      var pStyle = {
+        color: "#bcbcbc",
+        padding: "3px 20px",
+      };
+      var contents;
+      if (this.state.plants.length == 0) {
+        contents = (
+            <li><p style={pStyle}>No Plants in Group</p></li>
         );
+      }
+      else {
+          contents =
+          this.state.plants.map((plant) => {
+            return (
+              <li className="plantElement" key={plant.name}>
+              <button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
+              &nbsp;</button><a href="#">{plant.name}></a>
+              </li>
+            );
+          });
+        }
+      return(
+        <div>
+        {
+          contents
+        }
+        </div>
+      );
     }
 }
 
 class GroupsListing extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groups: [],
-      props: props
-    };
-  }
+    constructor(props) {
+      super(props);
+      this.state = {
+        groups: [],
+        props: props
+      };
+    }
 
-  componentDidMount() {
-    var url = `/get-groups/${this.state.props.username}`;
-    console.log("url: " + url);
-    axios.get(url)
+    ComponentDidMount() {
+      var url = `/get-groups/${this.state.props.username}`;
+      console.log("url: " + url);
+      axios.get(url)
       .then(res => {
-        var groups = res.data;
-        console.log(groups);
-        this.setState({groups: groups});});
-  }
+          var groups = res.data;
+          console.log(groups);
+          this.setState({groups: groups});});
+    }
 
-  render() {
-  	var button_style = {
-  		border: "none",
-        backgroundColor: "transparent",
-        paddingTop: "5px"
-  	};
+    render() {
+      var button_style = {
+      border: "none",
+      backgroundColor: "transparent",
+      paddingTop: "5px"
+      };
 
-    var P_Style = {
-        fontSize: "13px",
-        fontWeight: "bold",
-    };
+      var P_Style = {
+      fontSize: "13px",
+      fontWeight: "bold",
+      };
 
-    return (
-    	<div>
-    	{
-    		this.state.groups.map((group) => {
-    			return(
-    			<li className="groupElement">
-    			    <button className="glyphicon glyphicon-cog pull-right" style={button_style}></button>
-    			    <a href="#">{group.name}</a>
-
-                    <ul className="plantList" key={group.name}>
-                        <li><br/><p style={P_Style}>Plants:</p></li>
-                        <PlantListing username={this.state.props.username} groupname={group.name} />
-                    </ul>
-                    <br/>
-                </li>
+      return (
+        <div>
+        {
+          this.state.groups.map((group) => {
+            return(
+              <li className="groupElement">
+                <button className="glyphicon glyphicon-cog pull-right" style={button_style}></button>
+                <a href="#">{group.name}</a>
+                <ul className="plantList" key={group.name}>
+                  <li><br/><p style={P_Style}>Plants:</p></li>
+                    <PlantListing username={this.state.props.username} groupname={group.name} />
+                </ul>
+                <br/>
+              </li>
             );})
         }
-    	</div>);
+    	 </div>);
   	}
 }
 
