@@ -55,7 +55,7 @@ class PlantListing extends React.Component {
                   <button className="glyphicon glyphicon-cog pull-left" style={p_buttonStyle}>
                   &nbsp;</button><a href="#">{plant.name}></a>
                   </li>
-              );
+                );
             });
         }
         return(
@@ -108,10 +108,10 @@ class GroupsListing extends React.Component {
                     <ul className="plantList" key={group.name}>
                       <li><br/><p style={P_Style}>Plants:</p></li>
                         <PlantListing username={this.state.props.username} groupname={group.name} />
-                  </ul>
-                  <br/>
-                </li>
-              );})
+                    </ul>
+                    <br/>
+                  </li>
+                );})
         }
           </div>);
       }
