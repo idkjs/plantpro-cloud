@@ -1,82 +1,75 @@
 body {
 	/*margin: 1% 1% 1% 1%;*/
-	margin: 0 0 0 0;
-	background-color:  #e8e8e8; /*Full page background*/
-	color: black;
+    margin: 0 0 0 0;
+    background-color:  #e8e8e8; /*Full page background*/
+    color: black;
 }
+
 html{
-	height: 100%;
-	font-family:Helvetica;
+    height: 100%;
+    font-family: "Helvetica", sans-serif;;
 }
 
 hr {
-	border: 1px solid #ccc;
+    border: 1px solid #ccc;
 }
 /*-----------------------------Nav Bar-------------------------------------------*/
 
-.navbar{	
-	border-bottom: solid;
-	border-color: #009b09
+.navbar{
+    border-bottom: solid;
+    border-color: #009b09
 }
 
 .navbar-brand {
   	color:#009b09 !important;
   	font-size: 40px;
- 	margin: 0px;
+    margin: 0px;
 }
 .navbar-brand:hover{
-	color:#007a2a !important;
+    color:#007a2a !important;
 }
 
 .navbar-right a{
-	color:#009b09 !important;
-	font-size: 17px;
+    color:#009b09 !important;
+    font-size: 17px;
 }
 
 .navbar-right li a:hover{
-	color:#ffffff !important;
+    color:#ffffff !important;
 }
 
 .leaf li a:hover{
-	color:#007a2a !important;
+    color:#007a2a !important;
 }
 
-
- .nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
- 	background-color: #232323 !important;
- }
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
+    background-color: #232323 !important;
+}
 .nav{
-	color:#009b09 !important;
-	list-style-position: inside;
+    color:#009b09 !important;
+    list-style-position: inside;
 }
 /*---------------------------------NavBar End--------------------------------------------*/
 
-h1 {	
+h1 {
   	color:black;
   	height: 2%;
-	width: 100%;
- }
+    width: 100%;
+}
 
 .subsection{
-	font-size: 17px;
-	font-weight: bold;
-	text-decoration: underline;
+    font-size: 17px;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .subform{
-	padding-left: 3%;
-	width: 75%;
+    padding-left: 3%;
+    width: 75%;
 }
-
-#version{
-	position:fixed;
-    	bottom:0;
-    	right:1;
-}
-
 
 .confirm_text{
-	display: none;
+    display: none;
 }
 
 .EasterEgg {
@@ -94,11 +87,11 @@ h1 {
 }
 
 .EasterEgg-content {
-	background-color: #131313;
-	margin: auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 50%;
+    background-color: #131313;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
 }
 
 .close {

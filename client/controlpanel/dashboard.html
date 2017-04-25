@@ -30,22 +30,6 @@ function hex2a(hexx) {
 }
 
 function doWork() {
-    var EasterEgg = document.getElementById("Easter");
-    var Leaf = document.getElementById("Leaf");
-    var xicon = document.getElementsByClassName("close")[0];
-
-    Leaf.onclick = function(){ //When leaf is clicked on
-        EasterEgg.style.display="block";
-    };
-    xicon.onclick = function() { //when "X" icon is clicked on
-        EasterEgg.style.display = "none";
-    };
-    window.onclick = function(event) { //Close window if user clicks outside the box
-        if (event.target == EasterEgg) {
-            EasterEgg.style.display = "none";
-        }
-    };
-
     var xhr = new XMLHttpRequest();
     console.log(hex2a(getCookie("username")));
     xhr.open("get", "/get-devices/" + username + "/all");
@@ -81,15 +65,6 @@ function doWork() {
                         <li><a href="settings.html"><span class="glyphicon glyphicon-cog">&nbsp;</span>Settings</a></li>
                         <li><a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Signout</a></li>
                         <li><a id="Leaf"><span class="glyphicon glyphicon-leaf">&nbsp;</span></a></li>
-
-                        <li><div id="Easter" class="EasterEgg">
-                                <div class="EasterEgg-content">
-                                    <span class="close">&times;</span>
-                                    <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%" alt="dank memes">
-                                    <p style="color:white" >It's a feature :)</p>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -115,13 +90,13 @@ function doWork() {
 
                                             <!--Dank Weed-->
                                             <li><ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
-                                             <!----></button><a href="#">&nbsp;Dank Weed, 90%THC, strong stuff&nbsp;</a></li>
+                                             &#8203</button><a href="#">&nbsp;Dank Weed, 90%THC, strong stuff&nbsp;</a></li>
                                             </ul></li>
 
                                             <!--Mystery Plant-->
                                             <li><ul class="nav innerMenu"><li>
                                                 <button data-toggle="collapse" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">&nbsp;
-                                                  <!----></button><a href="#">Mystery Plant</a></li>
+                                                  &#8203</button><a href="#">Mystery Plant</a></li>
                                             </ul></li>
                                         </ul>
                                 </li>

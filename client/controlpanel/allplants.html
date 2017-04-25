@@ -54,15 +54,6 @@ xhr.send();
                         <li><a href="dashboard.html"><span class="glyphicon glyphicon-arrow-left">&nbsp;</span>Go back</a></li>
                         <li><a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Signout</a></li>
                         <li><a id="Leaf"><span class="glyphicon glyphicon-leaf">&nbsp;</span></a></li>
-
-                        <li><div id="Easter" class="EasterEgg">
-                                <div class="EasterEgg-content">
-                                    <span class="close">&times;</span>
-                                    <img src="https://www.askideas.com/media/39/Yes-Human-Plant-For-Your-Rabbit-Overlords-Funny-Rabbit-Meme-Image.jpg" width="80%" height="80%" alt="dank memes">
-                                    <p style="color:white" >Its a feature :)</p>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -88,22 +79,5 @@ xhr.send();
             <div id="expandedPlantContainer"></div>
         </div>
         <script src="dist/bundle.js"></script>
-        <script>
-var EasterEgg = document.getElementById("Easter");
-var Leaf = document.getElementById("Leaf");
-var xicon = document.getElementsByClassName("close")[0];
-
-Leaf.onclick = function(){ //When leaf is clicked on
-    EasterEgg.style.display="block";
-}
-xicon.onclick = function() { //when "X" icon is clicked on
-    EasterEgg.style.display = "none";
-}
-window.onclick = function(event) { //Close window if user clicks outside the box
-    if (event.target == EasterEgg) {
-        EasterEgg.style.display = "none";
-    }
-}
-        </script>
     </body>
 </html>
