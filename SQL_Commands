@@ -18,6 +18,9 @@ INSERT INTO users(creation_time, name, email, user_name, salt, p_hash, is_verifi
         
 //getting data
         SELECT creation_time , name , email , user_name , salt , p_hash , is_verified FROM users;
+        
+// removing data
+        DELETE from users WHERE id = %d;
 _______________________________________________________________________________
 // group table
 // create table
@@ -37,6 +40,11 @@ INSERT INTO temp(group_name, owner_id)
         
 //getting data by owner_id
         SELECT group_id, group_name FROM devices WHERE owner_id = %s;
+        
+// removing data
+        DELETE from group WHERE group_id = %d;
+        
+        DELETE from group WHERE owner_id = %d;
 _______________________________________________________________________________
 // devices table
 // create table
@@ -70,6 +78,12 @@ INSERT INTO users(group_id)
 //getting data by group_id
         SELECT device_id, name, owner_id FROM devices WHERE group_id = %s;
         
+// removing data
+        DELETE from devices WHERE device_id = %d;
+        
+        DELETE from devices WHERE group_id = %d;
+        
+        DELETE from devices WHERE owner_id = %d;
 _______________________________________________________________________________
 // temperature table
 // create table
@@ -88,6 +102,9 @@ INSERT INTO temp(creation_time, data, temp_unit, device_id)
         
 //getting data by device_id
         SELECT temp_id, creation_time, data, temp_unit FROM devices WHERE device_id = %s;
+        
+// removing data
+        DELETE from temp WHERE temp_id = %d;
 _______________________________________________________________________________
 // light table
 // create table
@@ -106,6 +123,8 @@ INSERT INTO light(creation_time, data, device_id)
 //getting data by device_id
         SELECT light_id, creation_time, data FROM devices WHERE device_id = %s;
         
+// removing data
+        DELETE from light WHERE light = %d;
 _______________________________________________________________________________
 // water table
 // create table
@@ -123,6 +142,9 @@ INSERT INTO water(creation_time, data, device_id)
         
 //getting data by device_id
         SELECT water_id, creation_time, data FROM devices WHERE device_id = %s;
+        
+// removing data
+        DELETE from water WHERE water_id = %d;
 _______________________________________________________________________________
 //LEGACY
 //create plant data
