@@ -31,6 +31,10 @@ build_server:
    - eval `opam config env`
   script: "cd server && opam pin add plantpi ."
 
+test_client:
+  stage: test
+  script: "echo not yet implemented"
+
 lint_client:
   before_script:
    - apk add tidyhtml@edge
@@ -49,7 +53,7 @@ deploy_server:
    - master
   script:
    - apk add ruby ruby-irb ruby-bundler
-   - echo 'gem: --no-document' > /etc/gemrc
+   - echo "gem: --no-document" > /etc/gemrc
    - gem install rdoc
    - gem install dpl
    - dpl --provider=heroku --app=plantpi --api-key=$HEROKU_API_KEY
