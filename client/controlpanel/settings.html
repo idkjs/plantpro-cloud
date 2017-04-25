@@ -12,88 +12,38 @@
 		<link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
 	</head>
 	<body>
-		<script>
-			function getCookie(cname) {
-				var name = cname + "=";
-				var decodeCookie = decodeCookie.split(';');
-				for(var i = 0; i <ca.length; i++) {
-					var c = ca[i];
-        					while (c.charAt(0) == ' ') {
-            						c = c.substring(1);
-        				}
-        				if (c.indexOf(name) == 0) {
-            					return c.substring(name.length, c.length);
-        				}
-        				return "";
-                                }
-    			}
-    			
-    			function hex2a(hexx) {
- 				var hex = hexx.toString();
-				var str = '';
-				for (var i = 0; i < hex.length; i += 2)
-					str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-    				return str;
-			}
-
-			//var username = hex2a(getCookie("username"));
-			//var xhr = new XMLHttpRequest();
-			//xhr.open("get", "/get-device" + username);
-			//xhr.send();
-			//var plantname = JSON.parse(xhr.response)[0].name;
-		</script>
 		<!--Begin NavBar-->
-		<nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
-			<div class="container-fluid">
-	    			<div class="navbar-header">
-                                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#TheNavBar">
-					            	<span class="icon-bar">&nbsp;</span>
-					           	<span class="icon-bar">&nbsp;</span>
-					           	<span class="icon-bar">&nbsp;</span>
-				        </button>
-	     				<a class="navbar-brand" href="dashboard.html">PlantPi</a>
-	    			</div>
+        <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#TheNavBar">
+                        <span class="icon-bar">&nbsp;</span>
+                        <span class="icon-bar">&nbsp;</span>
+                        <span class="icon-bar">&nbsp;</span>
+                    </button>
+                    <a class="navbar-brand" href="dashboard.html">PlantPi</a>
+                </div>
+                <!--Allow for better compatability when resizing-->
+                <div class="collapse navbar-collapse" id="TheNavBar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--Username-->
+                        <li><a><span id="usernameRenderTarget" class="glyphicon glyphicon-user"><!----></span></a></li>
 
-	    			<!--Allow for better compatability when resizing-->
-	    			<div class="collapse navbar-collapse" id="TheNavBar">
-		    			<ul class="nav navbar-nav navbar-right">
-					        <li>
-                                                        <a href="dashboard.html">
-                                                                <span class="glyphicon glyphicon-arrow-left">&nbsp;</span> Go Back
-                                                        </a>
-                                                </li>
-					               <li><a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span> Signout</a></li>
-					               <li><a id="Leaf"><span class="glyphicon glyphicon-leaf">&nbsp;</span></a></li>
-
-				 	</ul>
-				 </div>
-			</div>
-		</nav>
-		<script> //because i was bored EASTEREGG
-			var EasterEgg = document.getElementById("Easter");
-			var Leaf = document.getElementById("Leaf");
-			var xicon = document.getElementsByClassName("close")[0];
-
-			Leaf.onclick = function(){ //When leaf is clicked on
-			 	EasterEgg.style.display="block";
-			 }
-			xicon.onclick = function() { //when "X" icon is clicked on
-   				EasterEgg.style.display = "none";
-			}
-			window.onclick = function(event) { //Close window if user clicks outside the box
-				if (event.target == EasterEgg) {
-					EasterEgg.style.display = "none";
-				}
-			}
-		</script>
+                        <li><a href="dashboard.html"><span class="glyphicon glyphicon-arrow-left">&nbsp;</span>Go back</a></li>
+                        <li><a href="index.html"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Signout</a></li>
+                        <li><a id="Leaf"><span class="glyphicon glyphicon-leaf">&nbsp;</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 		<!--End NavBar-->
 
 		<br/><br/><br/><br/>
 
-		<!--The settings container, currently doesn't do anything other than show forms
-		and send a confirm alert upon button press--> 
+		<!--The settings container, currently doesnt do anything other than show forms
+		and send a confirm alert upon button press-->
 		<div class="container">
-			<h1><span class="glyphicon glyphicon-cog">&nbsp;</span>  Settings for <strong>"Maple"</strong></h1>
+			<h1><span class="glyphicon glyphicon-cog"><!----></span>&nbsp;General Settings</h1>
 			<p>Here you can change various settings for your PlantPi environment.</p>
 			<div class="container">
 				<br/>
@@ -104,19 +54,13 @@
 					<div class="subform">
 						<div class="form-group">
 						 	<label for="PlantName">Plant Name</label>
-						    	<input type="text" class="form-control" id="PlantName" name="name" placeholder="Maple">
+						    <input type="text" class="form-control" id="PlantName" name="name" placeholder="Maple"/>
 						 </div>
 						 <div class="form-group">
-						    	<label for="Pi_Device_ID">PlantPi Device ID</label>
-						    	<input type="text" class="form-control" id="Pi_Device_ID" name="device" placeholder="A113">
+						   	<label for="Pi_Device_ID">PlantPi Device ID</label>
+						   	<input type="text" class="form-control" id="Pi_Device_ID" name="device" placeholder="A113"/>
 						</div>
-						<button type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button>
-
-						<!--currently doesn't do anything-->
-						<div id="confirm_txt" class="confirm_text">
-							<p>Changes Successfully saved</p>
-						</div>
-
+						<button id="savebutton" type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button>
 						<br/>
 					</div>
 				</form>
@@ -126,29 +70,41 @@
 						<p>Account Infomation</p>
 					</div>
 					<div class="subform">
-						<div class="form-group">
-						    	<label for="cur_password">Current Password</label>
-						    	<input type="text" class="form-control" id="cur_password" placeholder="">
-						</div>
-						<div class="form-group">
-						    	<label for="new_password">New Password</label>
-						    	<input type="text" class="form-control" id="new_password" placeholder="">
-						</div>
-						<div class="form-group">
-						    	<label for="verify_password">Verify Password</label>
-						    	<input type="text" class="form-control" id="verify_password" placeholder="">
-						</div>
-						<button type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button><br/>
-					</div>	
+                        <p>Email Infomation</p>
+                        <div class="form-group">
+                            <label for="email-address">Email Address</label>
+                            <input type="text" class="form-control" id="email_address" placeholder="plantpi_is_awesome27@gmail.com"/>
+                        </div>
+                    </div>
+                    <button id="submitemail" type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button><br/>
+                </form>
+                <form action="#" method="post">
+                    <hr/>
+                    <div class="subsection">
+                        <p>Password Infomation</p>
+                    </div>
+                    <div class="form-group">
+					    	<label for="cur_password">Current Password</label>
+					    	<input type="text" class="form-control" id="cur_password" placeholder=""/>
+					</div>
+					<div class="form-group">
+					    	<label for="new_password">New Password</label>
+					    	<input type="text" class="form-control" id="new_password" placeholder=""/>
+					</div>
+					<div class="form-group">
+					    	<label for="verify_password">Verify Password</label>
+					    	<input type="text" class="form-control" id="verify_password" placeholder=""/>
+					</div>
+					<button id="submitpassword" type="submit" class="btn btn-primary" onclick="confirm_mes()">Save Settings</button>
+                    <br/>
 				</form>
 				<br/>
 			</div>
-			<script>
-				function confirm_mes(){
-					alert("Settings Successfully Saved!");
-				}
-			</script>
 		</div>
-		<div id="version">beta</div>
+        <script>
+function confirm_mes(){
+    alert("Settings Successfully Saved!");
+}
+</script>
 	</body>
 </html>
