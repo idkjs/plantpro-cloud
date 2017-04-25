@@ -10,31 +10,6 @@
         <link rel="stylesheet" type="text/css" href="css/gmain.css">
         <title>PlantPi: All your Groups</title>
         <link rel="shortcut icon" href="https://d30y9cdsu7xlg0.cloudfront.net/png/3973-200.png" />
-
-        <script>
-var username = hex2a(getCookie("username"));
-function getCookie(name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2)
-        return parts.pop().split(";").shift();
-}
-
-function hex2a(hexx) {
-    var hex = hexx.toString();
-    var str = '';
-    for (var i = 0; i < hex.length; i += 2)
-        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-    return str;
-}
-
-var username = hex2a(getCookie("username"));
-var xhr = new XMLHttpRequest();
-xhr.open("get", "/get-device" + username);
-xhr.send();
-//var plantname = JSON.parse(xhr.response)[0].name;
-        </script>
-
     </head>
     <body>
         <!--Begin NavBar-->
