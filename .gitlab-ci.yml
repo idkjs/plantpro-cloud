@@ -33,6 +33,8 @@ build_server:
 
 test_client:
   stage: test
+  before_script:
+   - npm install -g chai
   script: "echo not yet implemented"
 
 lint_client:
