@@ -1,6 +1,5 @@
 //please foward me any errors ASAP, it's fairly difficutl to test this. 
 //Preliminaries and looking at is sudjest this works, but I am not 100%.
-
 // users table
 // create table
 CREATE TABLE IF NOT EXISTS users (
@@ -13,14 +12,15 @@ CREATE TABLE IF NOT EXISTS users (
         p_hash text NOT NULL
         CONSTRAINT uc_user UNIQUE (email, user_name)
         int is_verified);
-
 //setting data
 INSERT INTO users(creation_time, name, email, user_name, salt, p_hash, is_verified)
         VALUES(%s, %s, %s, %s, %s, %s, %d);
         
 //getting data
         SELECT creation_time , name , email , user_name , salt , p_hash , is_verified FROM users;
-
+        
+// removing data
+        DELETE from users WHERE id = %d;
 _______________________________________________________________________________
 // group table
 // create table
@@ -28,7 +28,6 @@ CREATE TABLE group (
         group_id int PRIMARY KEY AUTOINCREMENT,
         group_name varchar(256) NOT NULL,
         FOREIGN KEY(owner_id) REFERENCES users(id));
-
 //setting data
 INSERT INTO temp(group_name, owner_id)
         VALUES(%s, %s);
@@ -41,7 +40,11 @@ INSERT INTO temp(group_name, owner_id)
         
 //getting data by owner_id
         SELECT group_id, group_name FROM devices WHERE owner_id = %s;
-
+        
+// removing data
+        DELETE from group WHERE group_id = %d;
+        
+        DELETE from group WHERE owner_id = %d;
 _______________________________________________________________________________
 // devices table
 // create table
@@ -51,7 +54,6 @@ CREATE TABLE IF NOT EXISTS devices (
         name varchar(256) NOT NULL,
         FOREIGN KEY(owner_id) REFERENCES users(id)
         FOREIGN KEY(group_id) REFERENCES group(group_id));
-
 //setting data with group
 INSERT INTO users(creation_time, name, owner_id, group_id)
         VALUES(%s, %s, %s, $s);
@@ -76,6 +78,12 @@ INSERT INTO users(group_id)
 //getting data by group_id
         SELECT device_id, name, owner_id FROM devices WHERE group_id = %s;
         
+// removing data
+        DELETE from devices WHERE device_id = %d;
+        
+        DELETE from devices WHERE group_id = %d;
+        
+        DELETE from devices WHERE owner_id = %d;
 _______________________________________________________________________________
 // temperature table
 // create table
@@ -85,7 +93,6 @@ CREATE TABLE IF NOT EXISTS temp (
         data varchar(256) NOT NULL,
         temp_unit varchar(256) NOT NULL,
         FOREIGN KEY(device_id) REFERENCES device(id));
-
 //setting data
 INSERT INTO temp(creation_time, data, temp_unit, device_id)
         VALUES(%s, %s, %s, %s);
@@ -95,7 +102,9 @@ INSERT INTO temp(creation_time, data, temp_unit, device_id)
         
 //getting data by device_id
         SELECT temp_id, creation_time, data, temp_unit FROM devices WHERE device_id = %s;
-
+        
+// removing data
+        DELETE from temp WHERE temp_id = %d;
 _______________________________________________________________________________
 // light table
 // create table
@@ -104,7 +113,6 @@ CREATE TABLE IF NOT EXISTS light (
         creation_time varchar(256) NOT NULL,
         data varchar(256) NOT NULL,
         FOREIGN KEY(device_id) REFERENCES device(id));
-
 //setting data
 INSERT INTO light(creation_time, data, device_id)
         VALUES(%s, %s, %s);
@@ -115,6 +123,8 @@ INSERT INTO light(creation_time, data, device_id)
 //getting data by device_id
         SELECT light_id, creation_time, data FROM devices WHERE device_id = %s;
         
+// removing data
+        DELETE from light WHERE light = %d;
 _______________________________________________________________________________
 // water table
 // create table
@@ -123,7 +133,6 @@ CREATE TABLE IF NOT EXISTS water (
         creation_time varchar(256) NOT NULL,
         data varchar(256) NOT NULL,
         FOREIGN KEY(device_id) REFERENCES device(id));
-
 //setting data
 INSERT INTO water(creation_time, data, device_id)
         VALUES(%s, %s, %s);
@@ -133,7 +142,9 @@ INSERT INTO water(creation_time, data, device_id)
         
 //getting data by device_id
         SELECT water_id, creation_time, data FROM devices WHERE device_id = %s;
-
+        
+// removing data
+        DELETE from water WHERE water_id = %d;
 _______________________________________________________________________________
 //LEGACY
 //create plant data
@@ -144,7 +155,6 @@ CREATE TABLE Px
         data varchar2(64)
 );
         
-
 //setting data
 INSERT INTO Px (sensor_type, data)
 VALUES
