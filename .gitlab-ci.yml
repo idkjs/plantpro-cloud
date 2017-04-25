@@ -52,7 +52,7 @@ deploy_server:
   only:
    - master
   script:
-   - apk add ruby ruby-irb ruby-bundler
+   - apk add ruby ruby-irb ruby-bundler ruby-json
    - 'echo "gem: --no-document" > /etc/gemrc'
    - gem install rdoc
    - gem install dpl
