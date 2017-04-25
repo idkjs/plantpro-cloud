@@ -62,6 +62,7 @@ deploy_server:
   only:
    - master
   script:
-   - apk add ruby
+   - apk add ruby ruby-irb ruby-bundler
+   - gem install rdoc
    - gem install dpl
    - dpl --provider=heroku --app=plantpi --api-key=$HEROKU_API_KEY
