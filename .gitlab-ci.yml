@@ -33,22 +33,12 @@ build_server:
 
 test_client:
   stage: test
-  before_script:
-   - npm install --save -g nightmare
-   - npm install --save nightmare
-   - npm install -g nightmare
-   - npm install --save -g mocha
-   - npm install --save mocha
-   - npm install -g mocha
-   - npm install --save -g chai
-   - npm install --save chai
-   - npm install -g chai
   script: "echo not yet implemented"
 
 lint_client:
   before_script:
    - apk add tidyhtml@edge
-  stage: lint
+  stage: build
   script:
    - pwd
    - ls
@@ -63,6 +53,7 @@ deploy_server:
    - master
   script:
    - apk add ruby ruby-irb ruby-bundler
+   - 'echo "gem: --no-document" > /etc/gemrc'
    - gem install rdoc
    - gem install dpl
    - dpl --provider=heroku --app=plantpi --api-key=$HEROKU_API_KEY
