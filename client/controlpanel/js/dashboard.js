@@ -1,6 +1,6 @@
 require("./usernameRender.js");
-require("./allgroups.js");
-require("./allplants.js");
+//require("./allgroups.js");
+//require("./allplants.js");
 require("./groupSettings.js");
 import React from "react";
 import ReactDOM from "react-dom";
