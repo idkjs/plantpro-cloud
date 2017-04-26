@@ -16,19 +16,6 @@ build_client:
 
 build_server:
   stage: build
-  before_script:
-   - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
-   - apk update
-   - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash nodejs-npm@edge
-   - export OPAMYES=true
-   - comp=${1:-system}
-   - opam init --comp="${comp}"
-   - opam switch 4.03.0
-   - eval `opam config env`
-   - opam update
-   - opam install camlp4
-   - opam pin add opium https://github.com/chrismamo1/opium.git
-   - eval `opam config env`
   script: "cd server && opam pin add plantpi ."
 
 test_client:
@@ -46,6 +33,25 @@ lint_client:
    - bash -c "tidy client/controlpanel/*.html > /dev/null"
    - pwd
    - cd client && npm install --only=dev && ./node_modules/.bin/eslint -c ./.eslintrc.json controlpanel/js/*.js
+
+lint_server:
+  stage: lint
+  before_script:
+   - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
+   - apk update
+   - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash nodejs-npm@edge pcregrep
+   - export OPAMYES=true
+   - comp=${1:-system}
+   - opam init --comp="${comp}"
+   - opam switch 4.03.0
+   - eval `opam config env`
+   - opam update
+   - opam install camlp4
+   - opam pin add opium https://github.com/chrismamo1/opium.git
+   - eval `opam config env`
+  script:
+   - cd server
+   - ! ocamlfind ppx_tools/rewriter -ppx "ocamlfind ocamllint/ppx_lint.native" *.ml | pcregrep -M 'File ".*", line [0-9]+, characters [0-9]+-[0-9]+.*:.*\n\(ocamllint\) .*'
 
 deploy_server:
   stage: deploy

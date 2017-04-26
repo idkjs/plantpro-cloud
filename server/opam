@@ -30,6 +30,7 @@ depends: [
         "rresult"
         "ocamlfind" {build}
         "omake" {build}
+        "ocamllint"
 ]
 
 available: [ocaml-version >= "4.03.0"]
