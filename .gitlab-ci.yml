@@ -16,6 +16,9 @@ build_client:
 
 build_server:
   stage: build
+  before_script:
+   - opam pin add opium https://github.com/chrismamo1/opium.git
+   - eval `opam config env`
   script: "cd server && opam pin add plantpi ."
 
 test_client:
@@ -46,8 +49,7 @@ lint_server:
    - opam switch 4.03.0
    - eval `opam config env`
    - opam update
-   - opam install camlp4
-   - opam pin add opium https://github.com/chrismamo1/opium.git
+   - opam install camlp4 ocamllint
    - eval `opam config env`
   script:
    - cd server
