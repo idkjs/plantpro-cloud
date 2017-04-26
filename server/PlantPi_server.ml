@@ -14,13 +14,6 @@ let _ =
   let open Email in
   ()
 
-(*let service_get_oauth = get "/" (fun req ->
-  Cohttp_lwt_body.to_string
-    req.Opium_rock.Request.body
-  >>= fun body ->
-  `String ("received request \"" ^ body ^ "\"")
-  |> respond')*)
-
 let create_account_handler = (fun req ->
   Cohttp_lwt_body.to_string
     req.Opium_rock.Request.body
@@ -365,21 +358,19 @@ let middleware_auth =
       | None, None
       | Some _, None
       | None, Some _ ->
-          let _ = Lwt_io.printf "resource: \"%s\"\n" req.request.Cohttp.Request.resource in
-          if Uri.(of_string req.request.Cohttp.Request.resource |> path) = "/static/login.html"
-          then
-            handler req
-          else
-            redirect'
-              (Uri.of_string "/static/login.html")
+          respond'
+            ~code:`Bad_request
+            (`String "authentication failure (missing some or all required cookies)")
       | (Some auth_token'), (Some username') -> begin
           match Session.check username' auth_token' with
             | `Expired ->
-              redirect'
-                (Uri.of_string "/static/index.html#session-expired")
+                respond'
+                  ~code:`Bad_request
+                  (`String "authentication failure (expired)")
             | `Nope ->
-              redirect'
-                (Uri.of_string "/static/index.html#bad-auth")
+                respond'
+                  ~code:`Bad_request
+                  (`String "authentication failure (invalid credentials)")
             | `Ok ->
                 Printf.printf "Handling with normal handler\n";
                 handler req
