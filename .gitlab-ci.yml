@@ -28,7 +28,7 @@ test_client:
 lint_client:
   before_script:
    - apk add tidyhtml@edge
-  stage: build
+  stage: lint
   script:
    - pwd
    - ls
