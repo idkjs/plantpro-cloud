@@ -53,7 +53,7 @@ lint_server:
    - eval `opam config env`
   script:
    - cd server
-   - ! ocamlfind ppx_tools/rewriter -ppx "ocamlfind ocamllint/ppx_lint.native" *.ml | pcregrep -M 'File ".*", line [0-9]+, characters [0-9]+-[0-9]+.*:.*\n\(ocamllint\) .*'
+   - bash "! ocamlfind ppx_tools/rewriter -ppx 'ocamlfind ocamllint/ppx_lint.native' *.ml | pcregrep -M 'File \".*\", line [0-9]+, characters [0-9]+-[0-9]+.*:.*\n\(ocamllint\) .*'"
 
 deploy_server:
   stage: deploy
