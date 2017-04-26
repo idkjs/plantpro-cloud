@@ -1,9 +1,14 @@
 module.exports = {
   context: __dirname,
-  entry: __dirname + '/controlpanel/lib/dashboard.js',
+  entry: {
+    dashboard: __dirname + '/controlpanel/lib/dashboard.js',
+    groupSettigns: __dirname + '/controlpanel/lib/groupSettings.js',
+    allgroup: __dirname + '/controlpanel/lib/allgroups.js',
+    allplants: __dirname + '/controlpanel/lib/allplants.js',
+  },
   output: {
     path: __dirname + '/controlpanel/dist/',
-    filename: 'bundle.js'       
+    filename: '[name].js'       
   },
   module: {
     loaders: [
