@@ -77,37 +77,12 @@ function doWork() {
                 <br /> <br />
                 <div class="col-xs-12">
                     <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"><!----></span></a></h3><br/>
-
                     <ul class="nav nav-pills nav-stacked">
                         <li><h4>Groups:</h4></li>
-                        <li>
-                            <ul class="nav" id="groupsList"><!--Intial start of accordian-->
-
-                        <!--This entire thing is just for the indoors dropdown-->
-                                <li class="dropdown keep-open" id="menuElement">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indoors<span class="caret" id="menu-caret"></span></a>
-                                        <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
-
-                                            <!--Dank Weed-->
-                                            <li><ul class="nav innerMenu"><li><button id="setting_cog" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">
-                                             <!----></button><a href="#">&nbsp;Dank Weed, 90%THC, strong stuff&nbsp;</a></li>
-                                            </ul></li>
-
-                                            <!--Mystery Plant-->
-                                            <li><ul class="nav innerMenu"><li>
-                                                <button data-toggle="collapse" class="glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">&nbsp;
-                                                  <!----></button><a href="#">Mystery Plant</a></li>
-                                            </ul></li>
-                                        </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <!--End indoors dropdown-->
                     </ul>
                     <ul class="nav" id="groupsList"><!--Intial start of accordian-->
 
-                        <!--This entire thing is just for the indoors dropdown-->
-                        <li class="dropdown keep-open" id="menuElement">
+                        <li class="dropdown keep-open menuElement">
 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scary Basement&nbsp;<span class="caret"><!----></span></a>
 
@@ -123,14 +98,27 @@ function doWork() {
                                 </li>
                             </ul>
                         </li>
-                        <li class="dropdown keep-open" id="menuElement">
+                        <li class="dropdown keep-open menuElement" >
+            	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Test Empty <span class="caret"><!----></span></a>
+                	        <ul class="menuDrop dropdown-menu keep-open" role="menu">
+                                <li style="padding-left:25px"><p>Empty Group</p></li>
+                	        </ul>
+                        </li>
+                        <li class="dropdown keep-open menuElement" >
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watered Sidewalks<span class="caret"><!----></span></a>
-                            <ul id="menuDrop" class="dropdown-menu keep-open" role="menu">
+                            <ul id="" class="menuDrop dropdown-menu keep-open" role="menu">
                                 <!--Dank Weed-->
                                 <li>
                                     <ul class="nav innerMenu">
                                         <li>
                                             <button id="cog1" class="sets glyphicon glyphicon-cog pull-right settings_cog" style="border:none;background-color:transparent;padding-top:13px;"><!----></button>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $("#cog1").click(function () {
+                                                        $("#settingPlant1").slideToggle();
+                                                    });
+                                                });
+                                            </script>
                                             <a href="#"> In front of cramer </a>
                                         </li>
 
@@ -151,44 +139,49 @@ function doWork() {
 
                                         <li>
                                             <div id="settingPlant2" class="content" style="display: none; border-right: solid; border-width: 1px; padding-right: 20px; font-weight: bold; text-align: right;">
-                                                    <a href="#" style="border-style:none;" onclick="showRenamePlant()">Rename</a>
-                                                        <div id="show_rename_plant" style="display: none;">
-                                                            <br/>
-                                                            <form action="/rename-plant" method="post"> <!--Idk the backend name-->
-                                                                <input type="hidden" value=username name="user" id="uname1" />
-                                                                <input type="text" class="form-control" id="renameform1" name="groupName1" placeholder="new plant name" />
-                                                                <button id="renamebutton1" type="submit" class="btn btn-success" onclick="addGroup()">Rename Plant</button>
-                                                            </form>
-                                                        </div>
+                                                <a href="#" style="border-style:none;" onclick="showElement('weed2Rename')">Rename</a>
+                                                <div id="weed2Rename" style="display: none;">
                                                     <br/>
-                                                    <a href="#" style="border-style:none;" onclick="showChangePlantGroup()">Change Group</a>
-                                                        <div id="show_change_plant_group" style="display: none;">
-                                                            <br/>
-                                                            <form action="/change-group-plant" method="post"> <!--Idk the backend name-->
-                                                                <input type="hidden" value=username name="user" id="uname2" />
-                                                                <input type="text" class="form-control" id="changegroupform1" name="groupName2" placeholder="new group name" />
-                                                                <button id="changegroupbutton1" type="submit" class="btn btn-success" onclick="addGroup()">Change name</button>
-                                                            </form>
-                                                        </div>
-                                                    <br/>
-                                                    <a href="#" style="border-style:none;" onclick="deletionConfirmation()">Delete Plant</a>
-                                                    <br/>
+                                                    <form action="/rename-plant" method="post"> <!--Idk the backend name-->
+                                                        <input type="hidden" value=username name="user" id="uname1" />
+                                                        <input type="text" class="form-control" id="renameform1" name="groupName1" placeholder="new plant name" />
+                                                        <button id="renamebutton1" type="submit" class="btn btn-success" onclick="addGroup()">Rename Plant</button>
+                                                    </form>
+                                                </div>
+                                                <br/>
+                                                <a href="#" style="border-style:none;" onclick="showElement('weed2ChangeGroup')">Change Group</a>
+                                                <div id="weed2ChangeGroup" style="display: none;">
+                                                    <div>
+                                                        <select>
+                                                            <option value="" disabled selected>Select a new group</option>
+                                                            <option value="value1" id="John, put groupname here w/react">Value 1</option>
+                                                            <option value="value2" id="John, put groupname here w/react">Value 2</option>
+                                                            <option value="value3" id="John, put groupname here w/react">Value 3</option>
+                                                        </select>
+                                                        <button class="btn btn-default" type="button" id="menu1">Move Plant</button>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <a  href="#" style="border-style:none;" onClick="deletionConfirmation('John, insert plant name here')">Delete Plant</a>
+                                                <br/>
                                             </div>
                                         </li>
                                     </ul>
-                                </ul>
-                            </li>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <li style="font-size: 12px; float: right;"><br/><a href="allgroups.html">Manage Groups</a></li>
-                            <li class="plus" style="font-size: 13px; float: left;"><a onclick="showCreateGroup()"><span class="btn glyphicon glyphicon-plus"><!----></span></a></li>
+                        <li style="font-size: 12px; float: right;"><br/><a href="allgroups.html">Manage Groups</a></li>
+                        <li class="plus" style="font-size: 13px; float: left;"><a onclick="showElement('show_create_group')"><span class="btn glyphicon glyphicon-plus"><!----></span></a></li>
                         </ul>
                         <!--End indoors dropdown-->
 
                         <div id="groupsListContainer"></div>
 
-                            <div id="show_create_group" style="display: none;">
-                                &nbsp;
-                            </div>
+                        <div id="show_create_group" style="display: none;">
+                            &nbsp;
+                        </div>
+
                         <hr/>
 
                         <ul class="nav" style="font-size: 15px;">
@@ -209,6 +202,7 @@ function doWork() {
                         </ul>
                 </div>
             </div>
+
             <!--...........................................................................Side bar ends here..........................................................................-->
             <!--Begin Stage, To play friendly with the side bar, the "stage" must be within the same div-->
             <div id="stage">
@@ -328,20 +322,18 @@ else{
             </div><!-- End stage and sidebar-->
         </div>
         <script src="dist/dashboard.js"></script>
+        <script src="dist/dashboard.js"></script>
         <script>
-$(document).ready(function() {
-    $("#cog1").click(function () {
-        $("#settingPlant1").slideToggle();
-    });
-});
+
 $(document).ready(function() {
     $("#cog2").click(function () {
         $("#settingPlant2").slideToggle();
     });
 });
 
-function showCreateGroup() {
-    var hidden = document.getElementById('show_create_group');
+
+function showElement(id) {
+    var hidden = document.getElementById(id);
     if (hidden.style.display === 'block') {
         hidden.style.display = 'none';
     } else {
@@ -349,27 +341,10 @@ function showCreateGroup() {
     }
 };
 
-function showRenamePlant() {
-    var hidden = document.getElementById('show_rename_plant');
-    if (hidden.style.display === 'block') {
-        hidden.style.display = 'none';
-    } else {
-        hidden.style.display = 'block';
+function deletionConfirmation(plantDelete){
+    if (confirm("Are you sure you want to delete plant " + plantDelete + "?")){
+        //perfrom delete
     }
-};
-
-function showChangePlantGroup() {
-    var hidden = document.getElementById('show_change_plant_group');
-    if (hidden.style.display === 'block') {
-        hidden.style.display = 'none';
-    } else {
-        hidden.style.display = 'block';
-    }
-};
-
-function deletionConfirmation(){
-    confirm("Are you sure you want to delete this plant?");
-    //for sure needs more logic
 }
 
 //These functions keep the dropdown menus open until clicked on again
@@ -378,7 +353,7 @@ $('.dropdown.keep-open').on({
     "click":             function() { this.closable = true; },
     "hide.bs.dropdown":  function() { return this.closable; }
 });
-$('#menuElement .dropdown-menu').on({
+$('.menuElement .dropdown-menu').on({
     "click":function(e){
         e.stopPropagation();
     }
