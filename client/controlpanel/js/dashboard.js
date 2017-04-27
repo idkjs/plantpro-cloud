@@ -94,11 +94,11 @@ class ChangeGroup extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <select value={this.state.value} onChange={this.handleChange}>
-                    <option value="" disabled selected>Select a new group</option>
+                    <option value="" disabled defaultValue>Select a new group</option>
                     {
                         this.state.groups.map((group) => {
                             return (
-                                <option value={group.id} id={group.name}>{group.name}</option>
+                                <option key={group.id} value={group.id} id={group.name}>{group.name}</option>
                             );
                         })
                     }
@@ -113,6 +113,7 @@ class PlantListing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            plants: [],
             props: props,
         };
     }
@@ -134,14 +135,26 @@ class PlantListing extends React.Component {
                 }
                 console.log(plants);
                 this.toggleSlide = this.toggleSlide.bind(this);
+                this.showElement = this.showElement.bind(this);
                 this.setState({plants: plants, props: this.state.props});});
     }
     toggleSlide(ref) { /* put this in the button ahref onClick={()=>this.toggleSlide('ref_to_be_slid') */
         $(this.refs[ref]).slideToggle()
     }
-
+    showElement(id) {
+        $(this.refs[ref]).slideToggle()
+    };
+    deletionConfirmation(plantDelete){
+        if (confirm("Are you sure you want to delete plant " + plantDelete + "?")){
+            //perfrom delete
+        }
+    }
     render() {
         var pStyle = {paddingLeft: "25px",};
+        var buttonStyle = {border:"none", backgroundColor:'transparent', paddingTop:'13px',};
+        var divStyle = {display: 'none', borderRight: 'solid', borderWidth: '1px', paddingRight: '20px', fontWeight: 'bold', textAlign: 'right'};
+        var noBorderStyle = {borderStyle:'none'};
+        var displayNoneStyle = {display: "none"};
 
         if (this.state.plants.length < 1) {
             return (<li style={pStyle}><p>Empty Group</p></li>);
@@ -150,25 +163,25 @@ class PlantListing extends React.Component {
             <li>
                 <ul className="nav innerMenu">
                     <li>
-                        <button onClick={()=>this.toggleSlide('settings'+this.plantname)}  type="button" className="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">&#8203;</button>
+                        <button onClick={()=>this.toggleSlide('settings'+this.plantname)}  type="button" className="sets glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
                         <a href="#">{this.state.props.plantname}</a>
                     </li>
                     <li>
-                        <div ref={'settings' + this.plantname} className="content" style="display: none; border-right: solid; border-width: 1px; padding-right: 20px; font-weight: bold; text-align: right;">
-                            <a href="#" style="border-style:none;" onclick="showElement({this.plantname + 'Rename'})">Rename</a>
-                            <div id={this.plantname + 'Rename'} style="display: none;">
+                        <div ref={'settings' + this.plantname} className="content" style={divStyle}>
+                            <a href="#" style={noBorderStyle} onClick={()=>this.showElement(this.plantname+'Rename')}>Rename</a>
+                            <div ref={this.plantname+'Rename'} style={displayNoneStyle}>
                                 <br/>
                                 <RenamePlant username={this.state.props.username} plantname={this.state.props.plant} />
                             </div>
                             <br/>
-                            <a href="#" style="border-style:none;" onclick="showElement({'' + this.plantname + 'ChangeGroup'})">Change Group</a>
-                            <div id={this.plantname + 'ChangeGroup'} style="display: none;">
+                            <a href="#" style={noBorderStyle} onClick={()=>this.showElement(this.plantname+'ChangeGroup')}>Change Group</a>
+                            <div ref={this.plantname+'ChangeGroup'} style={displayNoneStyle}>
                                 <div>
                                     <ChangeGroup username={this.state.props.username} groupname={this.state.props.groupname} />
                                 </div>
                             </div>
                             <br/>
-                            <div><a href="#" style="border-style:none;" onClick="deletionConfirmation({this.plantname})">Delete Plant</a></div>
+                            <div><a href="#" style={noBorderStyle} onClick=''>Delete Plant</a></div>
                             <br/>
                         </div>
                     </li>
@@ -198,12 +211,15 @@ class GroupsListing extends React.Component {
     }
 
     render() {
+        var liStyle= {fontSize: '12px', float: 'right'};
+        var plusStyle = {fontSize:'13px', float:'left'};
         return (
+            <ul className="nav" id="groupsList">
             {
-                this.state.groups.map((group) {
+                this.state.groups.map((group) => {
                     return(
-                        <li className="dropdown keep-open menuElement" >
-            	            <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret">&#8203;</span></a>
+                        <li className="dropdown keep-open menuElement" key={group.id} >
+                            <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret"></span></a>
                 	        <ul className="menuDrop dropdown-menu keep-open" role="menu">
                                 <PlantListing username={this.state.props.username} groupname={group.name} />
                 	        </ul>
@@ -211,6 +227,9 @@ class GroupsListing extends React.Component {
                     );
                 })
             }
+            <li style={liStyle}><br/><a href="allgroups.html">Manage Groups</a></li>
+            <li className="plus" style={plusStyle}><a onClick={()=>this.showElement('show_create_group')}><span className="btn glyphicon glyphicon-plus"></span></a></li>
+            </ul>
         );
     }
 }
@@ -280,6 +299,9 @@ function hex2a(hexx) {
 }
 
 var username = hex2a(getCookie("username"));
+ReactDOM.render(
+  <NewGroupComponent username={username} />,
+  document.getElementById("show_create_group"));
 
 ReactDOM.render(
   <GroupsListing username={username} />,
@@ -288,7 +310,3 @@ ReactDOM.render(
 ReactDOM.render(
   <PlantListing username={username} groupname={"ungrouped"} />,
   document.getElementById("plantListContainer"));
-
-ReactDOM.render(
-  <NewGroupComponent username={username} />,
-  document.getElementById("show_create_group"));
