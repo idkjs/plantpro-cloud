@@ -4,7 +4,6 @@ stages:
  - lint
  - build
  - test
- - deploy
 
 build_client:
   stage: build
@@ -54,14 +53,3 @@ lint_server:
   script:
    - cd server
    - bash -c "! ocamlfind ppx_tools/rewriter -ppx 'ocamlfind ocamllint/ppx_lint.native' *.ml | pcregrep -M 'File \".*\", line [0-9]+, characters [0-9]+-[0-9]+.*:.*\n\(ocamllint\) .*'"
-
-deploy_server:
-  stage: deploy
-  only:
-   - master
-  script:
-   - apk add ruby ruby-irb ruby-bundler ruby-json
-   - 'echo "gem: --no-document" > /etc/gemrc'
-   - gem install rdoc
-   - gem install dpl
-   - dpl --provider=heroku --app=plantpi --api-key=$HEROKU_API_KEY
