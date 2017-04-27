@@ -96,7 +96,7 @@ class ChangeGroup extends React.Component {
                 <select value={this.state.value} onChange={this.handleChange}>
                     <option value="" disabled selected>Select a new group</option>
                     {
-                        this.state.groups.map((group) {
+                        this.state.groups.map((group) => {
                             return (
                                 <option value={group.id} id={group.name}>{group.name}</option>
                             );
@@ -133,31 +133,28 @@ class PlantListing extends React.Component {
                     }
                 }
                 console.log(plants);
+                this.toggleSlide = this.toggleSlide.bind(this);
                 this.setState({plants: plants, props: this.state.props});});
+    }
+    toggleSlide(ref) { /* put this in the button ahref onClick={()=>this.toggleSlide('ref_to_be_slid') */
+        $(this.refs[ref]).slideToggle()
     }
 
     render() {
         var pStyle = {paddingLeft: "25px",};
 
         if (this.state.plants.length < 1) {
-            return (<li style=pStyle><p>Empty Group</p></li>);
+            return (<li style={pStyle}><p>Empty Group</p></li>);
         }
         else { return (
             <li>
-                <script>
-                    $(document).ready(function() {
-                        $({'#cog' + this.plantname}).click(function () {
-                            $({'#settings' + this.plantname}).slideToggle();
-                        });
-                    });
-                </script>
                 <ul className="nav innerMenu">
                     <li>
-                        <button id={'cog' + this.state.props.plantname} type="button" className="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;"><!----></button>
+                        <button onClick={()=>this.toggleSlide('settings'+this.plantname)}  type="button" className="sets glyphicon glyphicon-cog pull-right" style="border:none;background-color:transparent;padding-top:13px;">&#8203;</button>
                         <a href="#">{this.state.props.plantname}</a>
                     </li>
                     <li>
-                        <div id={'settings' + this.plantname} className="content" style="display: none; border-right: solid; border-width: 1px; padding-right: 20px; font-weight: bold; text-align: right;">
+                        <div ref={'settings' + this.plantname} className="content" style="display: none; border-right: solid; border-width: 1px; padding-right: 20px; font-weight: bold; text-align: right;">
                             <a href="#" style="border-style:none;" onclick="showElement({this.plantname + 'Rename'})">Rename</a>
                             <div id={this.plantname + 'Rename'} style="display: none;">
                                 <br/>
@@ -206,7 +203,7 @@ class GroupsListing extends React.Component {
                 this.state.groups.map((group) {
                     return(
                         <li className="dropdown keep-open menuElement" >
-            	            <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret"><!----></span></a>9
+            	            <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret">&#8203;</span></a>
                 	        <ul className="menuDrop dropdown-menu keep-open" role="menu">
                                 <PlantListing username={this.state.props.username} groupname={group.name} />
                 	        </ul>
