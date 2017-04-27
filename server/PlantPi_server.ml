@@ -320,8 +320,15 @@ let move_group_handler = (fun req ->
           |> Encrypt.hex_decode
       | None -> "no cookies"
   in
-  let%lwt device = Db.get_device_by_id params.plant in
-  let%lwt group = Db.get_group_by_id params.group in
+  let%lwt Some(device) = Db.get_device_by_id params.plant in
+  let%lwt group =
+    match params.group with
+      | Some x ->
+          let%lwt g = Db.get_group_by_id x in
+          Lwt.return (Some g)
+      | None ->
+          Lwt.return None
+  in
   let%lwt _ = Db.add_device_to_group device group in
   `String "OK"
   |> respond')
