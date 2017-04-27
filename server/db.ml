@@ -44,7 +44,8 @@ let _ =
           name TEXT NOT NULL, \
           group_id INTEGER, \
           FOREIGN KEY(group_id) REFERENCES groups(id), \
-          FOREIGN KEY(user_id) REFERENCES users(id))"];
+          FOREIGN KEY(user_id) REFERENCES users(id), \
+          UNIQUE(name, user_id))"];
   in
   let make_groups () =
     S.execute
@@ -290,6 +291,22 @@ let get_device_by_name name =
       Lwt.return Device.{id; name; group})
     [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE name = %s"]
     name
+
+let get_device_by_id id =
+  S.select_one_f_maybe
+    db
+    (fun (id, name, group_id) -> 
+      let%lwt group =
+        match group_id with
+          | Some group_id ->
+              let%lwt group = get_group_by_id group_id in
+              Lwt.return (Some group)
+          | None ->
+              Lwt.return None
+      in
+      Lwt.return Device.{id; name; group})
+    [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE device_id = %s"]
+    id
 
 let get_data device =
   let id = device.Device.id in
