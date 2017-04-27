@@ -1,4 +1,4 @@
-module StdList = struct
+module Std_list = struct
   include List
 end
 
@@ -7,7 +7,7 @@ open Lwt.Infix
 open CalendarLib
 
 module List = struct
-  include StdList
+  include Std_list
 end
 
 let _ =
@@ -43,6 +43,7 @@ let create_account_handler = (fun req ->
         ~code:(`Conflict)
         (`String ("Error: User " ^ username ^ " already exists"))
     with
+      | Sys.Break as exn
       | exn ->
           let user =
             User.create username "none@example.com" password1
