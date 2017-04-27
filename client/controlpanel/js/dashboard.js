@@ -211,10 +211,10 @@ class GroupsListing extends React.Component {
     }
 
     render() {
-        var liStyle= {fontSize: '12px', float: 'right'};
-        var plusStyle = {fontSize:'13px', float:'left'};
+
+
         return (
-            <ul className="nav" id="groupsList">
+            <div>
             {
                 this.state.groups.map((group) => {
                     return(
@@ -227,9 +227,7 @@ class GroupsListing extends React.Component {
                     );
                 })
             }
-            <li style={liStyle}><br/><a href="allgroups.html">Manage Groups</a></li>
-            <li className="plus" style={plusStyle}><a onClick={()=>this.showElement('show_create_group')}><span className="btn glyphicon glyphicon-plus"></span></a></li>
-            </ul>
+            </div>
         );
     }
 }
@@ -274,6 +272,8 @@ class NewGroupComponent extends React.Component {
     }
 
     render() {
+        console.log("NewGroupComponent rendering");
+        var divStyle = {display: "block"}
         return(
                 <div>
                 <input type="text" className="form-control" id="PlantName" name="groupName" placeholder="new group name" />
@@ -299,9 +299,6 @@ function hex2a(hexx) {
 }
 
 var username = hex2a(getCookie("username"));
-ReactDOM.render(
-  <NewGroupComponent username={username} />,
-  document.getElementById("show_create_group"));
 
 ReactDOM.render(
   <GroupsListing username={username} />,
@@ -310,3 +307,7 @@ ReactDOM.render(
 ReactDOM.render(
   <PlantListing username={username} groupname={"ungrouped"} />,
   document.getElementById("plantListContainer"));
+
+ReactDOM.render(
+  <NewGroupComponent username={username} />,
+  document.getElementById("show_create_group"));

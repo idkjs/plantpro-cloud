@@ -81,9 +81,12 @@ function doWork() {
                         <li><h4>Groups:</h4></li>
                     </ul>
 
-                        
 
-                        <div id="groupsListContainer"></div>
+                        <ul class="nav" id="groupsList">
+                            <div id="groupsListContainer">&nbsp;</div>
+                            <li style="font-size:12px; float:right;"><br/><a href="allgroups.html">Manage Groups</a></li>
+                            <li class="plus" style="font-size:13px; float:left;"><a onClick="showElement('show_create_group')"}><span class="btn glyphicon glyphicon-plus"><!----></span></a></li>
+                        </ul>
 
                         <div id="show_create_group" style="display: none;">
                             &nbsp;
