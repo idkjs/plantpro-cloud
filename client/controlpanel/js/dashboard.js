@@ -196,8 +196,13 @@ class GroupsListing extends React.Component {
         super(props);
         this.state = {
             groups: [],
-            props: props
+            props: props,
+            response: null,
+            displayStyle: true,
+            outputTray: <div></div>
         };
+        this.handleNewGroup = this.handleNewGroup.bind(this);
+        this.showElement = this.showElement.bind(this);
     }
 
     componentDidMount() {
@@ -209,56 +214,29 @@ class GroupsListing extends React.Component {
                 console.log(groups);
                 this.setState({groups: groups});});
     }
-
-    render() {
-
-
-        return (
-            <div>
-            {
-                this.state.groups.map((group) => {
-                    return(
-                        <li className="dropdown keep-open menuElement" key={group.id} >
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret"></span></a>
-                	        <ul className="menuDrop dropdown-menu keep-open" role="menu">
-                                <PlantListing username={this.state.props.username} groupname={group.name} />
-                	        </ul>
-                        </li>
-                    );
-                })
-            }
-            </div>
-        );
-    }
-}
-
-class NewGroupComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            response: null,
-            props: props,
-            outputTray: <div></div>
-        };
-
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick(e) {
+    handleNewGroup(e) {
         var url = "/create-group";
         console.log(url);
         axios.post(url,
             { user: this.state.props.username
-            , groupName: document.getElementById("PlantName").value
+            , groupName: document.getElementById("newGroupName").value
             })
         .then(res => {
             var style = {
                 paddingLeft: "1.5em"
             };
+            var url = `/get-groups/${this.state.props.username}`;
+            console.log("url: " + url);
+            axios.get(url)
+                .then(res => {
+                    var groups = res.data;
+                    console.log(groups);
+                    this.setState({groups: groups});});
             this.setState({
                 response: res.status,
                 props: this.state.props,
-                outputTray: <span style={style}>Valid!</span>});})
+                outputTray: <span style={style}>Valid!</span>});
+            })
             .catch(res => {
                 var style = {
                     color: "red",
@@ -271,17 +249,43 @@ class NewGroupComponent extends React.Component {
                 });});
     }
 
+    showElement(){
+        this.setState({displayStyle: !this.state.displayStyle})
+    }
     render() {
-        console.log("NewGroupComponent rendering");
-        var divStyle = {display: "block"}
-        return(
-                <div>
-                <input type="text" className="form-control" id="PlantName" name="groupName" placeholder="new group name" />
-                <button id="savebutton" className="btn btn-primary" onClick={this.handleClick}>Create Group</button>
+        let styleDisplay = this.state.displayStyle ? "none" : "block";
+        var plusStyle = {fontSize:"13px", float:"left", marginTop:"10px"};
+        var liStyle = {fontSize:"12px", float:"right"};
+        return (
+            <span>
+
+            {
+                this.state.groups.map((group) => {
+                    return(
+                        <li className="dropdown keep-open menuElement" key={group.id} >
+                            <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret"></span></a>
+                	        <ul className="menuDrop dropdown-menu keep-open" role="menu">
+                                <PlantListing username={this.state.props.username} groupname={group.name} />
+                	        </ul>
+                        </li>
+                    );
+                })
+            }
+            <li style={liStyle}><br/><a href="allgroups.html">Manage Groups</a></li>
+            <li className="plus" style={plusStyle}><a onClick={()=>this.showElement()}>
+                <span className="btn glyphicon glyphicon-plus"></span></a></li>
+
+            <div id="show_create_group" style={{display: styleDisplay}}>
+                <input type="text" className="form-control" id="newGroupName" name="groupName" placeholder="new group name" />
+                <button id="savebutton" className="btn btn-primary" onClick={this.handleNewGroup}>Create Group</button>
                 {this.state.outputTray}
-                </div>);
+            </div>
+            </span>
+        );
     }
 }
+
+
 
 function getCookie(name) {
     var value = "; " + document.cookie;
@@ -307,7 +311,3 @@ ReactDOM.render(
 ReactDOM.render(
   <PlantListing username={username} groupname={"ungrouped"} />,
   document.getElementById("plantListContainer"));
-
-ReactDOM.render(
-  <NewGroupComponent username={username} />,
-  document.getElementById("show_create_group"));
