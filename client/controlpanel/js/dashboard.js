@@ -116,6 +116,8 @@ class PlantListing extends React.Component {
             plants: [],
             props: props,
         };
+        this.showElement = this.showElement.bind(this);
+        this.deletionConfirmation = this.deletionConfirmation.bind(this);
     }
 
     componentDidMount() {
@@ -126,6 +128,8 @@ class PlantListing extends React.Component {
                 var i;
                 for (i = 0; i < res.data.length; i++) {
                     var p = res.data[i];
+                    console.log(p);
+                    /*console.log("groupname: " + this.state.props.groupname + "   p.group: " + p.group);*/
                     if (
                         (this.state.props.groupname === "all")
                         || (this.state.props.groupname === "ungrouped" && p.group === null)
@@ -134,18 +138,13 @@ class PlantListing extends React.Component {
                     }
                 }
                 console.log(plants);
-                this.toggleSlide = this.toggleSlide.bind(this);
-                this.showElement = this.showElement.bind(this);
                 this.setState({plants: plants, props: this.state.props});});
     }
-    toggleSlide(ref) { /* put this in the button ahref onClick={()=>this.toggleSlide('ref_to_be_slid') */
-        (this.refs[ref]).slideToggle();
-    }
     showElement(ref) {
-        (this.refs[ref]).slideToggle();
+        $(this.refs[ref]).slideToggle();
     }
-    deletionConfirmation(plantDelete){
-        if (confirm("Are you sure you want to delete plant " + plantDelete + "?")){
+    deletionConfirmation(plant){
+        if (confirm("Are you sure you want to delete plant " + plant.name + " and all of its data?")){
             //perfrom delete
         }
     }
@@ -161,33 +160,41 @@ class PlantListing extends React.Component {
         }
         else { return (
             <li>
-                <ul className="nav innerMenu">
-                    <li>
-                        <button onClick={()=>this.toggleSlide("settings"+this.plantname)}  type="button" className="sets glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
-                        <a href="#">{this.state.props.plantname}</a>
-                    </li>
-                    <li>
-                        <div ref={"settings" + this.plantname} className="content" style={divStyle}>
-                            <a href="#" style={noBorderStyle} onClick={()=>this.showElement(this.plantname+"Rename")}>Rename</a>
-                            <div ref={this.plantname+"Rename"} style={displayNoneStyle}>
-                                <br/>
-                                <RenamePlant username={this.state.props.username} plant={this.state.props.plant} />
-                            </div>
-                            <br/>
-                            <a href="#" style={noBorderStyle} onClick={()=>this.showElement(this.plantname+"ChangeGroup")}>Change Group</a>
-                            <div ref={this.plantname+"ChangeGroup"} style={displayNoneStyle}>
-                                <div>
-                                    <ChangeGroup username={this.state.props.username} groupname={this.state.props.groupname} />
+            {
+                this.state.plants.map((plant) => {
+                    return (
+
+                        <ul className="nav innerMenu" key={plant.id}>
+                            <li>
+                                <button onClick={()=>this.showElement("settings"+plant.id)}  type="button" className="sets glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
+                                <a href="#">{plant.name}</a>
+                            </li>
+                            <li>
+                                <div ref={"settings"+plant.id} className="content" style={divStyle}>
+                                    <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"Rename")}>Rename</a>
+                                    <div ref={plant.id+"Rename"} style={displayNoneStyle}>
+                                        <br/>
+                                        <RenamePlant username={this.state.props.username} plant={plant} />
+                                    </div>
+                                    <br/>
+                                    <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"ChangeGroup")}>Change Group</a>
+                                    <div ref={plant.id+"ChangeGroup"} style={displayNoneStyle}>
+                                        <div>
+                                            <ChangeGroup username={this.state.props.username} plant={plant} />
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div><a href="#" style={noBorderStyle} onClick={()=>this.deletionConfirmation(plant)}>Delete Plant</a></div>
+                                    <br/>
                                 </div>
-                            </div>
-                            <br/>
-                            <div><a href="#" style={noBorderStyle} onClick=''>Delete Plant</a></div>
-                            <br/>
-                        </div>
-                    </li>
-                </ul>
+                            </li>
+                        </ul>
+
+                    );})
+                }
             </li>
-        );}
+        );
+        }
     }
 }
 
