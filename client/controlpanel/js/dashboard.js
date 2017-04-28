@@ -19,7 +19,7 @@ class RenamePlant extends React.Component {
         this.setState({newPlantName: event.target.value});
     }
 
-    handleSubmit(event) {
+    handleSubmit() {
         var url = "/rename-plant";
     }
 
@@ -50,7 +50,7 @@ class ChangeGroup extends React.Component {
     handleChange(event) {
         this.setState({newGroup: event.target.value});
     }
-    handleSubmit(event) {
+    handleSubmit() {
         var url = "/change-group";
         axios.post(url, /* rm from group ... None */
             { plant:this.state.props.plant.id
