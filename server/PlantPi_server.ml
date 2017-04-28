@@ -435,9 +435,9 @@ let _ =
   in
   let auth_filter = Rock.Middleware.filter middleware_auth in
   let service_login = post "/login" login_handler in
+  let service_push_data = post "/push-data" push_data_handler in
   let service_create_account = post "/create-account" create_account_handler in
   let service_create_group = post "/create-group" (auth_filter create_group_handler) in
-  let service_push_data = post "/push-data" (auth_filter push_data_handler) in
   let service_associate_device = post "/associate-device" (auth_filter associate_device_handler) in
   let service_get_device_data = get "/get-data/:device" (auth_filter get_device_data_handler) in
   let service_get_user_devices = get "/get-devices/:username/:group" (auth_filter get_user_devices_handler) in
