@@ -55,11 +55,11 @@ class ChangeGroup extends React.Component {
         axios.post(url, /* rm from group ... None */
             { plant:this.state.props.plant.id
             , group: ["None"]
-        });
+            });
         axios.post(url, /* add to group ... Some */
             {  plant:this.state.props.plant.id
              , group: ["Some", this.state.newGroup]
-         })
+            })
         .then(res => {
             var style = {
                 paddingLeft: "1.5em"
@@ -236,7 +236,7 @@ class GroupsListing extends React.Component {
                 response: res.status,
                 props: this.state.props,
                 outputTray: <span style={style}>Valid!</span>});
-            })
+        })
             .catch(res => {
                 var style = {
                     color: "red",
@@ -264,7 +264,7 @@ class GroupsListing extends React.Component {
                     return(
                         <li className="dropdown keep-open menuElement" key={group.id} >
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret"></span></a>
-                	        <ul className="menuDrop dropdown-menu keep-open" role="menu">
+                            <ul className="menuDrop dropdown-menu keep-open" role="menu">
                                 <PlantListing username={this.state.props.username} groupname={group.name} />
                             </ul>
                         </li>
