@@ -85,6 +85,27 @@ INSERT INTO users(group_id)
         
         DELETE from devices WHERE owner_id = %d;
 _______________________________________________________________________________
+// authentication table
+// create table
+CREATE TABLE IF NOT EXISTS auth (
+        auth_id int PRIMARY KEY AUTOINCREMENT,
+        expiration_time varchar(128) NOT NULL,
+        auth_hash varchar(256) NOT NULL,
+        FOREIGN KEY(auth_name) REFERENCES users(user_name));
+        
+//setting data entry
+        INSERT INTO auth(experation_time, auth_hash, auth_name)
+        VALUES(%s, %s, %s);
+        
+//getting data by account name
+        SELECT expiration_time, auth_hash FROM auth WHERE auth_name = %s;
+        
+//getting data by authentication hash
+        SELECT expiration_time, auth_name FROM auth WHERE auth_hash = %s;
+        
+// removing data
+        DELETE from auth WHERE auth_id = %d;
+_______________________________________________________________________________
 // temperature table
 // create table
 CREATE TABLE IF NOT EXISTS temp (
