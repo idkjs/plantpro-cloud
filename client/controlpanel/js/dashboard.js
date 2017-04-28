@@ -28,7 +28,7 @@ class RenamePlant extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <input type="text" className="form-control" name="groupName1" placeholder="new plant name" value={this.state.value} onChange={this.handleChange} />
                 <button id="renamebutton1" type="submit" className="btn btn-success">Rename Plant</button>
-        	</form>
+            </form>
         );
     }
 }
@@ -55,11 +55,11 @@ class ChangeGroup extends React.Component {
         axios.post(url, /* rm from group ... None */
             { plant:this.state.props.plant.id
             , group: ["None"]
-            })
+        });
         axios.post(url, /* add to group ... Some */
             {  plant:this.state.props.plant.id
              , group: ["Some", this.state.newGroup]
-            })
+         })
         .then(res => {
             var style = {
                 paddingLeft: "1.5em"
@@ -102,8 +102,8 @@ class ChangeGroup extends React.Component {
                             );
                         })
                     }
-            	</select>
-            	<button className="btn btn-default" type="button" id="menu1">Move Plant</button>
+                </select>
+                <button className="btn btn-default" type="button" id="menu1">Move Plant</button>
             </form>
         );
     }
@@ -139,11 +139,11 @@ class PlantListing extends React.Component {
                 this.setState({plants: plants, props: this.state.props});});
     }
     toggleSlide(ref) { /* put this in the button ahref onClick={()=>this.toggleSlide('ref_to_be_slid') */
-        $(this.refs[ref]).slideToggle()
+        (this.refs[ref]).slideToggle();
     }
-    showElement(id) {
-        $(this.refs[ref]).slideToggle()
-    };
+    showElement(ref) {
+        (this.refs[ref]).slideToggle();
+    }
     deletionConfirmation(plantDelete){
         if (confirm("Are you sure you want to delete plant " + plantDelete + "?")){
             //perfrom delete
@@ -151,9 +151,9 @@ class PlantListing extends React.Component {
     }
     render() {
         var pStyle = {paddingLeft: "25px",};
-        var buttonStyle = {border:"none", backgroundColor:'transparent', paddingTop:'13px',};
-        var divStyle = {display: 'none', borderRight: 'solid', borderWidth: '1px', paddingRight: '20px', fontWeight: 'bold', textAlign: 'right'};
-        var noBorderStyle = {borderStyle:'none'};
+        var buttonStyle = {border:"none", backgroundColor:"transparent", paddingTop:"13px",};
+        var divStyle = {display: "none", borderRight: "solid", borderWidth: "1px", paddingRight: "20px", fontWeight: "bold", textAlign: "right"};
+        var noBorderStyle = {borderStyle:"none"};
         var displayNoneStyle = {display: "none"};
 
         if (this.state.plants.length < 1) {
@@ -163,19 +163,19 @@ class PlantListing extends React.Component {
             <li>
                 <ul className="nav innerMenu">
                     <li>
-                        <button onClick={()=>this.toggleSlide('settings'+this.plantname)}  type="button" className="sets glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
+                        <button onClick={()=>this.toggleSlide("settings"+this.plantname)}  type="button" className="sets glyphicon glyphicon-cog pull-right" style={buttonStyle}></button>
                         <a href="#">{this.state.props.plantname}</a>
                     </li>
                     <li>
-                        <div ref={'settings' + this.plantname} className="content" style={divStyle}>
-                            <a href="#" style={noBorderStyle} onClick={()=>this.showElement(this.plantname+'Rename')}>Rename</a>
-                            <div ref={this.plantname+'Rename'} style={displayNoneStyle}>
+                        <div ref={"settings" + this.plantname} className="content" style={divStyle}>
+                            <a href="#" style={noBorderStyle} onClick={()=>this.showElement(this.plantname+"Rename")}>Rename</a>
+                            <div ref={this.plantname+"Rename"} style={displayNoneStyle}>
                                 <br/>
-                                <RenamePlant username={this.state.props.username} plantname={this.state.props.plant} />
+                                <RenamePlant username={this.state.props.username} plant={this.state.props.plant} />
                             </div>
                             <br/>
-                            <a href="#" style={noBorderStyle} onClick={()=>this.showElement(this.plantname+'ChangeGroup')}>Change Group</a>
-                            <div ref={this.plantname+'ChangeGroup'} style={displayNoneStyle}>
+                            <a href="#" style={noBorderStyle} onClick={()=>this.showElement(this.plantname+"ChangeGroup")}>Change Group</a>
+                            <div ref={this.plantname+"ChangeGroup"} style={displayNoneStyle}>
                                 <div>
                                     <ChangeGroup username={this.state.props.username} groupname={this.state.props.groupname} />
                                 </div>
@@ -214,7 +214,7 @@ class GroupsListing extends React.Component {
                 console.log(groups);
                 this.setState({groups: groups});});
     }
-    handleNewGroup(e) {
+    handleNewGroup() {
         var url = "/create-group";
         console.log(url);
         axios.post(url,
@@ -250,7 +250,7 @@ class GroupsListing extends React.Component {
     }
 
     showElement(){
-        this.setState({displayStyle: !this.state.displayStyle})
+        this.setState({displayStyle: !this.state.displayStyle});
     }
     render() {
         let styleDisplay = this.state.displayStyle ? "none" : "block";
@@ -266,7 +266,7 @@ class GroupsListing extends React.Component {
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret"></span></a>
                 	        <ul className="menuDrop dropdown-menu keep-open" role="menu">
                                 <PlantListing username={this.state.props.username} groupname={group.name} />
-                	        </ul>
+                            </ul>
                         </li>
                     );
                 })
