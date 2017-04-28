@@ -346,7 +346,7 @@ let push_data_handler = (fun req ->
     | Ok packet ->
         let open Device in
         let%lwt () =
-          Lwt_list.iter_p
+          Lwt_list.iter_s
             (fun payload ->
               let reading = Device.sensor_reading_of_payload payload in
               let now = CalendarLib.Calendar.now () in
