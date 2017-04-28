@@ -27,6 +27,7 @@ _______________________________________________________________________________
 CREATE TABLE group (
         group_id int PRIMARY KEY AUTOINCREMENT,
         group_name varchar(256) NOT NULL,
+        owner_id varchar(256) NOT NULL,
         FOREIGN KEY(owner_id) REFERENCES users(id));
 //setting data
 INSERT INTO temp(group_name, owner_id)
@@ -52,6 +53,8 @@ CREATE TABLE IF NOT EXISTS devices (
         device_id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
         name varchar(256) NOT NULL,
+        owner_id varchar(256) NOT NULL,
+        group_id varchar(256) NOT NULL,
         FOREIGN KEY(owner_id) REFERENCES users(id)
         FOREIGN KEY(group_id) REFERENCES group(group_id));
 //setting data with group
@@ -59,12 +62,8 @@ INSERT INTO users(creation_time, name, owner_id, group_id)
         VALUES(%s, %s, %s, $s);
         
 //setting data
-INSERT INTO users(creation_time, name, owner_id)
-        VALUES(%s, %s, %s);
-        
-//setting group
-INSERT INTO users(group_id)
-        VALUES(%s);
+INSERT INTO users(creation_time, name, owner_id, group_id)
+        VALUES(%s, %s, %s, %s);
         
 //getting data by device id
         SELECT device_id, name, owner_id FROM devices WHERE device_id = %s;
@@ -89,19 +88,20 @@ _______________________________________________________________________________
 // create table
 CREATE TABLE IF NOT EXISTS auth (
         auth_id int PRIMARY KEY AUTOINCREMENT,
+        auth_name varchar(128) NOT NULL,
         expiration_time varchar(128) NOT NULL,
         auth_hash varchar(256) NOT NULL,
         FOREIGN KEY(auth_name) REFERENCES users(user_name));
         
 //setting data entry
-        INSERT INTO auth(experation_time, auth_hash, auth_name)
+        INSERT INTO auth(auth_name, expiration_time, auth_hash)
         VALUES(%s, %s, %s);
         
 //getting data by account name
-        SELECT expiration_time, auth_hash FROM auth WHERE auth_name = %s;
+        SELECT auth_name, expiration_time, auth_hash FROM auth WHERE auth_name = %s;
         
 //getting data by authentication hash
-        SELECT expiration_time, auth_name FROM auth WHERE auth_hash = %s;
+        SELECT auth_name, expiration_time, auth_name FROM auth WHERE auth_hash = %s;
         
 // removing data
         DELETE from auth WHERE auth_id = %d;
@@ -110,6 +110,7 @@ _______________________________________________________________________________
 // create table
 CREATE TABLE IF NOT EXISTS temp (
         temp_id int PRIMARY KEY AUTOINCREMENT,
+        device_id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
         data varchar(256) NOT NULL,
         temp_unit varchar(256) NOT NULL,
@@ -132,6 +133,7 @@ _______________________________________________________________________________
 CREATE TABLE IF NOT EXISTS light (
         light_id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
+        device_id int PRIMARY KEY AUTOINCREMENT,
         data varchar(256) NOT NULL,
         FOREIGN KEY(device_id) REFERENCES device(id));
 //setting data
@@ -152,6 +154,7 @@ _______________________________________________________________________________
 CREATE TABLE IF NOT EXISTS water (
         water_id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
+        device_id int PRIMARY KEY AUTOINCREMENT,
         data varchar(256) NOT NULL,
         FOREIGN KEY(device_id) REFERENCES device(id));
 //setting data
