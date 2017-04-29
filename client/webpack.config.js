@@ -5,10 +5,11 @@ module.exports = {
     groupSettigns: __dirname + '/controlpanel/lib/groupSettings.js',
     allgroup: __dirname + '/controlpanel/lib/allgroups.js',
     allplants: __dirname + '/controlpanel/lib/allplants.js',
+    login: __dirname + '/controlpanel/lib/login.js',
   },
   output: {
     path: __dirname + '/controlpanel/dist/',
-    filename: '[name].js'       
+    filename: '[name].js'
   },
   module: {
     loaders: [
@@ -20,6 +21,6 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.json'] 
+    extensions: ['.js', '.json']
   }
 };

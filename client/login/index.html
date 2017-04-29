@@ -44,24 +44,23 @@
         <div class=fake-hr2></div>
         <div class="lowerText">for your everyday plant monitoring needs</div>
     </div>
+
     <div id="hidden-login">
         <h2 style="margin:0 0 10px 0; text-align:center;">Login</h2>
 
         <div class = "login-container">
           <form action="/login" method="post">
-            <div>
+
               <label for="username">Username:</label>
               <input name="username" type="text" placeholder="username" />
-            </div>
-            <div>
               <label for="password">Password:</label>
               <input name="password" type="password" placeholder="password" />
-            </div>
 
             <div style="text-align:center;"><input type="submit" value=Login /></div>
           </form>
         </div>
     </div>
+
     <div id="hidden-signup">
         <h2 style="margin:0 0 10px 0; text-align:center;">Signup</h2>
 
@@ -76,7 +75,7 @@
               <input name="password1" type="password" placeholder="password" />
             </div>
             <div>
-              <label for="password2">Password:</label>
+              <label for="password2">Retype Password:</label>
               <input name="password2" type="password" placeholder="password" />
             </div>
             <div>
@@ -84,11 +83,12 @@
               <input name="email" type="text" placeholder="joe123@email.com" />
             </div>
 
-            <div style="text-align:center;"><input type="submit" value=Login /></div>
+            <div style="text-align:center;"><input type="submit" value="Signup" /></div>
           </form>
           <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
         </div>
     </div>
+    <script src="../controlpanel/dist/login.js"></script>
 
 
 </body>

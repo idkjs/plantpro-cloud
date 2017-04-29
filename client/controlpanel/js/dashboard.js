@@ -52,7 +52,7 @@ class ChangeGroup extends React.Component {
     }
     handleSubmit() {
         var url = "/change-group";
-        axios.post(url, /* rm from group ... None */
+        axios.post(url, /* rm from group... changing group to None */
             { plant:this.state.props.plant.id
             , group: ["None"]
             });
@@ -103,7 +103,7 @@ class ChangeGroup extends React.Component {
                         })
                     }
                 </select>
-                <button className="btn btn-default" type="button" id="menu1">Move Plant</button>
+                <button className="btn btn-default" type="button" id="menu1" onClick={this.handleSubmit} >Move Plant</button>
             </form>
         );
     }
