@@ -27,11 +27,11 @@ _______________________________________________________________________________
 CREATE TABLE group (
         group_id int PRIMARY KEY AUTOINCREMENT,
         group_name varchar(256) NOT NULL,
-        owner_id varchar(256) NOT NULL,
+        owner_id int,
         FOREIGN KEY(owner_id) REFERENCES users(id));
 //setting data
 INSERT INTO temp(group_name, owner_id)
-        VALUES(%s, %s);
+        VALUES(%s, %d);
         
 //getting data by group_id
         SELECT group_name, owner_id FROM devices WHERE group_id = %s;
@@ -40,7 +40,7 @@ INSERT INTO temp(group_name, owner_id)
         SELECT group_id, owner_id FROM devices WHERE group_name = %s;
         
 //getting data by owner_id
-        SELECT group_id, group_name FROM devices WHERE owner_id = %s;
+        SELECT group_id, group_name FROM devices WHERE owner_id = %d;
         
 // removing data
         DELETE from group WHERE group_id = %d;
@@ -53,29 +53,29 @@ CREATE TABLE IF NOT EXISTS devices (
         device_id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
         name varchar(256) NOT NULL,
-        owner_id varchar(256) NOT NULL,
-        group_id varchar(256) NOT NULL,
+        owner_id int,
+        group_id int,
         FOREIGN KEY(owner_id) REFERENCES users(id)
         FOREIGN KEY(group_id) REFERENCES group(group_id));
 //setting data with group
 INSERT INTO users(creation_time, name, owner_id, group_id)
-        VALUES(%s, %s, %s, $s);
+        VALUES(%s, %s, %d, $d);
         
 //setting data
 INSERT INTO users(creation_time, name, owner_id, group_id)
-        VALUES(%s, %s, %s, %s);
+        VALUES(%s, %s, %d, %d);
         
 //getting data by device id
-        SELECT device_id, name, owner_id FROM devices WHERE device_id = %s;
+        SELECT device_id, name, owner_id FROM devices WHERE device_id = %d;
         
 //getting data by owner_id
-        SELECT device_id, name, owner_id FROM devices WHERE owner_id = %s;
+        SELECT device_id, name, owner_id FROM devices WHERE owner_id = %d;
         
 //getting data by device name
         SELECT device_id, name, owner_id FROM devices WHERE name = %s;
         
 //getting data by group_id
-        SELECT device_id, name, owner_id FROM devices WHERE group_id = %s;
+        SELECT device_id, name, owner_id FROM devices WHERE group_id = %d;
         
 // removing data
         DELETE from devices WHERE device_id = %d;
@@ -84,46 +84,51 @@ INSERT INTO users(creation_time, name, owner_id, group_id)
         
         DELETE from devices WHERE owner_id = %d;
 _______________________________________________________________________________
-// authentication table
+// verified table
 // create table
-CREATE TABLE IF NOT EXISTS auth (
-        auth_id int PRIMARY KEY AUTOINCREMENT,
-        auth_name varchar(128) NOT NULL,
+CREATE TABLE IF NOT EXISTS verif (
+        verif_id int PRIMARY KEY AUTOINCREMENT,
+        owner_id int,
+        verif_name varchar(128) NOT NULL,
         expiration_time varchar(128) NOT NULL,
-        auth_hash varchar(256) NOT NULL,
-        FOREIGN KEY(auth_name) REFERENCES users(user_name));
+        verif_hash varchar(256) NOT NULL,
+        FOREIGN KEY(verif_name) REFERENCES users(user_name));
+        FOREIGN KEY(owner_id) REFERENCES users(owner_id));
         
 //setting data entry
-        INSERT INTO auth(auth_name, expiration_time, auth_hash)
-        VALUES(%s, %s, %s);
+        INSERT INTO verif(owner_id, verif_name, expiration_time, verif_hash)
+        VALUES(%d, %s, %s, %s);
         
 //getting data by account name
-        SELECT auth_name, expiration_time, auth_hash FROM auth WHERE auth_name = %s;
+        SELECT owner_id, verif_name, expiration_time, verif_hash FROM verif WHERE verif_name = %s;
         
-//getting data by authentication hash
-        SELECT auth_name, expiration_time, auth_name FROM auth WHERE auth_hash = %s;
+//getting data by verifentication hash
+        SELECT owner_id, verif_name, expiration_time, verif_name FROM verif WHERE verif_hash = %s;
         
+//getting data by owner_id
+        SELECT owner_id, verif_name, expiration_time, verif_name FROM verif WHERE owner_id = %d;
+    
 // removing data
-        DELETE from auth WHERE auth_id = %d;
+        DELETE from verif WHERE verif_id = %d;
 _______________________________________________________________________________
 // temperature table
 // create table
 CREATE TABLE IF NOT EXISTS temp (
         temp_id int PRIMARY KEY AUTOINCREMENT,
-        device_id int PRIMARY KEY AUTOINCREMENT,
+        device_id int,
         creation_time varchar(256) NOT NULL,
         data varchar(256) NOT NULL,
         temp_unit varchar(256) NOT NULL,
         FOREIGN KEY(device_id) REFERENCES device(id));
 //setting data
 INSERT INTO temp(creation_time, data, temp_unit, device_id)
-        VALUES(%s, %s, %s, %s);
+        VALUES(%s, %s, %s, %d);
         
 //getting data by temp_id
-        SELECT device_id, creation_time, data, temp_unit FROM devices WHERE temp_id = %s;
+        SELECT device_id, creation_time, data, temp_unit FROM devices WHERE temp_id = %d;
         
 //getting data by device_id
-        SELECT temp_id, creation_time, data, temp_unit FROM devices WHERE device_id = %s;
+        SELECT temp_id, creation_time, data, temp_unit FROM devices WHERE device_id = %d;
         
 // removing data
         DELETE from temp WHERE temp_id = %d;
@@ -133,18 +138,18 @@ _______________________________________________________________________________
 CREATE TABLE IF NOT EXISTS light (
         light_id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
-        device_id int PRIMARY KEY AUTOINCREMENT,
+        device_id int,
         data varchar(256) NOT NULL,
         FOREIGN KEY(device_id) REFERENCES device(id));
 //setting data
 INSERT INTO light(creation_time, data, device_id)
-        VALUES(%s, %s, %s);
+        VALUES(%s, %s, %d);
         
 //getting data by light_id
-        SELECT device_id, creation_time, data FROM devices WHERE light_id = %s;
+        SELECT device_id, creation_time, data FROM devices WHERE light_id = %d;
         
 //getting data by device_id
-        SELECT light_id, creation_time, data FROM devices WHERE device_id = %s;
+        SELECT light_id, creation_time, data FROM devices WHERE device_id = %d;
         
 // removing data
         DELETE from light WHERE light = %d;
@@ -154,18 +159,18 @@ _______________________________________________________________________________
 CREATE TABLE IF NOT EXISTS water (
         water_id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
-        device_id int PRIMARY KEY AUTOINCREMENT,
+        device_id int,
         data varchar(256) NOT NULL,
         FOREIGN KEY(device_id) REFERENCES device(id));
 //setting data
 INSERT INTO water(creation_time, data, device_id)
-        VALUES(%s, %s, %s);
+        VALUES(%s, %s, %d);
         
 //getting data by water_id
-        SELECT device_id, creation_time, data FROM devices WHERE water_id = %s;
+        SELECT device_id, creation_time, data FROM devices WHERE water_id = %d;
         
 //getting data by device_id
-        SELECT water_id, creation_time, data FROM devices WHERE device_id = %s;
+        SELECT water_id, creation_time, data FROM devices WHERE device_id = %d;
         
 // removing data
         DELETE from water WHERE water_id = %d;
