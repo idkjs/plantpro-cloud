@@ -115,6 +115,7 @@ class PlantListing extends React.Component {
         this.state = {
             plants: [],
             props: props,
+            displayStyle: true,
         };
         this.showElement = this.showElement.bind(this);
         this.deletionConfirmation = this.deletionConfirmation.bind(this);
@@ -140,8 +141,12 @@ class PlantListing extends React.Component {
                 console.log(plants);
                 this.setState({plants: plants, props: this.state.props});});
     }
-    showElement(ref) {
-        $(this.refs[ref]).slideToggle();
+    showElement(id) {
+        var thing = document.getElementById(id).style.display;
+        if (thing === "none")
+            document.getElementById(id).style.display = "block";
+        else
+            document.getElementById(id).style.display = "none";
     }
     deletionConfirmation(plant){
         if (confirm("Are you sure you want to delete plant " + plant.name + " and all of its data?")){
@@ -151,7 +156,7 @@ class PlantListing extends React.Component {
     render() {
         var pStyle = {paddingLeft: "25px",};
         var buttonStyle = {border:"none", backgroundColor:"transparent", paddingTop:"13px",};
-        var divStyle = {display: "none", borderRight: "solid", borderWidth: "1px", paddingRight: "20px", fontWeight: "bold", textAlign: "right"};
+        var divStyle = {display: "none",borderRight: "solid", borderWidth: "1px", paddingRight: "20px", fontWeight: "bold", textAlign: "right"};
         var noBorderStyle = {borderStyle:"none"};
         var displayNoneStyle = {display: "none"};
 
@@ -170,19 +175,21 @@ class PlantListing extends React.Component {
                                 <a href="#">{plant.name}</a>
                             </li>
                             <li>
-                                <div ref={"settings"+plant.id} className="content" style={divStyle}>
+                                <div id={"settings"+plant.id} ref={"settings"+plant.id} className="content" style={divStyle}>
                                     <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"Rename")}>Rename</a>
-                                    <div ref={plant.id+"Rename"} style={displayNoneStyle}>
+                                    <div id={plant.id+"Rename"} ref={plant.id+"Rename"} style={displayNoneStyle}>
                                         <br/>
                                         <RenamePlant username={this.state.props.username} plant={plant} />
                                     </div>
                                     <br/>
+
                                     <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"ChangeGroup")}>Change Group</a>
-                                    <div ref={plant.id+"ChangeGroup"} style={displayNoneStyle}>
+                                    <div id={plant.id+"ChangeGroup"} ref={plant.id+"ChangeGroup"} style={displayNoneStyle}>
                                         <div>
                                             <ChangeGroup username={this.state.props.username} plant={plant} />
                                         </div>
                                     </div>
+
                                     <br/>
                                     <div><a href="#" style={noBorderStyle} onClick={()=>this.deletionConfirmation(plant)}>Delete Plant</a></div>
                                     <br/>

@@ -32,15 +32,15 @@ class Login extends React.Component {
                 window.location = res1.request.responseURL;
             });
         }).catch(res => {
-                var style = {
-                    color: "#cc0000",
-                    fontStyle: "italic",
-                };
-                this.setState({
-                    response: 200,
-                    props: this.state.props,
-                    outputTray: <span style={style}>Invalid Login!</span>,
-                });});
+            var style = {
+                color: "#cc0000",
+                fontStyle: "italic",
+            };
+            this.setState({
+                response: 200,
+                props: this.state.props,
+                outputTray: <span style={style}>Invalid Login!</span>,
+            });});
     }
 
     render() {
