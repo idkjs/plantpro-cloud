@@ -40,7 +40,6 @@ class ChangeGroup extends React.Component {
         this.state = {
             groups: [],
             props: props,
-            newGroup: "",
             outputTray: <div></div>
         };
         this.handleChange = this.handleChange.bind(this);
@@ -49,16 +48,20 @@ class ChangeGroup extends React.Component {
 
     handleChange(event) {
         this.setState({newGroup: event.target.value});
+        //console.log(this.state.newGroup);
+        //console.log(event.target.value);
     }
     handleSubmit() {
         var url = "/change-group";
+        console.log("remove from group");
         axios.post(url, /* rm from group... changing group to None */
             { plant:this.state.props.plant.id
             , group: ["None"]
             });
+        console.log("add to group id: " + this.state.newGroup.id);
         axios.post(url, /* add to group ... Some */
             {  plant:this.state.props.plant.id
-             , group: ["Some", this.state.newGroup]
+             , group: ["Some", this.state.newGroup.id]
             })
         .then(res => {
             var style = {
@@ -87,7 +90,7 @@ class ChangeGroup extends React.Component {
             .then(res => {
                 var groups = res.data;
                 console.log(groups);
-                this.setState({groups: groups});});
+                this.setState({groups: groups, newGroup: groups[0]});});
     }
 
     render() {
@@ -98,7 +101,7 @@ class ChangeGroup extends React.Component {
                     {
                         this.state.groups.map((group) => {
                             return (
-                                <option key={group.id} value={group.id} id={group.name}>{group.name}</option>
+                                <option key={group.id} value={group} id={group.name}>{group.name}</option>
                             );
                         })
                     }
@@ -122,7 +125,7 @@ class PlantListing extends React.Component {
     }
 
     componentDidMount() {
-        var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(this.state.props.groupname)}`;
+        var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(this.state.props.group.name)}`;
         axios.get(url)
             .then(res => {
                 var plants = [];
@@ -132,9 +135,9 @@ class PlantListing extends React.Component {
                     console.log(p);
                     /*console.log("groupname: " + this.state.props.groupname + "   p.group: " + p.group);*/
                     if (
-                        (this.state.props.groupname === "all")
-                        || (this.state.props.groupname === "ungrouped" && p.group === null)
-                        || (p.group.name === this.state.props.groupname)) {
+                        (this.state.props.group.name === "all")
+                        || (this.state.props.group.name === "ungrouped" && p.group === null)
+                        || (p.group.name === this.state.props.group.name)) {
                         plants.push(p);
                     }
                 }
@@ -279,7 +282,7 @@ class GroupsListing extends React.Component {
                         <li className="dropdown keep-open menuElement" key={group.id} >
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret"></span></a>
                             <ul className="menuDrop dropdown-menu keep-open" role="menu">
-                                <PlantListing username={this.state.props.username} groupname={group.name} />
+                                <PlantListing username={this.state.props.username} group={group} />
                             </ul>
                         </li>
                     );
@@ -323,5 +326,5 @@ ReactDOM.render(
   document.getElementById("groupsListContainer"));
 
 ReactDOM.render(
-  <PlantListing username={username} groupname={"ungrouped"} />,
+  <PlantListing username={username} group={{id:null,name:"ungrouped"}} />,
   document.getElementById("plantListContainer"));
