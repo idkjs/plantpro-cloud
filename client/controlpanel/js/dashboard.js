@@ -27,7 +27,7 @@ class RenamePlant extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <input type="text" className="form-control" name="groupName1" placeholder="new plant name" value={this.state.value} onChange={this.handleChange} />
-                <button id="renamebutton1" type="submit" className="btn btn-success">Rename Plant</button>
+                <button type="submit" className="btn btn-success">Rename Plant</button>
             </form>
         );
     }
@@ -48,8 +48,6 @@ class ChangeGroup extends React.Component {
 
     handleChange(event) {
         this.setState({newGroup: event.target.value});
-        //console.log(this.state.newGroup);
-        //console.log(event.target.value);
     }
     handleSubmit() {
         var url = "/change-group";
@@ -58,7 +56,7 @@ class ChangeGroup extends React.Component {
             { plant:this.state.props.plant.id
             , group: ["None"]
             });
-        console.log("add to group id: " + this.state.newGroup.id);
+        console.log("add plant to group id: " + this.state.newGroup.id);
         axios.post(url, /* add to group ... Some */
             {  plant:this.state.props.plant.id
              , group: ["Some", this.state.newGroup.id]
@@ -101,12 +99,12 @@ class ChangeGroup extends React.Component {
                     {
                         this.state.groups.map((group) => {
                             return (
-                                <option key={group.id} value={group} id={group.name}>{group.name}</option>
+                                <option key={group.id} value={group}>{group.name}</option>
                             );
                         })
                     }
                 </select>
-                <button className="btn btn-default" type="button" id="menu1" onClick={this.handleSubmit} >Move Plant</button>
+                <button className="btn btn-default" type="button" onClick={this.handleSubmit} >Move Plant</button>
             </form>
         );
     }
@@ -144,12 +142,12 @@ class PlantListing extends React.Component {
                 console.log(plants);
                 this.setState({plants: plants, props: this.state.props});});
     }
-    showElement(id) {
-        var thing = document.getElementById(id).style.display;
+    showElement(ref) {
+        var thing = this.refs[ref].style.display;
         if (thing === "none")
-            document.getElementById(id).style.display = "block";
+            this.refs[ref].style.display = "block";
         else
-            document.getElementById(id).style.display = "none";
+            this.refs[ref].style.display = "none";
     }
     deletionConfirmation(plant){
         if (confirm("Are you sure you want to delete plant " + plant.name + " and all of its data?")){
@@ -178,16 +176,16 @@ class PlantListing extends React.Component {
                                 <a href="#">{plant.name}</a>
                             </li>
                             <li>
-                                <div id={"settings"+plant.id} ref={"settings"+plant.id} className="content" style={divStyle}>
+                                <div ref={"settings"+plant.id} className="content" style={divStyle}>
                                     <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"Rename")}>Rename</a>
-                                    <div id={plant.id+"Rename"} ref={plant.id+"Rename"} style={displayNoneStyle}>
+                                    <div ref={plant.id+"Rename"} style={displayNoneStyle}>
                                         <br/>
                                         <RenamePlant username={this.state.props.username} plant={plant} />
                                     </div>
                                     <br/>
 
                                     <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"ChangeGroup")}>Change Group</a>
-                                    <div id={plant.id+"ChangeGroup"} ref={plant.id+"ChangeGroup"} style={displayNoneStyle}>
+                                    <div ref={plant.id+"ChangeGroup"} style={displayNoneStyle}>
                                         <div>
                                             <ChangeGroup username={this.state.props.username} plant={plant} />
                                         </div>
@@ -216,10 +214,12 @@ class GroupsListing extends React.Component {
             props: props,
             response: null,
             displayStyle: true,
+            newGroupName: "",
             outputTray: <div></div>
         };
         this.handleNewGroup = this.handleNewGroup.bind(this);
         this.showElement = this.showElement.bind(this);
+        this.setNewGroupName = this.setNewGroupName.bind(this);
     }
 
     componentDidMount() {
@@ -236,7 +236,7 @@ class GroupsListing extends React.Component {
         console.log(url);
         axios.post(url,
             { user: this.state.props.username
-            , groupName: document.getElementById("newGroupName").value
+            , groupName: this.state.newGroupName
             })
         .then(res => {
             var style = {
@@ -269,6 +269,10 @@ class GroupsListing extends React.Component {
     showElement(){
         this.setState({displayStyle: !this.state.displayStyle});
     }
+    setNewGroupName(event){
+        this.setState({newGroupName: event.target.value});
+    }
+
     render() {
         let styleDisplay = this.state.displayStyle ? "none" : "block";
         var plusStyle = {fontSize:"13px", float:"left", marginTop:"10px"};
@@ -292,9 +296,9 @@ class GroupsListing extends React.Component {
             <li className="plus" style={plusStyle}><a onClick={()=>this.showElement()}>
                 <span className="btn glyphicon glyphicon-plus"></span></a></li>
 
-            <div id="show_create_group" style={{display: styleDisplay}}>
-                <input type="text" className="form-control" id="newGroupName" name="groupName" placeholder="new group name" />
-                <button id="savebutton" className="btn btn-primary" onClick={this.handleNewGroup}>Create Group</button>
+            <div style={{display: styleDisplay}}>
+                <input type="text" className="form-control" name="groupName" placeholder="new group name" value={this.state.newGroupName} onChange={this.setNewGroupName} />
+                <button className="btn btn-primary" onClick={this.handleNewGroup}>Create Group</button>
                 {this.state.outputTray}
             </div>
             </span>
