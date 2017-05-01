@@ -111,6 +111,45 @@ CREATE TABLE IF NOT EXISTS verif (
 // removing data
         DELETE from verif WHERE verif_id = %d;
 _______________________________________________________________________________
+// data table
+// create table
+CREATE TABLE IF NOT EXISTS data (
+    data_id int PRIMARY KEY AUTOINCREMENT,
+    timestamp --timestamp is "propper sql", not a string
+    owner_id int,
+    group_id int,
+    device_id int, --device_id varchar(256) NOT NULL,
+    FOREIGN KEY(owner_id) REFERENCES users(id)
+    FOREIGN KEY(group_id) REFERENCES group(group_id)
+    FOREIGN KEY(device_id) REFERENCES device(device_id)
+    sensor_type ENUM('temperature', 'light', 'water'),
+    json varchar(1024) NOT NULL); --not sure if 1024 is big enough
+
+//setting data    
+INSERT INTO data (owner_id, group_id, device_id, sensor_type, json)
+    VALUES(%d, %d, %d, %s, %s);
+
+//getting json
+Select timestamp, json FROM data WHERE data_id = %d;
+    
+Select timestamp, json FROM data WHERE owner_id = %d;
+
+Select timestamp, json FROM data WHERE group_id = %d;
+
+Select timestamp, json FROM data WHERE device_id = %d;
+
+Select timestamp, json FROM data WHERE sensor_type = %s;
+
+//getting all data
+Select data_id, timestamp, owner_id, group_id, device_id, sensor_type, json FROM data WHERE data_id = %d;
+
+Select data_id, timestamp, owner_id, group_id, device_id, sensor_type, json FROM data WHERE owner_id = %d;
+
+Select data_id, timestamp, owner_id, group_id, device_id, sensor_type, json FROM data WHERE group_id = %d;
+
+Select data_id, timestamp, owner_id, group_id, device_id, sensor_type, json FROM data WHERE device_id = %d;
+
+_______________________________________________________________________________
 // temperature table
 // create table
 CREATE TABLE IF NOT EXISTS temp (
