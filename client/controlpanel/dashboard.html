@@ -46,7 +46,7 @@ function doWork() {
     </head>
     <body onload="doWork();">
         <!--........................Begin NavBar.................................-->
-        <nav class="navbar navbar-inverse bg-inverse navbar-fixed-top">
+        <nav class="navbar navbar-inverse bg-inverse" style="margin-bottom: 0 !important;">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#TheNavBar">
@@ -70,40 +70,16 @@ function doWork() {
             </div>
         </nav>
         <!--.....................End NavBar............................-->
-        <br /><br />
         <!--..............Begin sidebar and stage......................-->
-        <div class="row-offcanvas row-offcanvas-left">
-            <div id="sidebar" class="sidebar-offcanvas">
-                <br /> <br />
-                <div class="col-xs-12">
-                    <h3 style="color:#bcbcbc; text-align: center;" >Your Plants <a id="Leaf"><span class="glyphicon glyphicon-tree-conifer" style="color: #007a2a !important;"><!----></span></a></h3><br/>
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><h4>Groups:</h4></li>
-                    </ul>
-
-
-
-
-                        <ul class="nav" id="groupsListContainer">
-
-                        </ul>
-
-
-                        <hr/>
-
-                        <ul class="nav" style="font-size: 15px;">
-                            <li>
-                                <h4 style="color: #009b09;">Ungrouped Plants:</h4>
-                            </li>
-                        </ul>
-                        <ul class="nav"  id="plantListContainer">
-
-
-                        </ul>
-                        <ul class="nav">
-                            <li style="font-size: 12px; float: right;"><a href="allplants.html">All Plants</a><br/><br/><br/></li>
-                        </ul>
+        <div class="flexContainer">
+            <div id="sidebar" class="sidebar-offcanvas" style="">
+                <div onclick="window.location='#groups'" class="navButton">
+                    Groups
                 </div>
+                <div onclick="window.location='#'" class="navButton">
+                    Plants
+                </div>
+                <div style="position: absolute; bottom: 0">Legal info goes here</div>
             </div>
 
             <!--...........................................................................Side bar ends here..........................................................................-->

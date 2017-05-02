@@ -10,6 +10,11 @@ html{
     font-family: 'Roboto', Helvetica;
 }
 
+div.flexContainer {
+    display: flex;
+    flex-direction: row;
+}
+
 /*-----------------------------Nav Bar-------------------------------------------*/
 
 .navbar{
@@ -49,11 +54,9 @@ html{
     max-width: 250px;
     background-color:#232323;
     float: left;
-    height:100%;
-    position:relative;
+    height:fill-available;
     overflow-y:auto;
     overflow-x:auto;
-    position: fixed;
     border-right: none;
     border-color: #009b09;
 }
@@ -307,5 +310,16 @@ hr {
 .close:focus {
     color: #000;
     text-decoration: none;
+    cursor: pointer;
+}
+
+div#sidebar > div.navButton {
+    padding: 4px;
+    margin: 2px;
+    color: white;
+}
+
+div#sidebar > div.navButton:hover {
+    background-color: green;
     cursor: pointer;
 }

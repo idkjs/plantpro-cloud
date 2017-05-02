@@ -57,8 +57,8 @@ class Stage extends React.Component {
         console.log("Handling state change.");
         var path = window.location.hash.substring(1);
         var i = 0;
-        if ((/^(.*)\..*$/g).exec(path) != null) {
-            var base = (/^(.*)\..*$/g).exec(path)[1];
+        if ((/^(.*)(\..*){0,1}$/g).exec(path) != null) {
+            var base = (/^(.*)(\..*){0,1}$/g).exec(path)[1];
             console.log("base: " + base);
             console.log(this.state.stageables);
             for (i = 0; i < this.state.stageables.length; i++) {
@@ -141,10 +141,193 @@ class AllPlantsView extends Stageable {
     }
 }
 
+function RenamePlant() {
+    return (<div></div>);
+}
+function ChangeGroup() {
+    return (<div></div>);
+}
+
+class PlantsListing extends Stageable {
+    constructor(props) {
+        super(props);
+        this.state = {
+            plants: [],
+            props: props,
+            displayStyle: true,
+        };
+        this.showElement = this.showElement.bind(this);
+        this.deletionConfirmation = this.deletionConfirmation.bind(this);
+    }
+
+    componentDidMount() {
+        if (this.state.props.plants == [] || this.state.props.plants == undefined) {
+            var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(this.state.props.group.name)}`;
+            axios.get(url)
+                .then(res => {
+                    var plants = [];
+                    var i;
+                    for (i = 0; i < res.data.length; i++) {
+                        var p = res.data[i];
+                        console.log("logging plants...");
+                        console.log(p);
+                        plants.push(p);
+                    }
+                    console.log(plants);
+                    var state = this.state;
+                    state.plants = plants;
+                    this.setState(state);
+                    console.log(this.state);});
+        } else {
+            this.state.plants = this.state.props.plants;
+        }
+    }
+
+    showElement(ref) {
+        var thing = this.refs[ref].style.display;
+        if (thing === "none")
+            this.refs[ref].style.display = "block";
+        else
+            this.refs[ref].style.display = "none";
+    }
+    deletionConfirmation(plant){
+        if (confirm("Are you sure you want to delete plant " + plant.name + " and all of its data?")){
+            //perform delete
+        }
+    }
+    render() {
+        var pStyle = {paddingLeft: "25px",};
+        var buttonStyle = {border:"none", backgroundColor:"transparent", paddingTop:"13px",};
+        var divStyle = {display: "none",borderLeft: "solid", borderWidth: "1px", marginLeft: "1em", paddingLeft: "1em"};
+        var ulStyle = {listStyle: "none"};
+        var noBorderStyle = {borderStyle:"none"};
+        var displayNoneStyle = {display: "none"};
+
+        console.log("about to return from PlantsListing.render");
+        console.log(this.state);
+        var plants = this.state.plants;
+        console.log(plants.length);
+
+        if (plants.length === 0) {
+            return (<li style={pStyle}><p>Empty Group</p></li>);
+        }
+        else { return (
+            <div>
+            {
+                plants.map((plant) => {
+                    return (
+
+                        <ul style={ulStyle} key={plant.id}>
+                            <li>
+                                <button onClick={()=>this.showElement("settings"+plant.id)}  type="button" className="sets glyphicon glyphicon-cog" style={buttonStyle}></button>
+                                <a href="#">{plant.name}</a>
+                            </li>
+                            <li>
+                                <div ref={"settings"+plant.id} className="content" style={divStyle}>
+                                    <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"Rename")}>Rename</a>
+                                    <div ref={plant.id+"Rename"} style={displayNoneStyle}>
+                                        <RenamePlant username={this.state.props.username} plant={plant} />
+                                    </div>
+                                    <br/>
+
+                                    <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"ChangeGroup")}>Change Group</a>
+                                    <div ref={plant.id+"ChangeGroup"} style={displayNoneStyle}>
+                                        <div>
+                                            <ChangeGroup username={this.state.props.username} plant={plant} />
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <div><a href="#" style={noBorderStyle} onClick={()=>this.deletionConfirmation(plant)}>Delete Plant</a></div>
+                                </div>
+                            </li>
+                        </ul>
+
+                    );})
+                }
+            </div>
+        );
+        }
+    }
+}
+
+class SingleGroupView extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log(this.state);
+        this.state = {};
+        this.state['props'] = props;
+    }
+
+    componentDidMount() {
+        var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(this.state.props.group.name)}`;
+        axios
+            .get(url)
+            .then(res => {
+                var plants = [];
+                var i;
+                for (i = 0; i < res.data.length; i++) {
+                    var p = res.data[i];
+                    plants.push(p);
+                }
+                var state = this.state;
+                state['plants'] = plants;
+                this.setState(state);
+            });
+    }
+    render() {
+        return (
+            <div className="group">
+                <h1>{this.state.props.group.name}</h1>
+                <PlantsListing plants={this.state.plants} username={this.props.username} />
+            </div>);
+    }
+}
+
+class AllGroupsView extends Stageable {
+    constructor(props) {
+        super(props);
+        this.state['groups'] = [];
+        this.state['props'] = {
+            username: props.username
+        };
+    }
+    componentDidMount() {
+        var url = `/get-groups/${this.state.props.username}`;
+        console.log("url: " + url);
+        axios.get(url)
+            .then(res => {
+                var groups = res.data;
+                console.log(groups);
+                var state = this.state;
+                state['groups'] = groups;
+                console.log("setting groups ");
+                console.log(groups);
+                this.setState(state);});
+    }
+    render() {
+        var groups = this.state['groups'].map((group) =>
+            {   return (
+                    <li>
+                        <SingleGroupView group={{name: group.name}} username={this.state.props.username} />
+                    </li>);});
+        return (
+            <ul>
+                {groups}
+            </ul>);
+    }
+}
+
 console.log("a");
 
 var main_stage =
-    <Stage stageables={[<AllPlantsView group={{name: "all"}} username={username} route="" />, <PlantDetailView route="plant" />]} />;
+    <Stage
+        stageables={
+            [ <PlantsListing group={{name: "all", id: null}} username={username} route="" />
+            , <PlantDetailView route="plant" />
+            , <AllGroupsView route="groups" username={username} />
+            ]
+        } />;
 
 console.log(main_stage);
 
