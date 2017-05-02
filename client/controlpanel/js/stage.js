@@ -1,6 +1,6 @@
-var libRenamePlant = require("./renamePlant.js");
-var RenamePlant = libRenamePlant.RenamePlant;
-console.log(libRenamePlant);
+import { RenamePlant } from "./renamePlant.js";
+import { ChangeGroup } from "./changeGroup.js";
+import { plantPi } from "./plantPi.js";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -143,10 +143,6 @@ class AllPlantsView extends Stageable {
                 }
             </ul>);
     }
-}
-
-function ChangeGroup() {
-    return (<div></div>);
 }
 
 class PlantsListing extends Stageable {
