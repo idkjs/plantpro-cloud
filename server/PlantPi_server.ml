@@ -488,6 +488,7 @@ let _ =
   let service_static_auth4 = get "/s/*/*/*/*" (auth_filter static_controlpanel_handler) in
   let service_static_auth5 = get "/s/*/*/*/*/*" (auth_filter static_controlpanel_handler) in
   let service_index = get "/index.html" (fun _ -> redirect' (Uri.of_string "/a/index.html")) in
+  let service_root = get "/" (fun _ -> redirect' (Uri.of_string "/a/index.html")) in
   App.empty
   |> service_static_no_auth
   |> service_static_auth1
@@ -507,4 +508,5 @@ let _ =
   |> service_delete_group
   |> service_move_group
   |> service_index
+  |> service_root
   |> App.run_command
