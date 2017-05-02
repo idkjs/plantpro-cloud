@@ -4,37 +4,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 
-class RenamePlant extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            groups: [],
-            props: props,
-            newPlantName: ""
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({newPlantName: event.target.value});
-    }
-
-    handleSubmit() {
-        var url = "/rename-plant";
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" className="form-control" name="groupName1" placeholder="new plant name" value={this.state.value} onChange={this.handleChange} />
-                <button type="submit" className="btn btn-success">Rename Plant</button>
-            </form>
-        );
-    }
-}
-
-
 class ChangeGroup extends React.Component {
     constructor(props) {
         super(props);
@@ -327,12 +296,10 @@ var username = hex2a(getCookie("username"));
 
 //main_stage.addStageable(<PlantDetailView route="plant" />);
 
-console.log("a");
-
-ReactDOM.render(
+/*ReactDOM.render(
   <GroupsListing username={username} />,
-  document.getElementById("groupsListContainer"));
+  document.getElementById("groupsListContainer"));*/
 
-ReactDOM.render(
+/*ReactDOM.render(
   <PlantListing username={username} group={{id:null,name:"ungrouped"}} />,
-  document.getElementById("plantListContainer"));
+  document.getElementById("plantListContainer"));*/

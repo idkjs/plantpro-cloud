@@ -4,6 +4,7 @@ body {
     margin: 0 0 0 0;
     background-color:  #e8e8e8; /*Full page background*/
     color: black;
+    height: 100%;
 }
 html{
     height: 100%;
@@ -13,6 +14,9 @@ html{
 div.flexContainer {
     display: flex;
     flex-direction: row;
+    align-items: stretch;
+    align-content: stretch;
+    height: 100%;
 }
 
 /*-----------------------------Nav Bar-------------------------------------------*/
@@ -54,11 +58,19 @@ div.flexContainer {
     max-width: 250px;
     background-color:#232323;
     float: left;
-    height:fill-available;
-    overflow-y:auto;
-    overflow-x:auto;
+    overflow-y: auto;
+    overflow-x: auto;
     border-right: none;
     border-color: #009b09;
+    display: flex;
+    align-content: stretch;
+    flex-direction: column;
+    flex-grow: 1;
+    color: white;
+}
+
+#sidebar nav {
+    flex-grow: 99;
 }
 
 .nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
@@ -197,16 +209,13 @@ select {
 /*-------------------------Begin Stage------------------------*/
 
 #stage {
-    margin-left: 253px;
     height:100%;
     overflow:auto;
     position: auto;
-    width: 81%;
 }
 
 #panel{
     width: 100%;
-
 }
 .panel_status{
     padding-left: 2%;
@@ -313,13 +322,13 @@ hr {
     cursor: pointer;
 }
 
-div#sidebar > div.navButton {
+div#sidebar div.navButton {
     padding: 4px;
     margin: 2px;
     color: white;
 }
 
-div#sidebar > div.navButton:hover {
+div#sidebar div.navButton:hover {
     background-color: green;
     cursor: pointer;
 }

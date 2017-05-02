@@ -1,3 +1,7 @@
+var libRenamePlant = require("./renamePlant.js");
+var RenamePlant = libRenamePlant.RenamePlant;
+console.log(libRenamePlant);
+
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
@@ -141,9 +145,6 @@ class AllPlantsView extends Stageable {
     }
 }
 
-function RenamePlant() {
-    return (<div></div>);
-}
 function ChangeGroup() {
     return (<div></div>);
 }
@@ -161,8 +162,14 @@ class PlantsListing extends Stageable {
     }
 
     componentDidMount() {
-        if (this.state.props.plants == [] || this.state.props.plants == undefined) {
-            var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(this.state.props.group.name)}`;
+        if (this.state.props.plants == undefined || this.state.props.plants.length === 0) {
+            var group;
+            if (this.state.props.group === undefined) {
+                group = "undefined";
+            } else {
+                group = this.state.props.group.name;
+            }
+            var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(group)}`;
             axios.get(url)
                 .then(res => {
                     var plants = [];
