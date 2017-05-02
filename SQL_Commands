@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS verif (
         verif_name varchar(128) NOT NULL,
         expiration_time varchar(128) NOT NULL,
         verif_hash varchar(256) NOT NULL,
-        FOREIGN KEY(verif_name) REFERENCES users(user_name));
+        FOREIGN KEY(verif_name) REFERENCES users(user_name)
         FOREIGN KEY(owner_id) REFERENCES users(id));
         
 //setting data entry
@@ -117,10 +117,10 @@ _______________________________________________________________________________
 // create table
 CREATE TABLE IF NOT EXISTS data (
     data_id int PRIMARY KEY AUTOINCREMENT,
-    data_time varchar(256),
-    owner_id int,
+    data_time varchar(256) NOT NULL,
+    owner_id int NOT NULL,
     group_id int,
-    device_id int,
+    device_id int NOT NULL,
     device_code varchar(256) NOT NULL,
     FOREIGN KEY(owner_id) REFERENCES users(id),
     FOREIGN KEY(group_id) REFERENCES group(group_id),
