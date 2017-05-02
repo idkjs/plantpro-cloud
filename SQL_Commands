@@ -130,32 +130,32 @@ CREATE TABLE IF NOT EXISTS data (
     json varchar(4096) NOT NULL); --4KB
 
 //setting data    
-INSERT INTO data (owner_id, group_id, device_id, device_code, sensor_type, json)
-    VALUES(%d, %d, %d, %s, %s, %s);
+INSERT INTO data (owner_id, group_id, device_id, device_code, data_time, sensor_type, json)
+    VALUES(%d, %d, %d, %s, %s, %s, %s);
 
 //getting json
-Select timestamp, json FROM data WHERE data_id = %d;
+Select data_time, json FROM data WHERE data_id = %d;
     
-Select timestamp, json FROM data WHERE owner_id = %d;
+Select data_time, json FROM data WHERE owner_id = %d;
 
-Select timestamp, json FROM data WHERE group_id = %d;
+Select data_time, json FROM data WHERE group_id = %d;
 
-Select timestamp, json FROM data WHERE device_id = %d;
+Select data_time, json FROM data WHERE device_id = %d;
 
-Select timestamp, json FROM data WHERE sensor_type = %s;
+Select data_time, json FROM data WHERE sensor_type = %s;
 
-Select timestamp, json FROM data WHERE device_code = %s;
+Select data_time, json FROM data WHERE device_code = %s;
 
 //getting all data
-Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE data_id = %d;
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE data_id = %d;
 
-Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE owner_id = %d;
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE owner_id = %d;
 
-Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE group_id = %d;
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE group_id = %d;
 
-Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_id = %d;
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_id = %d;
 
-Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_code = %s;
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_code = %s;
 
 _______________________________________________________________________________
 // LEGACY
