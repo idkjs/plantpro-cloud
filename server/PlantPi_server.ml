@@ -145,10 +145,10 @@ let login_handler = (fun req ->
         in
         redirect'
           ~headers
-          (Uri.of_string "/controlpanel/dashboard.html")
+          (Uri.of_string "/s/dashboard.html")
     | `Nope ->
         redirect'
-          (Uri.of_string "/index.html#bad-pass")
+          (Uri.of_string "/index.html")
   end)
 
 let get_user_devices_handler = (fun req ->
@@ -387,13 +387,22 @@ let static_controlpanel_handler =
   (fun req ->
     let path =
       splat req
+      |> List.rev
       |> List.fold_left
           (fun acc x ->
+            let x =
+              ExtString.String.replace_chars
+                (function
+                  | '/' -> ""
+                  | c -> String.make 1 c)
+                x
+            in
             Filename.concat acc x)
           ""
     in
-    let%lwt _ = Lwt_io.printf "Splat param: %s\n" path in
-    let%lwt body = read_file ("../static/controlpanel", path) in
+    let%lwt _ = Lwt_io.printf "Splat param: \"%s\"\n" path in
+    let prefix = Filename.concat (Unix.getcwd ()) "../client/controlpanel" in
+    let%lwt body = read_file (prefix, path) in
     `String body
     |> respond')
 
@@ -458,7 +467,7 @@ let _ =
     set_signal 3 (Signal_handle plantpi_handle_signal);
     set_signal 15 (Signal_handle plantpi_handle_signal););
   let static_login =
-    Middleware.static ~local_path:"../client/login" ~uri_prefix:"/a/"
+    Middleware.static ~local_path:"../client/login" ~uri_prefix:"/a"
   in
   let auth_filter = Rock.Middleware.filter middleware_auth in
   let service_login = post "/login" login_handler in
@@ -471,12 +480,21 @@ let _ =
   let service_get_user_groups = get "/get-groups/:username" (auth_filter get_user_groups_handler) in
   let service_rename_group = get "/rename-group" (auth_filter rename_group_handler) in
   let service_delete_group = get "/delete-group" (auth_filter delete_group_handler) in
-  let service_move_group = get "/change-group" (auth_filter move_group_handler) in
+  let service_move_group = post "/change-group" (auth_filter move_group_handler) in
   let service_static_no_auth = middleware static_login in
-  let service_static_auth = get "/s/**" (auth_filter static_controlpanel_handler) in
+  let service_static_auth1 = get "/s/*" (auth_filter static_controlpanel_handler) in
+  let service_static_auth2 = get "/s/*/*" (auth_filter static_controlpanel_handler) in
+  let service_static_auth3 = get "/s/*/*/*" (auth_filter static_controlpanel_handler) in
+  let service_static_auth4 = get "/s/*/*/*/*" (auth_filter static_controlpanel_handler) in
+  let service_static_auth5 = get "/s/*/*/*/*/*" (auth_filter static_controlpanel_handler) in
+  let service_index = get "/index.html" (fun _ -> redirect' (Uri.of_string "/a/index.html")) in
   App.empty
   |> service_static_no_auth
-  |> service_static_auth
+  |> service_static_auth1
+  |> service_static_auth2
+  |> service_static_auth3
+  |> service_static_auth4
+  |> service_static_auth5
   |> service_create_account
   |> service_login
   |> service_create_group
@@ -488,4 +506,5 @@ let _ =
   |> service_rename_group
   |> service_delete_group
   |> service_move_group
+  |> service_index
   |> App.run_command

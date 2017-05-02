@@ -34,21 +34,12 @@ end
 
 let lwt_memoize f max =
   let memos = Hashtbl.create 32 in
-  let eles = ref [] in
   fun x ->
     try
       let y = Hashtbl.find memos x in
-      let after = List.after !eles x in
-      let before = List.before !eles x in
-      eles := before @ ((List.hd after) :: x :: (List.tl after));
       Lwt.return y
     with
       | Not_found ->
           let%lwt y = f x in
           Hashtbl.add memos x y;
-          if Hashtbl.length memos > max
-          then begin
-            eles := List.tl !eles;
-          end;
-          eles := x :: !eles;
           Lwt.return y
