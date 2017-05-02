@@ -309,12 +309,16 @@ type group_operation_request =
 [@@deriving yojson]
 
 let move_group_handler = (fun req ->
-  Cohttp_lwt_body.to_string
-    req.Opium_rock.Request.body
-  >>= fun body ->
-  let Ok(params) =
-    Yojson.Safe.from_string body
-    |> group_operation_request_of_yojson
+  let%lwt body =
+    Cohttp_lwt_body.to_string
+      req.Opium_rock.Request.body
+  in
+  let params =
+    match group_operation_request_of_yojson (Yojson.Safe.from_string body) with
+      | Ok x ->
+          x
+      | Error s ->
+          raise (Failure "Problem decoding change-group parameters: %s")
   in
   let username =
     match Cohttp.Header.get (Request.headers req) "Cookie" with
