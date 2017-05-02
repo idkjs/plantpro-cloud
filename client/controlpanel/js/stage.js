@@ -2,6 +2,23 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2)
+        return parts.pop().split(";").shift();
+}
+
+function hex2a(hexx) {
+    var hex = hexx.toString();
+    var str = "";
+    for (var i = 0; i < hex.length; i += 2)
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+}
+
+var username = hex2a(getCookie("username"));
+
 class Stageable extends React.Component {
     constructor(props) {
         super(props);
@@ -44,7 +61,7 @@ class Stage extends React.Component {
             var base = (/^(.*)\..*$/g).exec(path)[1];
             console.log("base: " + base);
             console.log(this.state.stageables);
-            for (var i = 0; i < this.state.stageables.length; i++) {
+            for (i = 0; i < this.state.stageables.length; i++) {
                 var rt = this.state.stageables[i].props.route;
                 console.log("checking " + rt);
                 if (rt == base) {
@@ -87,11 +104,11 @@ class PlantDetailView extends Stageable {
 class AllPlantsView extends Stageable {
     constructor(props) {
         super(props);
-        this.state['plants'] = [];
-        this.state['props'] = props;
+        this.state["plants"] = [];
+        this.state["props"] = props;
     }
     componentDidMount() {
-        var url = `/get-devices/${this.state.props.username}/${encodeURIComponent('all')}`;
+        var url = `/get-devices/${this.state.props.username}/${encodeURIComponent("all")}`;
         axios.get(url)
             .then(res => {
                 var plants = [];
@@ -116,11 +133,9 @@ class AllPlantsView extends Stageable {
                 {
                     this.state.plants.map((plant) =>
                         {
-                            var id = plant.id;
-                            return (<li onClick={() => { window.location = "#plant." + id }}>
-                                        {plant.name}
-                                    </li>);
-                        })
+                        var id = plant.id;
+                        return (<li onClick={() => { window.location = "#plant." + id ;}}>{plant.name}</li>);
+                    })
                 }
             </ul>);
     }
