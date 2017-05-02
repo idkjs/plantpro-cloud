@@ -6,11 +6,11 @@ CREATE TABLE IF NOT EXISTS users (
         id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
         name varchar(256) NOT NULL,
-        email varchar(256) NOT NULL,
-        user_name varchar(256) NOT NULL,
+        email varchar(256) NOT NULL UNIQUE,
+        user_name varchar(256) NOT NULL UNIQUE,
         salt varchar(256) NOT NULL,
-        p_hash text NOT NULL
-        CONSTRAINT uc_user UNIQUE (email, user_name)
+        p_hash text NOT NULL,
+        CONSTRAINT uc_user UNIQUE (email, user_name),
         int is_verified);
 //setting data
 INSERT INTO users(creation_time, name, email, user_name, salt, p_hash, is_verified)
@@ -26,8 +26,9 @@ _______________________________________________________________________________
 // create table
 CREATE TABLE group (
         group_id int PRIMARY KEY AUTOINCREMENT,
-        group_name varchar(256) NOT NULL,
         owner_id int,
+        group_name varchar(256) NOT NULL, 
+        CONSTRAINT c_gname UNIQUE (owner_id, group_name),
         FOREIGN KEY(owner_id) REFERENCES users(id));
 //setting data
 INSERT INTO temp(group_name, owner_id)
@@ -53,29 +54,28 @@ CREATE TABLE IF NOT EXISTS devices (
         device_id int PRIMARY KEY AUTOINCREMENT,
         creation_time varchar(256) NOT NULL,
         name varchar(256) NOT NULL,
+        group_name varchar(256) NOT NULL,
+        CONSTRAINT d_gname UNIQUE (owner_id, name),
+        device_code varchar(256) NOT NULL,
         owner_id int,
         group_id int,
         FOREIGN KEY(owner_id) REFERENCES users(id)
         FOREIGN KEY(group_id) REFERENCES group(group_id));
 //setting data with group
-INSERT INTO users(creation_time, name, owner_id, group_id)
-        VALUES(%s, %s, %d, $d);
-        
-//setting data
-INSERT INTO users(creation_time, name, owner_id, group_id)
-        VALUES(%s, %s, %d, %d);
+INSERT INTO devices(creation_time, name, device_code, owner_id, group_id)
+        VALUES(%s, %s, %s, %d, $d);
         
 //getting data by device id
-        SELECT device_id, name, owner_id FROM devices WHERE device_id = %d;
+        SELECT device_id, name, device_code, owner_id FROM devices WHERE device_id = %d;
         
 //getting data by owner_id
-        SELECT device_id, name, owner_id FROM devices WHERE owner_id = %d;
+        SELECT device_id, name, device_code, owner_id FROM devices WHERE owner_id = %d;
         
 //getting data by device name
-        SELECT device_id, name, owner_id FROM devices WHERE name = %s;
+        SELECT device_id, name, device_code, owner_id FROM devices WHERE name = %s;
         
 //getting data by group_id
-        SELECT device_id, name, owner_id FROM devices WHERE group_id = %d;
+        SELECT device_id, name, device_code, owner_id FROM devices WHERE group_id = %d;
         
 // removing data
         DELETE from devices WHERE device_id = %d;
@@ -83,6 +83,8 @@ INSERT INTO users(creation_time, name, owner_id, group_id)
         DELETE from devices WHERE group_id = %d;
         
         DELETE from devices WHERE owner_id = %d;
+        
+        DELETE from devices WHERE device_code = %d;
 _______________________________________________________________________________
 // verified table
 // create table
@@ -115,19 +117,21 @@ _______________________________________________________________________________
 // create table
 CREATE TABLE IF NOT EXISTS data (
     data_id int PRIMARY KEY AUTOINCREMENT,
-    timestamp --timestamp is "propper sql", not a string
+    data_time varchar(256),
     owner_id int,
     group_id int,
-    device_id int, --device_id varchar(256) NOT NULL,
-    FOREIGN KEY(owner_id) REFERENCES users(id)
-    FOREIGN KEY(group_id) REFERENCES group(group_id)
-    FOREIGN KEY(device_id) REFERENCES device(device_id)
+    device_id int,
+    device_code varchar(256) NOT NULL,
+    FOREIGN KEY(owner_id) REFERENCES users(id),
+    FOREIGN KEY(group_id) REFERENCES group(group_id),
+    FOREIGN KEY(device_id) REFERENCES device(device_id),
+    FOREIGN KEY(device_code) REFERENCES device(device_code),
     sensor_type ENUM('temperature', 'light', 'water'),
     json varchar(1024) NOT NULL); --not sure if 1024 is big enough
 
 //setting data    
-INSERT INTO data (owner_id, group_id, device_id, sensor_type, json)
-    VALUES(%d, %d, %d, %s, %s);
+INSERT INTO data (owner_id, group_id, device_id, device_code, sensor_type, json)
+    VALUES(%d, %d, %d, %s, %s, %s);
 
 //getting json
 Select timestamp, json FROM data WHERE data_id = %d;
@@ -140,14 +144,18 @@ Select timestamp, json FROM data WHERE device_id = %d;
 
 Select timestamp, json FROM data WHERE sensor_type = %s;
 
+Select timestamp, json FROM data WHERE device_code = %s;
+
 //getting all data
-Select data_id, timestamp, owner_id, group_id, device_id, sensor_type, json FROM data WHERE data_id = %d;
+Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE data_id = %d;
 
-Select data_id, timestamp, owner_id, group_id, device_id, sensor_type, json FROM data WHERE owner_id = %d;
+Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE owner_id = %d;
 
-Select data_id, timestamp, owner_id, group_id, device_id, sensor_type, json FROM data WHERE group_id = %d;
+Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE group_id = %d;
 
-Select data_id, timestamp, owner_id, group_id, device_id, sensor_type, json FROM data WHERE device_id = %d;
+Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_id = %d;
+
+Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_code = %s;
 
 _______________________________________________________________________________
 // temperature table
