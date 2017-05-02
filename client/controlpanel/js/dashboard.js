@@ -53,8 +53,8 @@ class ChangeGroup extends React.Component {
         var url = "/change-group";
         console.log("remove from group");
         axios.post(url, /* rm from group... changing group to None */
-            { plant:this.state.props.plant.id,
-              group: null
+            {   plant:this.state.props.plant.id,
+                group: null
             });
         console.log("add plant to group id: " + this.state.newGroup.id);
         axios.post(url, /* add to group ... Some */
