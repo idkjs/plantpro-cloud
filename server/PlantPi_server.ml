@@ -304,9 +304,9 @@ let associate_device_handler = (fun req ->
 
 type group_operation_request =
   { plant: string
-  ; group: int option
+  ; group: int option [@default None]
   }
-[@@deriving yojson]
+[@@deriving yojson {strict = false}]
 
 let move_group_handler = (fun req ->
   let%lwt body =
@@ -318,7 +318,11 @@ let move_group_handler = (fun req ->
       | Ok x ->
           x
       | Error s ->
-          raise (Failure "Problem decoding change-group parameters: %s")
+          raise (
+            Failure (
+              Printf.sprintf
+                "Problem decoding change-group parameters: %s"
+                s))
   in
   let username =
     match Cohttp.Header.get (Request.headers req) "Cookie" with
