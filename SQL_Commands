@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS verif (
         expiration_time varchar(128) NOT NULL,
         verif_hash varchar(256) NOT NULL,
         FOREIGN KEY(verif_name) REFERENCES users(user_name));
-        FOREIGN KEY(owner_id) REFERENCES users(owner_id));
+        FOREIGN KEY(owner_id) REFERENCES users(id));
         
 //setting data entry
         INSERT INTO verif(owner_id, verif_name, expiration_time, verif_hash)
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS data (
     FOREIGN KEY(device_id) REFERENCES device(device_id),
     FOREIGN KEY(device_code) REFERENCES device(device_code),
     sensor_type ENUM('temperature', 'light', 'water'),
-    json varchar(1024) NOT NULL); --not sure if 1024 is big enough
+    json varchar(4096) NOT NULL); --4KB
 
 //setting data    
 INSERT INTO data (owner_id, group_id, device_id, device_code, sensor_type, json)
@@ -158,6 +158,7 @@ Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_ty
 Select data_id, timestamp, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_code = %s;
 
 _______________________________________________________________________________
+// LEGACY
 // temperature table
 // create table
 CREATE TABLE IF NOT EXISTS temp (
@@ -180,6 +181,7 @@ INSERT INTO temp(creation_time, data, temp_unit, device_id)
 // removing data
         DELETE from temp WHERE temp_id = %d;
 _______________________________________________________________________________
+// LEGACY
 // light table
 // create table
 CREATE TABLE IF NOT EXISTS light (
@@ -201,6 +203,7 @@ INSERT INTO light(creation_time, data, device_id)
 // removing data
         DELETE from light WHERE light = %d;
 _______________________________________________________________________________
+// LEGACY
 // water table
 // create table
 CREATE TABLE IF NOT EXISTS water (
