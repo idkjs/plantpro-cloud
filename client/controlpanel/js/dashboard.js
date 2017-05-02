@@ -1,4 +1,5 @@
 require("./usernameRender.js");
+require("./stage.js");
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
@@ -306,8 +307,6 @@ class GroupsListing extends React.Component {
     }
 }
 
-
-
 function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
@@ -324,6 +323,11 @@ function hex2a(hexx) {
 }
 
 var username = hex2a(getCookie("username"));
+
+
+//main_stage.addStageable(<PlantDetailView route="plant" />);
+
+console.log("a");
 
 ReactDOM.render(
   <GroupsListing username={username} />,
