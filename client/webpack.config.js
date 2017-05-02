@@ -6,7 +6,6 @@ module.exports = {
     allgroup: __dirname + '/controlpanel/lib/allgroups.js',
     allplants: __dirname + '/controlpanel/lib/allplants.js',
     login: __dirname + '/controlpanel/lib/login.js',
-    stage: __dirname + '/controlpanel/lib/stage.js',
   },
   output: {
     path: __dirname + '/controlpanel/dist/',
