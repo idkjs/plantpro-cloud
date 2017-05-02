@@ -284,8 +284,8 @@ class GroupsListing extends React.Component {
                 this.state.groups.map((group) => {
                     return(
                         <li className="dropdown keep-open menuElement" key={group.id} >
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown">{group.name} <span className="caret"></span></a>
-                            <ul className="menuDrop dropdown-menu keep-open" role="menu">
+                            <a href="#" className="dropdown-toggle" data-toggle="collapse" data-target={"#iWillGenerateIDwithReactIfIwantChris"+group.id}>{group.name} <span className="caret"></span></a>
+                            <ul className="menuDrop dropdown-menu keep-open" role="menu" id={"iWillGenerateIDwithReactIfIwantChris"+group.id}>
                                 <PlantListing username={this.state.props.username} group={group} />
                             </ul>
                         </li>
