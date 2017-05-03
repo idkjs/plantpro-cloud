@@ -1,32 +1,30 @@
-//please foward me any errors ASAP, it's fairly difficutl to test this. 
+//please foward me any errors ASAP, it's fairly difficult to test this. 
 //Preliminaries and looking at is sudjest this works, but I am not 100%.
 // users table
 // create table
 CREATE TABLE IF NOT EXISTS users (
-        id int PRIMARY KEY AUTOINCREMENT,
-        creation_time varchar(256) NOT NULL,
-        name varchar(256) NOT NULL,
-        email varchar(256) NOT NULL UNIQUE,
-        user_name varchar(256) NOT NULL UNIQUE,
-        salt varchar(256) NOT NULL,
-        p_hash text NOT NULL,
-        CONSTRAINT uc_user UNIQUE (email, user_name),
-        int is_verified);
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          is_verified INTEGER,
+          creation_time VARCHAR(256) NOT NULL,
+          email VARCHAR(256) NOT NULL UNIQUE,
+          user_name varchar(256) NOT NULL UNIQUE,
+          salt VARCHAR(256) NOT NULL,
+          p_hash VARCHAR(256) NOT NULL);
 //setting data
-INSERT INTO users(creation_time, name, email, user_name, salt, p_hash, is_verified)
-        VALUES(%s, %s, %s, %s, %s, %s, %d);
+INSERT INTO users(creation_time, email, user_name, salt, p_hash, is_verified)
+        VALUES(%s, %s, %s, %s, %s, %d);
         
 //getting data
-        SELECT creation_time , name , email , user_name , salt , p_hash , is_verified FROM users;
+        SELECT creation_time , email , user_name , salt , p_hash , is_verified FROM users;
         
 // removing data
         DELETE from users WHERE id = %d;
 _______________________________________________________________________________
 // group table
 // create table
-CREATE TABLE group (
-        group_id int PRIMARY KEY AUTOINCREMENT,
-        owner_id int,
+CREATE TABLE groups (
+        group_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        owner_id INTEGER NOT NULL, 
         group_name varchar(256) NOT NULL, 
         CONSTRAINT c_gname UNIQUE (owner_id, group_name),
         FOREIGN KEY(owner_id) REFERENCES users(id));
@@ -51,27 +49,27 @@ _______________________________________________________________________________
 // devices table
 // create table
 CREATE TABLE IF NOT EXISTS devices (
-        device_id int PRIMARY KEY AUTOINCREMENT,
+        device_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        owner_id INTEGER NOT NULL, 
         creation_time varchar(256) NOT NULL,
         name varchar(256) NOT NULL,
         group_name varchar(256) NOT NULL,
-        CONSTRAINT d_gname UNIQUE (owner_id, name),
         device_code varchar(256) NOT NULL,
-        owner_id int,
-        group_id int,
+        group_id INTEGER,
+        UNIQUE (owner_id, name),
         FOREIGN KEY(owner_id) REFERENCES users(id)
-        FOREIGN KEY(group_id) REFERENCES group(group_id));
+        FOREIGN KEY(group_id) REFERENCES groups(group_id));
 //setting data with group
 INSERT INTO devices(creation_time, name, device_code, owner_id, group_id)
         VALUES(%s, %s, %s, %d, $d);
         
-//getting data by device id
+//getting data by devices id
         SELECT device_id, name, device_code, owner_id FROM devices WHERE device_id = %d;
         
 //getting data by owner_id
         SELECT device_id, name, device_code, owner_id FROM devices WHERE owner_id = %d;
         
-//getting data by device name
+//getting data by devices name
         SELECT device_id, name, device_code, owner_id FROM devices WHERE name = %s;
         
 //getting data by group_id
@@ -89,8 +87,8 @@ _______________________________________________________________________________
 // verified table
 // create table
 CREATE TABLE IF NOT EXISTS verif (
-        verif_id int PRIMARY KEY AUTOINCREMENT,
-        owner_id int,
+        verif_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        owner_id INTEGER NOT NULL,
         verif_name varchar(128) NOT NULL,
         expiration_time varchar(128) NOT NULL,
         verif_hash varchar(256) NOT NULL,
@@ -116,18 +114,18 @@ _______________________________________________________________________________
 // data table
 // create table
 CREATE TABLE IF NOT EXISTS data (
-    data_id int PRIMARY KEY AUTOINCREMENT,
+    data_id INTEGER PRIMARY KEY AUTOINCREMENT,
     data_time varchar(256) NOT NULL,
-    owner_id int NOT NULL,
-    group_id int,
-    device_id int NOT NULL,
+    owner_id INTEGER NOT NULL,
+    group_id INTEGER,
+    device_id INTEGER NOT NULL,
     device_code varchar(256) NOT NULL,
+    sensor_type varchar(256) NOT NULL,
+    json varchar(4096) NOT NULL,
     FOREIGN KEY(owner_id) REFERENCES users(id),
-    FOREIGN KEY(group_id) REFERENCES group(group_id),
-    FOREIGN KEY(device_id) REFERENCES device(device_id),
-    FOREIGN KEY(device_code) REFERENCES device(device_code),
-    sensor_type ENUM('temperature', 'light', 'water'),
-    json varchar(4096) NOT NULL); --4KB
+    FOREIGN KEY(group_id) REFERENCES groups(group_id),
+    FOREIGN KEY(device_id) REFERENCES devices(device_id),
+    FOREIGN KEY(device_code) REFERENCES devices(device_code));
 
 //setting data    
 INSERT INTO data (owner_id, group_id, device_id, device_code, data_time, sensor_type, json)
