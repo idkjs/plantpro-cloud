@@ -10,7 +10,7 @@ class Plant {
 
 class Group {
     constructor(pp, id, name, owner_id) {
-        this.pp = pp;
+        this.pp = pp;x
         this.id = id;
         this.name = name;
         this.owner_id = owner_id;
