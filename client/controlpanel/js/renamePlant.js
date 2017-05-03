@@ -32,4 +32,4 @@ class RenamePlant extends React.Component {
 
 module.exports = {
     RenamePlant: RenamePlant
-}
+};

@@ -10,7 +10,7 @@ class Plant {
 
 class Group {
     constructor(pp, id, name, owner_id) {
-        this.pp = pp;x
+        this.pp = pp;
         this.id = id;
         this.name = name;
         this.owner_id = owner_id;
@@ -19,13 +19,12 @@ class Group {
     getPlants() {
         var gn = encodeURIComponent(this.name);
         var url = `get-devices/${this.pp.username}/${gn}`;
-        return
-            axios
-                .get(url)
-                .then(res => {
-                    var plants = res.data;
-                    return plants;
-                });
+        axios
+            .get(url)
+            .then(res => {
+                var plants = res.data;
+                return plants;
+            });
     }
 }
 
@@ -51,14 +50,12 @@ class PlantPi {
     getGroups() {
         var slf = this;
         var url = `/get-groups/${this.state.props.username}`;
-        return
-            axios
-                .get(url)
-                .then(res => {
-                    var groups = res.data;
-                    groups = groups.map((g) => {
-                        new Group(slf, g.id, g.name, g.owner_id)});
-                    return groups});
+        axios
+            .get(url)
+            .then(res => {
+                var groups = res.data;
+                groups = groups.map((g) => {new Group(slf, g.id, g.name, g.owner_id);});
+                return groups;});
     }
 }
 

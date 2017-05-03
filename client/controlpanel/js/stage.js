@@ -259,7 +259,7 @@ class SingleGroupView extends React.Component {
         super(props);
         console.log(this.state);
         this.state = {};
-        this.state['props'] = props;
+        this.state["props"] = props;
     }
 
     componentDidMount() {
@@ -274,7 +274,7 @@ class SingleGroupView extends React.Component {
                     plants.push(p);
                 }
                 var state = this.state;
-                state['plants'] = plants;
+                state["plants"] = plants;
                 this.setState(state);
             });
     }
@@ -290,8 +290,8 @@ class SingleGroupView extends React.Component {
 class AllGroupsView extends Stageable {
     constructor(props) {
         super(props);
-        this.state['groups'] = [];
-        this.state['props'] = {
+        this.state["groups"] = [];
+        this.state["props"] = {
             username: props.username
         };
     }
@@ -303,13 +303,13 @@ class AllGroupsView extends Stageable {
                 var groups = res.data;
                 console.log(groups);
                 var state = this.state;
-                state['groups'] = groups;
+                state["groups"] = groups;
                 console.log("setting groups ");
                 console.log(groups);
                 this.setState(state);});
     }
     render() {
-        var groups = this.state['groups'].map((group) =>
+        var groups = this.state["groups"].map((group) =>
             {   return (
                     <li>
                         <SingleGroupView group={{name: group.name}} username={this.state.props.username} />
@@ -326,10 +326,10 @@ console.log("a");
 var main_stage =
     <Stage
         stageables={
-            [ <PlantsListing group={{name: "all", id: null}} username={username} route="" />
+        [   <PlantsListing group={{name: "all", id: null}} username={username} route="" />
             , <PlantDetailView route="plant" />
             , <AllGroupsView route="groups" username={username} />
-            ]
+        ]
         } />;
 
 console.log(main_stage);
