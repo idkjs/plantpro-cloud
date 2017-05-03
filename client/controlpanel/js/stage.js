@@ -253,7 +253,7 @@ class SinglePlantView extends Stageable {
     }
 
     onUpdate() {
-        fetchData();
+        this.fetchData();
         this.props.onUpdate();
     }
 
@@ -407,7 +407,7 @@ class SingleGroupView extends React.Component {
                 .then(res => {
                     console.log("Should've just deleted a group");
                     console.log(res);
-                    onUpdate();
+                    this.onUpdate();
                 });
         }
     }
@@ -491,7 +491,7 @@ class AllPlants extends Stageable {
 
     onUpdate() {
         plantPi
-            .getPlants()
+            .getPlants("all")
             .then(plants => {
                 console.log("onUpdate");
                 console.log(plants);

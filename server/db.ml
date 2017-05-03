@@ -132,7 +132,7 @@ let add_data time device_id sensor_type value =
     [%sqlc "INSERT INTO px(time, device_id, sensor_type, value) \
             VALUES(%s, %s, %s, %s)"]
     (CalendarLib.Printer.Calendar.to_string time)
-    (B64.decode device_id)
+    device_id
     sensor_type
     value
 
@@ -259,7 +259,7 @@ let associate_device user device name =
     db
     [%sqlc "INSERT INTO devices(user_id, device_id, name) VALUES(%d, %s, %s)"]
     id
-    device
+    (B64.decode device)
     name
 
 let get_devices user : Device.t list Lwt.t =
