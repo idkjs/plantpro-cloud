@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import {plantPi} from "./plantPi.js";
 
 class ChangeGroup extends React.Component {
     constructor(props) {
@@ -16,17 +17,19 @@ class ChangeGroup extends React.Component {
     handleChange(event) {
         this.setState({newGroup: event.target.value});
     }
+
     handleSubmit() {
         var url = "/change-group";
         console.log("remove from group");
+        console.log(this.state);
         axios.post(url, /* rm from group... changing group to None */
             { plant:this.state.props.plant.id
-            , group: ["None"]
+            , group: null
             });
-        console.log("add plant to group id: " + this.state.newGroup.id);
+        console.log("add plant to group id: " + this.state.newGroup);
         axios.post(url, /* add to group ... Some */
             {  plant:this.state.props.plant.id
-             , group: ["Some", this.state.newGroup.id]
+             , group: parseInt(this.state.newGroup)
             })
         .then(res => {
             var style = {
@@ -35,17 +38,17 @@ class ChangeGroup extends React.Component {
             this.setState({
                 response: res.status,
                 props: this.state.props,
-                outputTray: <span style={style}>Done!</span>});})
-            .catch(res => {
-                var style = {
-                    color: "red",
-                    paddingLeft: "1.5em"
-                };
-                this.setState({
-                    response: 200,
-                    props: this.state.props,
-                    outputTray: <span style={style}>Failed!</span>
-                });});
+                outputTray: <span style={style}>Done!</span>});
+            this.props.onUpdate();})
+        .catch(res => {
+            var style = {
+                color: "red",
+                paddingLeft: "1.5em"
+            };
+            this.setState({
+                response: 200,
+                props: this.state.props,
+                outputTray: <span style={style}>Failed!</span>});});
     }
 
     componentDidMount() {
@@ -61,12 +64,12 @@ class ChangeGroup extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <select value={this.state.value} onChange={this.handleChange}>
-                    <option value="" disabled defaultValue>Select a new group</option>
+                <select onChange={this.handleChange}>
+                    <option value="ungrouped" defaultValue>Ungrouped</option>
                     {
                         this.state.groups.map((group) => {
                             return (
-                                <option key={group.id} value={group}>{group.name}</option>
+                                <option key={group.id} value={group.id}>{group.name}</option>
                             );
                         })
                     }

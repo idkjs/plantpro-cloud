@@ -16,7 +16,7 @@ div.flexContainer {
     flex-direction: row;
     align-items: stretch;
     align-content: stretch;
-    height: 100%;
+    min-height: 100%;
 }
 
 /*-----------------------------Nav Bar-------------------------------------------*/
@@ -52,12 +52,10 @@ div.flexContainer {
 /*-------------------------------Begin Sidebar-------------------------------------------*/
 
 #sidebar {
-    z-index: 1000;
     width: inherit;
     min-width: 250px;
     max-width: 250px;
     background-color:#232323;
-    float: left;
     overflow-y: auto;
     overflow-x: auto;
     border-right: none;
@@ -209,9 +207,9 @@ select {
 /*-------------------------Begin Stage------------------------*/
 
 #stage {
-    height:100%;
     overflow:auto;
     position: auto;
+    flex-grow: 9;
 }
 
 #panel{
