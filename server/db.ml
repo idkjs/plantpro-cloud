@@ -132,7 +132,7 @@ let add_data time device_id sensor_type value =
     [%sqlc "INSERT INTO px(time, device_id, sensor_type, value) \
             VALUES(%s, %s, %s, %s)"]
     (CalendarLib.Printer.Calendar.to_string time)
-    device_id
+    (B64.decode device_id)
     sensor_type
     value
 
