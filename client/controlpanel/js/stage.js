@@ -23,6 +23,72 @@ function hex2a(hexx) {
 
 var username = hex2a(getCookie("username"));
 
+class CreateGroup extends React.Component {
+    constructor(props) {
+        super(props);
+        this.setNewGroupName = this.setNewGroupName.bind(this);
+        this.pushGroup = this.pushGroup.bind(this);
+        this.state = {
+            newGroupName: "undefined",
+            resultTray: <div></div>
+        };
+    }
+
+    setNewGroupName(ev) {
+        var state = this.state;
+        state.newGroupName = ev.target.value;
+        this.setState(state);
+    }
+
+    pushGroup() {
+        console.log(plantPi);
+        plantPi
+            .createGroup(this.state.newGroupName)
+            .then(code => {
+                var style = {
+                    color: (code === 200) ? "green" : "red"
+                };
+                var msg =
+                    (code === 200) ? "OK" : ("error code " + code);
+                this.setState(
+                    {resultTray: <div style={style}>{msg}</div>});
+            });
+        /*axios
+            .post(url, params)
+            .then(res => {
+                console.log(res);
+                var state = this.state;
+                var style = {
+                    color: "green"
+                };
+                state.resultTray = (<div style={style}>Success!</div>);
+                this.setState(state);
+            })
+            .catch(res => {
+                var state = this.state;
+                state.resultTray = (
+                    <div style={{color: "red"}}>
+                        Failure
+                    </div>);
+                this.setState(state);
+            });*/
+    }
+
+    render() {
+        return (
+            <div>
+                <input
+                    type="text"
+                    onChange={this.setNewGroupName} />
+                <button onClick={this.pushGroup}>
+                    Create Group
+                </button>
+                {this.state.resultTray}
+            </div>
+        );
+    }
+}
+
 class Stageable extends React.Component {
     constructor(props) {
         super(props);
@@ -263,19 +329,10 @@ class SingleGroupView extends React.Component {
     }
 
     componentDidMount() {
-        var url = `/get-devices/${this.state.props.username}/${encodeURIComponent(this.state.props.group.name)}`;
-        axios
-            .get(url)
-            .then(res => {
-                var plants = [];
-                var i;
-                for (i = 0; i < res.data.length; i++) {
-                    var p = res.data[i];
-                    plants.push(p);
-                }
-                var state = this.state;
-                state["plants"] = plants;
-                this.setState(state);
+        plantPi
+            .getPlants(this.state.props.group.name)
+            .then(plants => {
+                this.state["plants"] = plants;
             });
     }
     render() {
@@ -315,9 +372,12 @@ class AllGroupsView extends Stageable {
                         <SingleGroupView group={{name: group.name}} username={this.state.props.username} />
                     </li>);});
         return (
-            <ul>
-                {groups}
-            </ul>);
+            <div>
+                <ul>
+                    {groups}
+                </ul>
+                <CreateGroup />
+            </div>);
     }
 }
 

@@ -47,6 +47,7 @@ class PlantPi {
 
         this.username = hex2a(getCookie("username"));
     }
+
     getGroups() {
         var slf = this;
         var url = `/get-groups/${this.state.props.username}`;
@@ -54,8 +55,34 @@ class PlantPi {
             .get(url)
             .then(res => {
                 var groups = res.data;
-                groups = groups.map((g) => {new Group(slf, g.id, g.name, g.owner_id);});
+                groups = groups.map((g) => {new Group(this, g.id, g.name, g.owner_id);});
                 return groups;});
+    }
+
+    getPlants(group = "all") {
+        var groupName = encodeURIComponent(group);
+        var url = `/get-devices/${this.username}/${groupName}`;
+        axios
+            .get(url)
+            .then(res => {
+                return res.data;
+            });
+    }
+
+    createGroup(name) {
+        var url = "/create-group";
+        var params = {
+            user: this.username,
+            groupName: name
+        };
+        axios
+            .post(url, params)
+            .then(res => {
+                return res.code;
+            })
+            .catch(res => {
+                return res.code;
+            });
     }
 }
 
