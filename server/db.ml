@@ -132,7 +132,7 @@ let add_data time device_id sensor_type value =
     [%sqlc "INSERT INTO px(time, device_id, sensor_type, value) \
             VALUES(%s, %s, %s, %s)"]
     (CalendarLib.Printer.Calendar.to_string time)
-    device_id
+    (B64.decode device_id)
     sensor_type
     value
 
@@ -279,7 +279,7 @@ let get_devices user : Device.t list Lwt.t =
 let get_device_by_name name =
   S.select_one_f_maybe
     db
-    (fun (id, name, group_id) -> 
+    (fun (id, name, group_id) ->
       let%lwt group =
         match group_id with
           | Some group_id ->
@@ -295,7 +295,7 @@ let get_device_by_name name =
 let get_device_by_id id =
   S.select_one_f_maybe
     db
-    (fun (id, name, group_id) -> 
+    (fun (id, name, group_id) ->
       let%lwt group =
         match group_id with
           | Some group_id ->
@@ -306,7 +306,7 @@ let get_device_by_id id =
       in
       Lwt.return Device.{id; name; group})
     [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE device_id = %s"]
-    id
+    (B64.decode id)
 
 let get_data device =
   let id = device.Device.id in
