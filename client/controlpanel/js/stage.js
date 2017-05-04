@@ -247,12 +247,12 @@ class DataTableView extends React.Component {
         plantPi
             .getData(this.plant)
             .then(data => {
-                this.state['temps'] =
+                this.state["temps"] =
                     data.data
                     .filter(x => x[0] == "ChirpTemp");
-                this.state['wets'] =
+                this.state["wets"] =
                     data.data.filter(x => x[0] == "ChirpMoisture");
-                this.state['lights'] =
+                this.state["lights"] =
                     data.data.filter(x => x[0] == "ChirpLight");
                 this.setState({data: data.data});
             });
