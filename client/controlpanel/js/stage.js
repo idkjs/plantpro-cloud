@@ -5,7 +5,6 @@ import { plantPi } from "./plantPi.js";
 console.log("In stage.js");
 console.log(plantPi);
 
-import Chart from "react-chartjs";
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
