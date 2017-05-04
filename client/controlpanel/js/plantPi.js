@@ -77,6 +77,8 @@ class PlantPi {
         return (axios
             .get(url)
             .then(res => {
+                console.log("got data");
+                console.log(res);
                 return res;
             }));
     }
