@@ -242,6 +242,7 @@ let get_devices_by_group group =
           | None ->
               Lwt.return None
       in
+      let id = B64.encode id in
       Lwt.return Device.{id; name; group})
     [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE group_id = %d"]
     group.Group.id
@@ -270,9 +271,9 @@ let get_devices user : Device.t list Lwt.t =
       match group_id with
         | Some group_id ->
             let%lwt group = get_group_by_id group_id in
-            Lwt.return Device.{id = id; name = name; group = Some group}
+            Lwt.return Device.{id = B64.encode id; name = name; group = Some group}
         | None ->
-            Lwt.return Device.{id = id; name = name; group = None})
+            Lwt.return Device.{id = B64.encode id; name = name; group = None})
     [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE user_id = %d"]
     id
 
@@ -288,6 +289,7 @@ let get_device_by_name name =
           | None ->
               Lwt.return None
       in
+      let id = B64.encode id in
       Lwt.return Device.{id; name; group})
     [%sqlc "SELECT @s{device_id}, @s{name}, @d?{group_id} FROM devices WHERE name = %s"]
     name
