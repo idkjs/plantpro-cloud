@@ -2,7 +2,6 @@ module Std_list = struct
   include List
 end
 
-
 open Opium.Std
 open Lwt.Infix
 open CalendarLib
@@ -274,9 +273,8 @@ let get_device_data_handler = (fun req ->
   let device = try_unoption device in
   let%lwt data = Db.get_data device in
   let res =
-    [%to_yojson: Device.sensor_reading list] data
+    [%to_yojson: Device.data_packet_payload list] data
   in
-  (*`String device.name*)
   `Json res
   |> respond')
 
@@ -380,7 +378,7 @@ let push_data_handler = (fun req ->
               let%lwt _ =
                 Db.add_data
                   now
-                  (B64.decode packet.Device.device)
+                  packet.Device.device
                   sensor_type
                   (payload
                     |> Device.data_packet_payload_to_yojson

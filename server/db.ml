@@ -316,11 +316,11 @@ let get_data device =
     db
     (fun (time, sensor_type, value) ->
       let time = CalendarLib.Printer.Calendar.from_string time in
-      match sensor_type with
-        | "ChirpTemp" ->
-            Lwt.return (Device.(ChirpTemp (float_of_string value, (ttype_of_string sensor_type), time)))
-        | _ ->
-            raise (Failure ("invalid sensor type found in database: \"" ^ sensor_type ^ "\"")))
+      let json = Yojson.Safe.from_string value in
+      let x = Device.data_packet_payload_of_yojson json in
+      match x with
+        | Ok x ->
+            Lwt.return x)
     [%sqlc "SELECT @s{time}, @s{sensor_type}, @s{value} FROM px WHERE device_id = %s"]
     id
 
