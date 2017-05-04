@@ -269,13 +269,13 @@ class DataTableView extends React.Component {
             rows.push(
                 <tr>
                     <td style={{padding: "5px"}}>
-                        {this.state.temps[i][1]}&deg;C
+                        {this.state.temps[i][1].toFixed(3)}&deg;C
                     </td>
                     <td style={{padding: "5px"}}>
-                        {this.state.wets[i][1]}
+                        {this.state.wets[i][1].toFixed(3)}
                     </td>
                     <td style={{padding: "5px"}}>
-                        {this.state.lights[i][1]}
+                        {this.state.lights[i][1].toFixed(3)}
                     </td>
                 </tr>
             );
@@ -288,9 +288,9 @@ class DataTableView extends React.Component {
             <table style={tStyle}>
                 <tbody>
                     <tr>
-                        <th>Temperatures</th>
-                        <th>Moisture</th>
-                        <th>Light</th>
+                        <th style={{padding: "5px"}}>Temperatures</th>
+                        <th style={{padding: "5px"}}>Moisture</th>
+                        <th style={{padding: "5px"}}>Light</th>
                     </tr>
                     {rows}
                 </tbody>
