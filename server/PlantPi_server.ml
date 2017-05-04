@@ -90,6 +90,14 @@ let create_group_handler = (fun req ->
       params
   in*)
   let%lwt user = Db.get_user username in
+  let () =
+    match String.(lowercase (trim group_name)) with
+      | "ungrouped"
+      | "all" as n ->
+          raise (Failure (n ^ " is a reserved name"))
+      | _ ->
+          ()
+  in
   match%lwt Db.add_group group_name username with
     | res ->
         respond'
@@ -256,9 +264,11 @@ let try_unoption = function
   | None -> raise (Failure "gambled and lost, mate *shrugs*")
 
 let get_device_data_handler = (fun req ->
-  let device_name = param req "device" in
+  let device_id =
+    param req "device"
+  in
   let%lwt device =
-    Db.get_device_by_name device_name
+    Db.get_device_by_id device_id
   in
   let device = try_unoption device in
   let%lwt data = Db.get_data device in
@@ -391,7 +401,7 @@ let static_controlpanel_handler =
     let%lwt body = Lwt_io.read ic in
     Lwt.return body
   in
-  let read_file = Fuck_stdlib.lwt_memoize read_file 128 in
+  (*let read_file = Fuck_stdlib.lwt_memoize read_file 128 in*)
   (fun req ->
     let path =
       splat req
@@ -487,7 +497,7 @@ let _ =
   let service_get_user_devices = get "/get-devices/:username/:group" (auth_filter get_user_devices_handler) in
   let service_get_user_groups = get "/get-groups/:username" (auth_filter get_user_groups_handler) in
   let service_rename_group = get "/rename-group" (auth_filter rename_group_handler) in
-  let service_delete_group = get "/delete-group" (auth_filter delete_group_handler) in
+  let service_delete_group = post "/delete-group" (auth_filter delete_group_handler) in
   let service_move_group = post "/change-group" (auth_filter move_group_handler) in
   let service_static_no_auth = middleware static_login in
   let service_static_auth1 = get "/s/*" (auth_filter static_controlpanel_handler) in

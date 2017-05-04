@@ -1,3 +1,11 @@
+import { RenamePlant } from "./renamePlant.js";
+import { ChangeGroup } from "./changeGroup.js";
+import { plantPi } from "./plantPi.js";
+
+console.log("In stage.js");
+console.log(plantPi);
+
+///import LineChart from "react-chartjs";
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
@@ -18,6 +26,121 @@ function hex2a(hexx) {
 }
 
 var username = hex2a(getCookie("username"));
+
+class CreatePlant extends React.Component {
+    constructor(props) {
+        super(props);
+        this.setNewPlantName = this.setNewPlantName.bind(this);
+        this.setNewPlantId = this.setNewPlantId.bind(this);
+        this.pushPlant = this.pushPlant.bind(this);
+        this.state = {
+            newPlantName: "",
+            resultTray: <div></div>
+        };
+    }
+
+    setNewPlantName(ev) {
+        var state = this.state;
+        state.newPlantName = ev.target.value;
+        this.setState(state);
+    }
+
+    setNewPlantId(ev) {
+        var state = this.state;
+        state.newPlantId = ev.target.value;
+        this.setState(state);
+    }
+
+    pushPlant() {
+        console.log(plantPi);
+        console.log(this.state);
+        var cg = plantPi.createPlant(this.state.newPlantName, this.state.newPlantId);
+        cg
+            .then(code => {
+                var style = {
+                    color: (code === 200) ? "green" : "red"
+                };
+                var msg =
+                    (code === 200) ? "OK" : ("error code " + code);
+                this.setState(
+                    {resultTray: <div style={style}>{msg}</div>});
+            })
+            .then(x => {
+                this.props.onUpdate();
+            });
+    }
+
+    render() {
+        return (
+            <div>
+                <label for="name">name</label>
+                <input
+                    type="text"
+                    onChange={this.setNewPlantName}
+                    name="name" />
+                <label for="id">id</label>
+                <input
+                    type="text"
+                    onChange={this.setNewPlantId}
+                    name="id" />
+                <button onClick={this.pushPlant}>
+                    Create Plant
+                </button>
+                {this.state.resultTray}
+            </div>
+        );
+    }
+}
+
+class CreateGroup extends React.Component {
+    constructor(props) {
+        super(props);
+        this.setNewGroupName = this.setNewGroupName.bind(this);
+        this.pushGroup = this.pushGroup.bind(this);
+        this.state = {
+            newGroupName: "ungrouped",
+            resultTray: <div></div>
+        };
+    }
+
+    setNewGroupName(ev) {
+        var state = this.state;
+        state.newGroupName = ev.target.value;
+        this.setState(state);
+    }
+
+    pushGroup() {
+        console.log(plantPi);
+        var cg = plantPi.createGroup(this.state.newGroupName);
+        cg
+            .then(code => {
+                var style = {
+                    color: (code === 200) ? "green" : "red"
+                };
+                var msg =
+                    (code === 200) ? "OK" : ("error code " + code);
+                this.setState(
+                    {resultTray: <div style={style}>{msg}</div>});
+            })
+            .then(x => {
+                this.props.onUpdate();
+            });
+    }
+
+    render() {
+        return (
+            <div>
+                <input
+                    type="text"
+                    onChange={this.setNewGroupName} />
+                <button onClick={this.pushGroup}>
+                    Create Group
+                </button>
+                {this.state.resultTray}
+            </div>
+        );
+    }
+}
 
 class Stageable extends React.Component {
     constructor(props) {
@@ -57,8 +180,8 @@ class Stage extends React.Component {
         console.log("Handling state change.");
         var path = window.location.hash.substring(1);
         var i = 0;
-        if ((/^(.*)\..*$/g).exec(path) != null) {
-            var base = (/^(.*)\..*$/g).exec(path)[1];
+        if ((/^(.*)(\..*){0,1}$/g).exec(path) != null) {
+            var base = (/^(.*)(\..*){0,1}$/g).exec(path)[1];
             console.log("base: " + base);
             console.log(this.state.stageables);
             for (i = 0; i < this.state.stageables.length; i++) {
@@ -101,50 +224,302 @@ class PlantDetailView extends Stageable {
     }
 }
 
-class AllPlantsView extends Stageable {
+class SinglePlantView extends Stageable {
     constructor(props) {
         super(props);
-        this.state["plants"] = [];
-        this.state["props"] = props;
+        this.state = {
+            collapsed: true
+        };
+        this.handleClick = this.handleClick.bind(this);
+        this.repr = props.plant;
+        this.onUpdate = this.onUpdate.bind(this);
     }
+
+    handleClick(ev) {
+        this.setState({collapsed: !(this.state.collapsed)});
+    }
+
     componentDidMount() {
-        var url = `/get-devices/${this.state.props.username}/${encodeURIComponent("all")}`;
-        axios.get(url)
-            .then(res => {
-                var plants = [];
-                var i;
-                for (i = 0; i < res.data.length; i++) {
-                    var p = res.data[i];
-                    console.log(p);
-                    /*console.log("groupname: " + this.state.props.groupname + "   p.group: " + p.group);*/
-                    if (
-                        (this.state.props.group.name === "all")
-                        || (this.state.props.group.name === "ungrouped" && p.group === null)
-                        || (p.group.name === this.state.props.group.name)) {
-                        plants.push(p);
-                    }
-                }
-                console.log(plants);
-                this.setState({plants: plants});});
+        this.fetchData();
     }
+
+    fetchData() {
+        plantPi
+            .getData(this.repr)
+            .then(data => {
+                this.setState({data: data});
+                console.log(data);});
+        
+    }
+
+    onUpdate() {
+        this.fetchData();
+        this.props.onUpdate();
+    }
+
+    render() {
+        var detail = <span></span>;
+        if (!this.state.collapsed) {
+            /* render more things */
+            console.log(this.state.data);
+            detail =
+                <div>
+                    <ChangeGroup
+                        username={username}
+                        plant={this.repr}
+                        onUpdate={this.onUpdate} />
+                </div>;
+        }
+        return (
+            <div>
+                <div onClick={this.handleClick}>{this.repr.name}</div>
+                {detail}
+            </div>
+        );
+    }
+}
+
+class PlantsListing extends Stageable {
+    constructor(props) {
+        super(props);
+        this.state = {
+            plants: [],
+            props: props,
+            displayStyle: true,
+        };
+        this.showElement = this.showElement.bind(this);
+        this.deletionConfirmation = this.deletionConfirmation.bind(this);
+        this.onUpdate = this.onUpdate.bind(this);
+    }
+
+    onUpdate() {
+        this.updatePlants();
+        if (this.props.onUpdate !== undefined) {
+            this.props.onUpdate();
+        }
+    }
+
+    updatePlants() {
+        var group;
+        if (this.state.props.group === undefined) {
+            group = "ungrouped";
+        } else {
+            group = this.state.props.group;
+        }
+        plantPi
+            .getPlants(group)
+            .then(plants => {
+                this.setState({plants: []});
+                this.setState({plants: plants});
+            });
+    }
+
+    componentDidMount() {
+        this.updatePlants();
+    }
+
+    showElement(ref) {
+        var thing = this.refs[ref].style.display;
+        if (thing === "none")
+            this.refs[ref].style.display = "block";
+        else
+            this.refs[ref].style.display = "none";
+    }
+
+    deletionConfirmation(plant){
+        if (confirm("Are you sure you want to delete plant " + plant.name + " and all of its data?")){
+            //perform delete
+        }
+    }
+
+    render() {
+        var pStyle = {paddingLeft: "25px",};
+        var buttonStyle = {border:"none", backgroundColor:"transparent", paddingTop:"13px",};
+        var divStyle = {display: "none",borderLeft: "solid", borderWidth: "1px", marginLeft: "1em", paddingLeft: "1em"};
+        var ulStyle = {listStyle: "none"};
+        var noBorderStyle = {borderStyle:"none"};
+        var displayNoneStyle = {display: "none"};
+
+        console.log("about to return from PlantsListing.render");
+        console.log(this.state);
+        var plants = this.state.plants;
+        console.log(plants.length);
+
+        if (plants.length === 0) {
+            return (<li style={pStyle}><p>Empty Group</p></li>);
+        }
+        else { return (
+            <div>
+            {
+                plants.map((plant) => {
+                    return (
+                        <SinglePlantView
+                            onUpdate={this.onUpdate}
+                            plant={plant} />
+                        /*<ul style={ulStyle} key={plant.id}>
+                            <li>
+                                <button onClick={()=>this.showElement("settings"+plant.id)}  type="button" className="sets glyphicon glyphicon-cog" style={buttonStyle}></button>
+                                <a href="#">{plant.name}</a>
+                            </li>
+                            <li>
+                                <div ref={"settings"+plant.id} className="content" style={divStyle}>
+                                    <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"Rename")}>Rename</a>
+                                    <div ref={plant.id+"Rename"} style={displayNoneStyle}>
+                                        <RenamePlant username={this.state.props.username} plant={plant} />
+                                    </div>
+                                    <br/>
+
+                                    <a href="#" style={noBorderStyle} onClick={()=>this.showElement(plant.id+"ChangeGroup")}>Change Group</a>
+                                    <div ref={plant.id+"ChangeGroup"} style={displayNoneStyle}>
+                                        <div>
+                                            <ChangeGroup username={this.state.props.username} plant={plant} />
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <div><a href="#" style={noBorderStyle} onClick={()=>this.deletionConfirmation(plant)}>Delete Plant</a></div>
+                                </div>
+                            </li>
+                        </ul>*/
+
+                    );})
+                }
+            </div>
+        );
+        }
+    }
+}
+
+class SingleGroupView extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log(this.state);
+        this.state = {};
+        this.state["props"] = props;
+        this.handleDelete = this.handleDelete.bind(this);
+        this.onUpdate = this.onUpdate.bind(this);
+    }
+
+    handleDelete() {
+        if (confirm("Are you sure you want to delete group " + this.props.group.name)) {
+            plantPi
+                .deleteGroup(this.props.group.name)
+                .then(res => {
+                    console.log("Should've just deleted a group");
+                    console.log(res);
+                    this.onUpdate();
+                });
+        }
+    }
+
+    onUpdate() {
+        this.props.onUpdate();
+    }
+
     render() {
         return (
-            <ul>
-                {
-                    this.state.plants.map((plant) =>
-                        {
-                        var id = plant.id;
-                        return (<li onClick={() => { window.location = "#plant." + id ;}}>{plant.name}</li>);
-                    })
-                }
-            </ul>);
+            <div className="group">
+                <h1>{this.state.props.group.name}</h1>
+                <PlantsListing group={this.state.props.group.name} username={this.props.username} onUpdate={this.onUpdate} />
+                <button onClick={this.handleDelete}>
+                    Delete group
+                </button>
+            </div>);
     }
+}
+
+class AllGroupsView extends Stageable {
+    constructor(props) {
+        super(props);
+        this.state["groups"] = [];
+        this.state["props"] = {
+            username: props.username
+        };
+        this.onUpdate = this.onUpdate.bind(this);
+        this.state["alpha"] = 0;
+    }
+
+    componentDidMount() {
+        plantPi
+            .getGroups()
+            .then(groups => {
+                console.log("onUpdate");
+                console.log(groups);
+                this.setState({groups: []});
+                this.setState({groups: groups});
+                this.setState({alpha: this.state.alpha + 1});});
+    }
+
+    onUpdate() {
+        plantPi
+            .getGroups()
+            .then(groups => {
+                console.log("onUpdate");
+                console.log(groups);
+                this.setState({groups: []});
+                this.setState({groups: groups});
+                this.setState({alpha: this.state.alpha + 1});});
+    }
+
+    render() {
+        var groupNames = this.state.groups;
+        var groups = groupNames.map((group) =>
+            {   return (
+                    <li>
+                        <SingleGroupView group={group} username={this.state.props.username} onUpdate={this.onUpdate} />
+                    </li>);});
+        return (
+            <div>
+                <ul>
+                    {groups}
+                </ul>
+                <CreateGroup onUpdate={this.onUpdate} />
+            </div>);
+    }
+}
+
+class AllPlants extends Stageable {
+    constructor(props) {
+        super(props);
+        this.onUpdate = this.onUpdate.bind(this);
+        this.state["alpha"] = 0;
+    }
+
+    componentDidMount() {
+        this.onUpdate();
+    }
+
+    onUpdate() {
+        plantPi
+            .getPlants("all")
+            .then(plants => {
+                console.log("onUpdate");
+                console.log(plants);
+                this.setState({plants: []});
+                this.setState({plants: plants});
+                this.setState({alpha: this.state.alpha + 1});});
+    }
+
+    render() {
+        return (
+            <div>
+                <PlantsListing plants={this.state.plants} />
+                <CreatePlant onUpdate={this.onUpdate} />
+            </div>);
+    }
+    
 }
 
 console.log("a");
 
 var main_stage =
-    <Stage stageables={[<AllPlantsView group={{name: "all"}} username={username} route="" />, <PlantDetailView route="plant" />]} />;
+    <Stage
+        stageables={
+        [   <AllPlants route="" />
+            , <PlantDetailView route="plant" />
+            , <AllGroupsView route="groups" username={username} />
+        ]
+        } />;
 
 console.log(main_stage);
 

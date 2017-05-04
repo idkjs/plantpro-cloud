@@ -4,10 +4,19 @@ body {
     margin: 0 0 0 0;
     background-color:  #e8e8e8; /*Full page background*/
     color: black;
+    height: 100%;
 }
 html{
     height: 100%;
     font-family: 'Roboto', Helvetica;
+}
+
+div.flexContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: stretch;
+    min-height: 100%;
 }
 
 /*-----------------------------Nav Bar-------------------------------------------*/
@@ -43,19 +52,23 @@ html{
 /*-------------------------------Begin Sidebar-------------------------------------------*/
 
 #sidebar {
-    z-index: 1000;
     width: inherit;
     min-width: 250px;
     max-width: 250px;
     background-color:#232323;
-    float: left;
-    height:100%;
-    position:relative;
-    overflow-y:auto;
-    overflow-x:auto;
-    position: fixed;
+    overflow-y: auto;
+    overflow-x: auto;
     border-right: none;
     border-color: #009b09;
+    display: flex;
+    align-content: stretch;
+    flex-direction: column;
+    flex-grow: 1;
+    color: white;
+}
+
+#sidebar nav {
+    flex-grow: 99;
 }
 
 .nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
@@ -194,16 +207,13 @@ select {
 /*-------------------------Begin Stage------------------------*/
 
 #stage {
-    margin-left: 253px;
-    height:100%;
     overflow:auto;
     position: auto;
-    width: 81%;
+    flex-grow: 9;
 }
 
 #panel{
     width: 100%;
-
 }
 .panel_status{
     padding-left: 2%;
@@ -307,5 +317,16 @@ hr {
 .close:focus {
     color: #000;
     text-decoration: none;
+    cursor: pointer;
+}
+
+div#sidebar div.navButton {
+    padding: 4px;
+    margin: 2px;
+    color: white;
+}
+
+div#sidebar div.navButton:hover {
+    background-color: green;
     cursor: pointer;
 }

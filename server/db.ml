@@ -259,7 +259,7 @@ let associate_device user device name =
     db
     [%sqlc "INSERT INTO devices(user_id, device_id, name) VALUES(%d, %s, %s)"]
     id
-    device
+    (B64.decode device)
     name
 
 let get_devices user : Device.t list Lwt.t =
