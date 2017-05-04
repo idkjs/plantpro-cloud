@@ -88,11 +88,9 @@ function doWork() {
             <!--...........................................................................Side bar ends here..........................................................................-->
             <!--Begin Stage, To play friendly with the side bar, the "stage" must be within the same div-->
             <div id="stage">
-                <div class="col-md-12">
+<!--                <div class="col-md-12">
                     <br/>
-                    <!--Spawn button for sidebar collapse for better resizing compatability-->
                     <p class="visible-xs"> <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left">&nbsp;</i></button> </p>
-                    <!--HEADER PLANT NAME, controled by js script dowork()-->
                     <h1> Let's see how <strong id = "pname"></strong> is doing:</h1> <br/>
 
                     <div id="panel" style="border-style: double; border-width: 2px; border-color: #ccc">
@@ -112,7 +110,6 @@ var moisture = false;
 //Like the temperature is too high, set off the flag, the moisture is too low,
 //set off the flag, light levels are low (for a duration), set off the flag.
 //This is highly dependant on what type of units we are gonna use though.
-//-------------------Determination of attention will go here------------------
 //Temp check
 var faren = (celcius * (9/5) + 32);
 if(faren > 110 || faren < 32){
@@ -200,7 +197,7 @@ else{
                             </ul>
                         </div>
                     </div>
-                </div>
+</div>-->
             </div><!-- End stage and sidebar-->
         </div>
         <script src="dist/dashboard.js"></script>

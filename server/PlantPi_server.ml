@@ -2,7 +2,6 @@ module Std_list = struct
   include List
 end
 
-
 open Opium.Std
 open Lwt.Infix
 open CalendarLib
@@ -274,9 +273,8 @@ let get_device_data_handler = (fun req ->
   let device = try_unoption device in
   let%lwt data = Db.get_data device in
   let res =
-    [%to_yojson: Device.sensor_reading list] data
+    [%to_yojson: Device.data_packet_payload list] data
   in
-  (*`String device.name*)
   `Json res
   |> respond')
 
@@ -380,7 +378,7 @@ let push_data_handler = (fun req ->
               let%lwt _ =
                 Db.add_data
                   now
-                  (B64.decode packet.Device.device)
+                  packet.Device.device
                   sensor_type
                   (payload
                     |> Device.data_packet_payload_to_yojson
@@ -494,7 +492,7 @@ let _ =
   let service_create_account = post "/create-account" create_account_handler in
   let service_create_group = post "/create-group" (auth_filter create_group_handler) in
   let service_associate_device = post "/associate-device" (auth_filter associate_device_handler) in
-  let service_get_device_data = get "/get-data/:device" (auth_filter get_device_data_handler) in
+  let service_get_device_data = get "/get-data/:device" get_device_data_handler in
   let service_get_user_devices = get "/get-devices/:username/:group" (auth_filter get_user_devices_handler) in
   let service_get_user_groups = get "/get-groups/:username" (auth_filter get_user_groups_handler) in
   let service_rename_group = get "/rename-group" (auth_filter rename_group_handler) in

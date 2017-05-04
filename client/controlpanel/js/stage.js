@@ -5,10 +5,13 @@ import { plantPi } from "./plantPi.js";
 console.log("In stage.js");
 console.log(plantPi);
 
-///import LineChart from "react-chartjs";
+import Chart from "react-chartjs";
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+
+console.log(Chart);
+var LineChart = Chart.Line;
 
 function getCookie(name) {
     var value = "; " + document.cookie;
@@ -224,11 +227,83 @@ class PlantDetailView extends Stageable {
     }
 }
 
+class DataTableView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.plant = props.plant;
+        this.state = {
+            wets: [],
+            lights: [],
+            temps: []
+        };
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    fetchData() {
+        console.log("fetching data");
+        plantPi
+            .getData(this.plant)
+            .then(data => {
+                this.state["temps"] =
+                    data.data
+                    .filter(x => x[0] == "ChirpTemp");
+                this.state["wets"] =
+                    data.data.filter(x => x[0] == "ChirpMoisture");
+                this.state["lights"] =
+                    data.data.filter(x => x[0] == "ChirpLight");
+                this.setState({data: data.data});
+            });
+    }
+
+    render() {
+        var i = 0;
+        var rows = [];
+        var mtemps;
+        var mwets;
+        var mlights;
+        console.log(this.state);
+        for (i = 0; i < this.state.temps.length && i < this.state.wets.length && i < this.state.lights.length ; ++i) {
+            rows.push(
+                <tr>
+                    <td style={{padding: "5px"}}>
+                        {this.state.temps[i][1].toFixed(3)}&deg;C
+                    </td>
+                    <td style={{padding: "5px"}}>
+                        {this.state.wets[i][1].toFixed(3)}
+                    </td>
+                    <td style={{padding: "5px"}}>
+                        {this.state.lights[i][1].toFixed(3)}
+                    </td>
+                </tr>
+            );
+        }
+        console.log(rows);
+        var tStyle = {
+            padding: "5px"
+        };
+        return (
+            <table style={tStyle}>
+                <tbody>
+                    <tr>
+                        <th style={{padding: "5px"}}>Temperatures</th>
+                        <th style={{padding: "5px"}}>Moisture</th>
+                        <th style={{padding: "5px"}}>Light</th>
+                    </tr>
+                    {rows}
+                </tbody>
+            </table>);
+    }
+}
+
 class SinglePlantView extends Stageable {
     constructor(props) {
         super(props);
         this.state = {
-            collapsed: true
+            collapsed: true,
+            data: []
         };
         this.handleClick = this.handleClick.bind(this);
         this.repr = props.plant;
@@ -239,21 +314,7 @@ class SinglePlantView extends Stageable {
         this.setState({collapsed: !(this.state.collapsed)});
     }
 
-    componentDidMount() {
-        this.fetchData();
-    }
-
-    fetchData() {
-        plantPi
-            .getData(this.repr)
-            .then(data => {
-                this.setState({data: data});
-                console.log(data);});
-        
-    }
-
     onUpdate() {
-        this.fetchData();
         this.props.onUpdate();
     }
 
@@ -261,13 +322,13 @@ class SinglePlantView extends Stageable {
         var detail = <span></span>;
         if (!this.state.collapsed) {
             /* render more things */
-            console.log(this.state.data);
             detail =
                 <div>
                     <ChangeGroup
                         username={username}
                         plant={this.repr}
                         onUpdate={this.onUpdate} />
+                    <DataTableView plant={this.repr} />
                 </div>;
         }
         return (
