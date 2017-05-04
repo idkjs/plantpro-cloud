@@ -193,9 +193,9 @@ let get_user_groups_handler = (fun req ->
   `Json groups
   |> respond')
 
-let try_unoption = function
+(*let try_unoption = function
   | Some x -> x
-  | None -> raise (Failure "gambled and lost, mate *shrugs*")
+  | None -> raise (Failure "gambled and lost, mate *shrugs*")*)
 
 type rename_group_parameters =
   { old_name: string
