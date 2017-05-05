@@ -22,7 +22,10 @@ build_server:
 
 test_client:
   stage: test
-  script: "echo not yet implemented"
+  script:
+   - ./server/PlantPi_server.native -p 8080 -d &
+   - cd client/tests && npm install . && npm run test
+   - kill -2 PlantPi_server.native
 
 lint_client:
   before_script:
