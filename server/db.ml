@@ -321,7 +321,7 @@ let get_data device =
       match x with
         | Ok x ->
             Lwt.return x)
-    [%sqlc "SELECT @s{time}, @s{sensor_type}, @s{value} FROM px WHERE device_id = %s"]
+    [%sqlc "SELECT @s{time}, @s{sensor_type}, @s{value} FROM px WHERE device_id = %s ORDER BY time"]
     id
 
 let close_db () =
