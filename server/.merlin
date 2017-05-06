@@ -7,3 +7,4 @@ PKG extlib
 PKG calendar
 PKG sqlexpr.ppx
 PKG cryptokit
+PKG ppx_netblob

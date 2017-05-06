@@ -17,6 +17,7 @@ build_server:
   stage: build
   before_script:
    - opam pin add opium https://github.com/chrismamo1/opium.git
+   - opam pin add ppx_netblob https://github.com/chrismamo1/ppx_netblob.git
    - eval `opam config env`
   script: "cd server && opam pin add plantpi ."
 
@@ -56,3 +57,22 @@ lint_server:
   script:
    - cd server
    - bash -c "! ocamlfind ppx_tools/rewriter -ppx 'ocamlfind ocamllint/ppx_lint.native' *.ml | pcregrep -M 'File \".*\", line [0-9]+, characters [0-9]+-[0-9]+.*:.*\n\(ocamllint\) .*'"
+
+test_server:
+  stage: test
+  before_script:
+   - echo '@edge http://dl-4.alpinelinux.org/alpine/edge/main/' >> /etc/apk/repositories
+   - apk update
+   - apk add make m4 ocaml perl build-base gcc zlib-dev opam patch sqlite-dev glib-dev pkgconfig gmp-dev ncurses-dev camlp4 git bash nodejs-npm@edge pcre-tools@edge
+   - export OPAMYES=true
+   - comp=${1:-system}
+   - opam init --comp="${comp}"
+   - opam switch 4.03.0
+   - eval `opam config env`
+   - opam update
+   - opam install camlp4 ocamllint
+   - opam pin add ppx_netblob https://github.com/chrismamo1/ppx_netblob.git
+   - eval `opam config env`
+  script:
+   - cd server
+   - make test
