@@ -48,6 +48,15 @@ module Groups = struct
       ; meth = `Get
       ; format = `Json glist_of_yojson
       }]
+
+  type delete_group_req =
+    { body: string
+    }
+    [@@deriving netblob
+      { url = "http://localhost:8080/delete-group"
+      ; meth = `Post
+      ; format = `Text
+      }]
 end
 
 let get_http_result ?(expect = 200) code body =
@@ -159,6 +168,20 @@ let test_groups cookies =
           `Failure(-1, Printf.sprintf "the server returned malformed JSON: %s" msg)
   in
   let results = ("Analyzing list of groups", result) :: results in
+  let%lwt (code, body, _) = Groups.netblob_post_delete_group_req ~body:"someGroup1" ~cookies () in
+  let%lwt (code, groups, _) = Groups.netblob_get_get_groups_req ~user ~cookies () in
+  let results = ("Deleting a group", get_http_result code body) :: results in
+  let results = ("Getting groups after deleting one of them", get_http_result code body) :: results in
+  let result =
+    match groups with
+      | Ok groups ->
+          if List.length groups = 1
+          then `Ok ""
+          else `Failure(-1, Printf.sprintf "Wrong number of groups in list: %d" (List.length groups))
+      | Error msg ->
+          `Failure(-1, Printf.sprintf "the server returned malformed JSON: %s" msg)
+  in
+  let results = ("Verifying that the deleted group is not there anymore", result) :: results in
   Lwt.return results
 
 let () =
