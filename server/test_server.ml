@@ -36,7 +36,7 @@ let test_account () =
       ~password:"somePassword"
       ()
   in
-  let (k, v) = List.hd cookies in
+  let [k, v] :: _ = cookies in
   let%lwt () = Lwt_io.printf "Body: %s\n" body in
   Lwt.return ()
 
