@@ -40,7 +40,7 @@ let create_account_handler = (fun req ->
       params
   in
   if password1 <> password2
-  then respond' (`String ("passwords do not match: " ^ username))
+  then respond' ~code:`Conflict (`String ("passwords do not match: " ^ username))
   else begin
     try%lwt
       let%lwt _ = Db.get_user username in
