@@ -1,0 +1,4 @@
+EXCLUDE_QUERY_DIR
+B /Users/mando/Github/plantpro-cloud/_esy/default/store/b/test_project-d093164b/default/library/.PlantproCloudLibrary.objs/byte
+S .
+FLG -open PlantproCloudLibrary -w -40

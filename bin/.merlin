@@ -1,0 +1,7 @@
+EXCLUDE_QUERY_DIR
+B /Users/mando/Github/plantpro-cloud/_esy/default/store/b/test_project-d093164b/default/bin/.PlantproCloudApp.eobjs/byte
+B /Users/mando/Github/plantpro-cloud/_esy/default/store/b/test_project-d093164b/default/bin/.PlantproCloudBinPesyModules.objs/byte
+B /Users/mando/Github/plantpro-cloud/_esy/default/store/b/test_project-d093164b/default/library/.PlantproCloudLibrary.objs/byte
+S .
+S ../library
+FLG -open PlantproCloudBinPesyModules -w -40

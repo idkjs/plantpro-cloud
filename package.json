@@ -1,0 +1,49 @@
+{
+  "name": "plantpro-cloud",
+  "version": "0.1.0",
+  "description": "Starter Reason Project",
+  "esy": {
+    "build": "dune build -p #{self.name}",
+    "buildDev": "pesy build",
+    "release": {
+      "rewritePrefix": true,
+      "releasedBinaries": [ "PlantproCloudApp" ]
+    }
+  },
+  "pesy": {
+    "azure-project": "esy-dev/esy",
+    "github": "esy/pesy-reason-template"
+  },
+  "buildDirs": {
+    "library": {},
+    "bin": {
+      "imports": [ "Library = require('plantpro-cloud/library')" ],
+      "bin": { "PlantproCloudApp": "PlantproCloudApp.re" }
+    }
+  },
+  "scripts": { "start": "esy x PlantproCloudApp" },
+  "dependencies": {
+    "@esy-ocaml/reason": "*",
+    "@opam/calendar": "2.04",
+    "@opam/cohttp-lwt-unix": "4.0.0",
+    "@opam/cryptokit": "1.16.1",
+    "@opam/devkit": "1.20210517",
+    "@opam/dune": "*",
+    "@opam/extlib": "1.7.8",
+    "@opam/lwt_ppx": "2.0.2",
+    "@opam/ocamlnet": "4.1.9-1",
+    "@opam/opium": "0.20.0",
+    "@opam/ppx_deriving_yojson": "3.6.1",
+    "@opam/ppx_rapper": "3.0.0",
+    "@opam/ppx_tools": "6.4",
+    "@opam/rresult": "0.6.0",
+    "@opam/yojson": "1.7.0",
+    "@pesy/esy-pesy": "0.1.0-alpha.11",
+    "ocaml": "4.10.x"
+  },
+  "devDependencies": {
+    "@opam/merlin": "*",
+    "@opam/ocaml-lsp-server": "*",
+    "refmterr": "*"
+  }
+}

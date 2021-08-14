@@ -1,6 +1,6 @@
 {
   "ocaml.sandbox": {
-    "kind": "opam",
-    "switch": "${workspaceFolder:plantpro-cloud}"
+    "kind": "esy",
+    "root": "${workspaceFolder:plantpro-cloud}"
   }
 }

@@ -1,6 +1,6 @@
 (library
  (name ppx_netblob)
- (public_name ppx_netblob)
+;  (public_name ppx_netblob)
  (kind ppx_deriver)
  (preprocess
   (pps ppxlib.metaquot lwt_ppx))
