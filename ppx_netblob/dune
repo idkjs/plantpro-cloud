@@ -1,0 +1,21 @@
+(library
+ (name ppx_netblob)
+ (public_name ppx_netblob)
+ (kind ppx_deriver)
+ (preprocess
+  (pps ppxlib.metaquot lwt_ppx))
+ (libraries
+  ppxlib
+  cohttp
+  cohttp-lwt-unix
+  ppx_tools
+  ppx_deriving.api
+  ppx_deriving_yojson
+  lwt
+  lwt.unix
+  extlib))
+
+(env
+ (dev
+  (flags
+   (:standard -w -50))))

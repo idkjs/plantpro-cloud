@@ -1,0 +1,245 @@
+//please foward me any errors ASAP, it's fairly difficult to test this. 
+//Preliminaries and looking at is sudjest this works, but I am not 100%.
+// users table
+// create table
+CREATE TABLE IF NOT EXISTS users (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          is_verified INTEGER,
+          creation_time VARCHAR(256) NOT NULL,
+          email VARCHAR(256) NOT NULL UNIQUE,
+          user_name varchar(256) NOT NULL UNIQUE,
+          salt VARCHAR(256) NOT NULL,
+          p_hash VARCHAR(256) NOT NULL);
+//setting data
+INSERT INTO users(creation_time, email, user_name, salt, p_hash, is_verified)
+        VALUES(%s, %s, %s, %s, %s, %d);
+        
+//getting data
+        SELECT creation_time , email , user_name , salt , p_hash , is_verified FROM users;
+        
+// removing data
+        DELETE from users WHERE id = %d;
+_______________________________________________________________________________
+// group table
+// create table
+CREATE TABLE groups (
+        group_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        owner_id INTEGER NOT NULL, 
+        group_name varchar(256) NOT NULL, 
+        CONSTRAINT c_gname UNIQUE (owner_id, group_name),
+        FOREIGN KEY(owner_id) REFERENCES users(id));
+//setting data
+INSERT INTO temp(group_name, owner_id)
+        VALUES(%s, %d);
+        
+//getting data by group_id
+        SELECT group_name, owner_id FROM devices WHERE group_id = %s;
+        
+//getting data by group_name
+        SELECT group_id, owner_id FROM devices WHERE group_name = %s;
+        
+//getting data by owner_id
+        SELECT group_id, group_name FROM devices WHERE owner_id = %d;
+        
+// removing data
+        DELETE from group WHERE group_id = %d;
+        
+        DELETE from group WHERE owner_id = %d;
+_______________________________________________________________________________
+// devices table
+// create table
+CREATE TABLE IF NOT EXISTS devices (
+        device_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        owner_id INTEGER NOT NULL, 
+        creation_time varchar(256) NOT NULL,
+        name varchar(256) NOT NULL,
+        group_name varchar(256) NOT NULL,
+        device_code varchar(256) NOT NULL,
+        group_id INTEGER,
+        UNIQUE (owner_id, name),
+        FOREIGN KEY(owner_id) REFERENCES users(id)
+        FOREIGN KEY(group_id) REFERENCES groups(group_id));
+//setting data with group
+INSERT INTO devices(creation_time, name, device_code, owner_id, group_id)
+        VALUES(%s, %s, %s, %d, $d);
+        
+//getting data by devices id
+        SELECT device_id, name, device_code, owner_id FROM devices WHERE device_id = %d;
+        
+//getting data by owner_id
+        SELECT device_id, name, device_code, owner_id FROM devices WHERE owner_id = %d;
+        
+//getting data by devices name
+        SELECT device_id, name, device_code, owner_id FROM devices WHERE name = %s;
+        
+//getting data by group_id
+        SELECT device_id, name, device_code, owner_id FROM devices WHERE group_id = %d;
+        
+// removing data
+        DELETE from devices WHERE device_id = %d;
+        
+        DELETE from devices WHERE group_id = %d;
+        
+        DELETE from devices WHERE owner_id = %d;
+        
+        DELETE from devices WHERE device_code = %d;
+_______________________________________________________________________________
+// verified table
+// create table
+CREATE TABLE IF NOT EXISTS verif (
+        verif_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        owner_id INTEGER NOT NULL,
+        verif_name varchar(128) NOT NULL,
+        expiration_time varchar(128) NOT NULL,
+        verif_hash varchar(256) NOT NULL,
+        FOREIGN KEY(verif_name) REFERENCES users(user_name)
+        FOREIGN KEY(owner_id) REFERENCES users(id));
+        
+//setting data entry
+        INSERT INTO verif(owner_id, verif_name, expiration_time, verif_hash)
+        VALUES(%d, %s, %s, %s);
+        
+//getting data by account name
+        SELECT owner_id, verif_name, expiration_time, verif_hash FROM verif WHERE verif_name = %s;
+        
+//getting data by verifentication hash
+        SELECT owner_id, verif_name, expiration_time, verif_name FROM verif WHERE verif_hash = %s;
+        
+//getting data by owner_id
+        SELECT owner_id, verif_name, expiration_time, verif_name FROM verif WHERE owner_id = %d;
+    
+// removing data
+        DELETE from verif WHERE verif_id = %d;
+_______________________________________________________________________________
+// data table
+// create table
+CREATE TABLE IF NOT EXISTS data (
+    data_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    data_time varchar(256) NOT NULL,
+    owner_id INTEGER NOT NULL,
+    group_id INTEGER,
+    device_id INTEGER NOT NULL,
+    device_code varchar(256) NOT NULL,
+    sensor_type varchar(256) NOT NULL,
+    json varchar(4096) NOT NULL,
+    FOREIGN KEY(owner_id) REFERENCES users(id),
+    FOREIGN KEY(group_id) REFERENCES groups(group_id),
+    FOREIGN KEY(device_id) REFERENCES devices(device_id),
+    FOREIGN KEY(device_code) REFERENCES devices(device_code));
+
+//setting data    
+INSERT INTO data (owner_id, group_id, device_id, device_code, data_time, sensor_type, json)
+    VALUES(%d, %d, %d, %s, %s, %s, %s);
+
+//getting json
+Select data_time, json FROM data WHERE data_id = %d;
+    
+Select data_time, json FROM data WHERE owner_id = %d;
+
+Select data_time, json FROM data WHERE group_id = %d;
+
+Select data_time, json FROM data WHERE device_id = %d;
+
+Select data_time, json FROM data WHERE sensor_type = %s;
+
+Select data_time, json FROM data WHERE device_code = %s;
+
+//getting all data
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE data_id = %d;
+
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE owner_id = %d;
+
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE group_id = %d;
+
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_id = %d;
+
+Select data_id, data_time, owner_id, group_id, device_id, device_code, sensor_type, json FROM data WHERE device_code = %s;
+
+_______________________________________________________________________________
+// LEGACY
+// temperature table
+// create table
+CREATE TABLE IF NOT EXISTS temp (
+        temp_id int PRIMARY KEY AUTOINCREMENT,
+        device_id int,
+        creation_time varchar(256) NOT NULL,
+        data varchar(256) NOT NULL,
+        temp_unit varchar(256) NOT NULL,
+        FOREIGN KEY(device_id) REFERENCES device(id));
+//setting data
+INSERT INTO temp(creation_time, data, temp_unit, device_id)
+        VALUES(%s, %s, %s, %d);
+        
+//getting data by temp_id
+        SELECT device_id, creation_time, data, temp_unit FROM devices WHERE temp_id = %d;
+        
+//getting data by device_id
+        SELECT temp_id, creation_time, data, temp_unit FROM devices WHERE device_id = %d;
+        
+// removing data
+        DELETE from temp WHERE temp_id = %d;
+_______________________________________________________________________________
+// LEGACY
+// light table
+// create table
+CREATE TABLE IF NOT EXISTS light (
+        light_id int PRIMARY KEY AUTOINCREMENT,
+        creation_time varchar(256) NOT NULL,
+        device_id int,
+        data varchar(256) NOT NULL,
+        FOREIGN KEY(device_id) REFERENCES device(id));
+//setting data
+INSERT INTO light(creation_time, data, device_id)
+        VALUES(%s, %s, %d);
+        
+//getting data by light_id
+        SELECT device_id, creation_time, data FROM devices WHERE light_id = %d;
+        
+//getting data by device_id
+        SELECT light_id, creation_time, data FROM devices WHERE device_id = %d;
+        
+// removing data
+        DELETE from light WHERE light = %d;
+_______________________________________________________________________________
+// LEGACY
+// water table
+// create table
+CREATE TABLE IF NOT EXISTS water (
+        water_id int PRIMARY KEY AUTOINCREMENT,
+        creation_time varchar(256) NOT NULL,
+        device_id int,
+        data varchar(256) NOT NULL,
+        FOREIGN KEY(device_id) REFERENCES device(id));
+//setting data
+INSERT INTO water(creation_time, data, device_id)
+        VALUES(%s, %s, %d);
+        
+//getting data by water_id
+        SELECT device_id, creation_time, data FROM devices WHERE water_id = %d;
+        
+//getting data by device_id
+        SELECT water_id, creation_time, data FROM devices WHERE device_id = %d;
+        
+// removing data
+        DELETE from water WHERE water_id = %d;
+_______________________________________________________________________________
+//LEGACY
+//create plant data
+CREATE TABLE Px
+        (ID serial PRIMARY KEY,
+        time timestamp,
+        sensor_type NUMBER,
+        data varchar2(64)
+);
+        
+//setting data
+INSERT INTO Px (sensor_type, data)
+VALUES
+        (n1,'d');
+        (n2,'tnt');
+        ...
+        
+        
+        
+//getting data
+SELECT ID, time, sensor_type, data FROM Px;

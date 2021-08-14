@@ -1,0 +1,11 @@
+opam-version: "2.0"
+synopsis: "/Users/mando/Github/plantpro-cloud"
+opam-root: "/Users/mando/.opam"
+invariant: ["ocaml-base-compiler" {= "4.12.0"} | "ocaml-system" {= "4.12.0"}]
+paths {
+  
+}
+variables {
+  user: "mando"
+  group: "staff"
+}

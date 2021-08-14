@@ -1,0 +1,7 @@
+### Starting build.
+# Target: PlantPi_server.ml.depends, tags: { package(calendar), package(cryptokit), package(extlib), package(lwt), package(lwt.ppx), package(netstring), package(opium.unix), package(ppx_deriving_yojson), package(rresult), package(sqlexpr.ppx), package(unix), package(yojson), extension:ml, file:PlantPi_server.ml, ocaml, ocamldep, quiet, thread }
+ocamlfind ocamldep -package rresult -package netstring -package lwt.ppx -package cryptokit -package sqlexpr.ppx -package ppx_deriving_yojson -package yojson -package unix -package lwt -package opium.unix -package extlib -package calendar -modules PlantPi_server.ml > PlantPi_server.ml.depends
++ ocamlfind ocamldep -package rresult -package netstring -package lwt.ppx -package cryptokit -package sqlexpr.ppx -package ppx_deriving_yojson -package yojson -package unix -package lwt -package opium.unix -package extlib -package calendar -modules PlantPi_server.ml > PlantPi_server.ml.depends
+ocamlfind: Package `rresult' not found
+Command exited with code 2.
+# Compilation unsuccessful.

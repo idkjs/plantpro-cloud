@@ -1,0 +1,8 @@
+(executable
+ (name PlantPi_server)
+ (public_name server)
+ (libraries calendar extlib opium.unix lwt unix yojson ppx_deriving_yojson sqlexpr.ppx cryptokit lwt.ppx netstring rresult ppx_netblob))
+; (executable
+;  (name test_server)
+;  (modules test_server)
+;  (libraries calendar extlib opium.unix lwt unix yojson ppx_deriving_yojson sqlexpr.ppx cryptokit lwt.ppx netstring rresult ppx_netblob))

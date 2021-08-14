@@ -1,0 +1,37 @@
+opam-version: "1.2"
+maintainer: "john.mcalpine@student.nmt.edu"
+authors: ["John Christopher McAlpine" "Elias Flores" "Benjamin Fowler"]
+license: "MIT"
+
+homepage: "https://git.cs.nmt.edu/PlantPi/cloud-side/"
+bug-reports: "https://git.cs.nmt.edu/PlantPi/cloud-side/issues"
+dev-repo: "git@git.cs.nmt.edu:PlantPi/cloud-side.git"
+
+build: [ [make "build"] ]
+
+install: [make "install"]
+
+remove: [
+        ["ocamlfind" "remove" "plantpi"]
+]
+
+build-test: [ [make "check"] ]
+
+depends: [
+        "opium" { = "0.15.0+yojson" }
+        "lwt"
+        "ppx_deriving_yojson"
+        "extlib"
+        "calendar"
+        "sqlexpr"
+        "cryptokit"
+        "base64"
+        "ocamlnet"
+        "rresult"
+        "ocamlfind" {build}
+        "omake" {build}
+        "ocamllint"
+        "ppx_netblob"
+]
+
+available: [ocaml-version >= "4.03.0"]
